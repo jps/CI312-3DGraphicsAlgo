@@ -11,6 +11,9 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL/SDL.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+#include <time.h>
 
 #include "Vertex.h"
 #include "Edge.h"
@@ -20,6 +23,7 @@ using namespace Game;
 
 #define window_width  640
 #define window_height 480
+
 
     // Keydown booleans
     bool key[321];
@@ -38,8 +42,23 @@ using namespace Game;
 	    }
 	    return true;
     }
+
+
     void main_loop_function()
     {
+	    Vertex varr[8];
+	    Edge earr[18];
+	    Face farr[12];
+
+	    int r[12], g[12], b[12];
+
+	    for( int i = 0; i < 12 ; ++i)
+		{
+		    r[i] = rand() % 255;
+		    g[i] = rand() % 255;
+		    b[i] = rand() % 255;
+		}
+
 	    float RotationX, RotationY, RotationZ;
 	    while( events() )
 	    {
@@ -50,40 +69,91 @@ using namespace Game;
 
 		    glBegin(GL_TRIANGLES);
 
-		    Vertex varr[8];
-		    Edge earr[18];
-		    Face farr[8];
+
 
 		    //TODO: Fore now i have stored these both in array and as objects consider moving just to array
 
 
-		    Vertex v1 = varr[0] = Vertex(-1,-1,-1); //Front Face Bottom Left
-		    Vertex v2 = varr[1] = Vertex(-1, 1,-1); //Front Face Top Left
-		    Vertex v3 = varr[2] = Vertex( 1, 1,-1); //Front Face Top Right
-		    Vertex v4 = varr[3] = Vertex( 1,-1,-1); //Front Face Bottom Right
-		    Vertex v5 = varr[4] = Vertex(-1, 1, 1); //Top Face Top Left
-		    Vertex v6 = varr[5] = Vertex( 1, 1, 1); //Top Face Top Right
-		    Vertex v7 = varr[6] = Vertex( 1,-1, 1); //Right Face Bottom Right
-		    Vertex v8 = varr[7] = Vertex(-1,-1, 1); //Back Face Bottom Right (if facing)
+		    varr[0] = Vertex(-1,-1,-1); //Front Face Bottom Left
+		    varr[1] = Vertex(-1, 1,-1); //Front Face Top Left
+		    varr[2] = Vertex( 1, 1,-1); //Front Face Top Right
+		    varr[3] = Vertex( 1,-1,-1); //Front Face Bottom Right
+		    varr[4] = Vertex(-1, 1, 1); //Top Face Top Left
+		    varr[5] = Vertex( 1, 1, 1); //Top Face Top Right
+		    varr[6] = Vertex( 1,-1, 1); //Right Face Bottom Right
+		    varr[7] = Vertex(-1,-1, 1); //Back Face Bottom Right (if facing)
 
-		    Edge e1 = evarr[0] = Edge(v1, v2); //Front Face Left
-		    Edge e2 = evarr[1] =Edge(v2, v3); //Front Face Top
-		    Edge e3 = evarr[2] =Edge(v3, v1); //Front Face Diagonal
-		    Edge e4 = evarr[3] =Edge(v3, v4); //Front Face Right
-		    Edge e5 = evarr[4] =Edge(v4, v1); //Front Face Bottom
-		    Edge e6 = evarr[5] =Edge(v2, v5); //Top Face Left
-		    Edge e7 = evarr[6] =Edge(v5, v6); //Top Face Top
-		    Edge e8 = evarr[7] =Edge(v6, v2); //Top Face Diagonal
-		    Edge e9 = evarr[8] =Edge(v6, v3); //Top Face Right
-		    Edge e10 = evarr[9] =Edge(v6, v4); //Right Face Diagonal
-		    Edge e11 = evarr[10] = Edge(v6, v7); //Right Face Right
-		    Edge e12 = evarr[11] = Edge(v7, v4); //Right Face Bottom
-		    Edge e13 = evarr[12] = Edge(v5, v7); //Rear Diagonal
-		    Edge e14 = evarr[13] = Edge(v5, v8); //Rear Right (if facing)
-		    Edge e15 = evarr[14] = Edge(v8, v7); //Rear Bottom
-		    Edge e16 = evarr[15] = Edge(v2, v8); //Left Diagonal
-		    Edge e17 = evarr[16] = Edge(v1, v8); //Left Bottom
-		    Edge e18 = evarr[17] = Edge(v4, v8); //Bottom diagonal
+		    earr[0] = Edge(varr[0], varr[1]); //Front Face Left
+		    earr[1] = Edge(varr[1], varr[2]); //Front Face Top
+		    earr[2] = Edge(varr[2], varr[0]); //Front Face Diagonal
+		    earr[3] = Edge(varr[2], varr[3]); //Front Face Right
+		    earr[4] = Edge(varr[3], varr[0]); //Front Face Bottom
+		    earr[5] = Edge(varr[1], varr[4]); //Top Face Left
+		    // Edge e6 = Edge(v2, v5); //Top Face Left
+		    earr[6] = Edge(varr[4], varr[5]); //Top Face Top
+		    earr[7] = Edge(varr[5], varr[1]); //Top Face Diagonal
+		    earr[8] = Edge(varr[5], varr[2]); //Top Face Right
+		    earr[9] = Edge(varr[5], varr[3]); //Right Face Diagonal
+		    earr[10] = Edge(varr[5], varr[6]); //Right Face Right
+		    earr[11] = Edge(varr[6], varr[3]); //Right Face Bottom
+		    earr[12] = Edge(varr[4], varr[6]); //Rear Diagonal
+		    earr[13] = Edge(varr[4], varr[7]); //Rear Right (if facing)
+		    earr[14] = Edge(varr[7], varr[6]); //Rear Bottom
+		    earr[15] = Edge(varr[1], varr[7]); //Left Diagonal
+		    earr[16] = Edge(varr[0], varr[7]); //Left Bottom
+		    earr[17] = Edge(varr[3], varr[7]); //Bottom diagonal
+
+
+		    farr[0] = Face(earr[0],earr[1],earr[2]);      //Front Face Left Tri
+		    farr[1] = Face(earr[2],earr[3],earr[4], BFF); //Front Face Right Tri
+		    farr[2] = Face(earr[5], earr[6], earr[7]);    //Top Face Left Tri
+		    farr[3] = Face(earr[7], earr[8], earr[1], BFB); //Top Face Right
+		    farr[4] = Face(earr[3], earr[8] ,earr[9] , BBF); //Right Face Left
+		    farr[5] = Face(earr[9], earr[10] ,earr[11] , BFF); //Right Face Right
+		    farr[6] = Face(earr[10], earr[6], earr[12], BBF); //Back Face Left
+		    farr[7] = Face(earr[12], earr[13], earr[14], BFF); //Back Face Right
+		    farr[8] = Face(earr[13], earr[5], earr[15] , BBF); //Left Face Left
+		    farr[9] = Face(earr[15], earr[0] , earr[16] , BBF); //Left Face Right
+		    //farr[9] = Face(e16, e1 , e17 , BBF); //Left Face Right
+		    farr[10] = Face(earr[16], earr[4] , earr[17] , BBF); //Bottom Face Left
+		    farr[11] = Face(earr[17], earr[11] ,earr[14] , BBB); //Bottom Face Right
+
+		    for(int i = 0; i < 12; ++i)
+			{
+
+			    glColor3ub(r[i],g[i],b[i]);
+			    //if(i!= 9)
+			    farr[i].Draw();
+			}
+
+/*
+		    Vertex v1 = Vertex(-1,-1,-1); //Front Face Bottom Left
+		    Vertex v2 = Vertex(-1, 1,-1); //Front Face Top Left
+		    Vertex v3 = Vertex( 1, 1,-1); //Front Face Top Right
+		    Vertex v4 = Vertex( 1,-1,-1); //Front Face Bottom Right
+		    Vertex v5 = Vertex(-1, 1, 1); //Top Face Top Left
+		    Vertex v6 = Vertex( 1, 1, 1); //Top Face Top Right
+		    Vertex v7 = Vertex( 1,-1, 1); //Right Face Bottom Right
+		    Vertex v8 = Vertex(-1,-1, 1); //Back Face Bottom Right (if facing)
+
+		    Edge e1 = Edge(v1, v2); //Front Face Left
+		    Edge e2 = Edge(v2, v3); //Front Face Top
+		    Edge e3 = Edge(v3, v1); //Front Face Diagonal
+		    Edge e4 = Edge(v3, v4); //Front Face Right
+		    Edge e5 = Edge(v4, v1); //Front Face Bottom
+		    Edge e6 = Edge(v2, v5); //Top Face Left
+		    Edge e7 = Edge(v5, v6); //Top Face Top
+		    Edge e8 = Edge(v6, v2); //Top Face Diagonal
+		    Edge e9 = Edge(v6, v3); //Top Face Right
+		    Edge e10 = Edge(v6, v4); //Right Face Diagonal
+		    Edge e11 = Edge(v6, v7); //Right Face Right
+		    Edge e12 = Edge(v7, v4); //Right Face Bottom
+		    Edge e13 = Edge(v5, v7); //Rear Diagonal
+		    Edge e14 = Edge(v5, v8); //Rear Right (if facing)
+		    Edge e15 = Edge(v8, v7); //Rear Bottom
+		    Edge e16 = Edge(v2, v8); //Left Diagonal
+		    Edge e17 = Edge(v1, v8); //Left Bottom
+		    Edge e18 = Edge(v4, v8); //Bottom diagonal
 
 		    Face f1 = farr[0] = Face(e1,e2,e3);      //Front Face Left Tri
 		    Face f2 = farr[1] = Face(e3,e4,e5, BFF); //Front Face Right Tri
@@ -124,8 +194,7 @@ using namespace Game;
 		    f11.Draw();
 		    glColor3ub(18,60,24);
 		    f12.Draw();
-
-
+*/
 /*		    glColor3ub(255, 255, 000);
 		    //FrontFace
 		    //-left-tri
@@ -197,8 +266,18 @@ using namespace Game;
 		    if( key[SDLK_LEFT ] ){ RotationX+=0.5; }
 		    if( key[SDLK_UP] ){ RotationY-=0.5; }
 		    if( key[SDLK_DOWN ] ){ RotationY+=0.5; }
+		    //if( key[SDLK_i] ) { ExecuteSubSpaceDivision(); }
+
+		  //  delete[] varr;
+		  //  delete[] earr;
+		  //  delete[] farr;
 	    }
     }
+
+
+
+
+
     // Initialze OpenGL perspective matrix
     void GL_Setup(int width, int height)
     {
@@ -210,6 +289,8 @@ using namespace Game;
     }
     int main()
     {
+	    //Random Number seed
+	    srand ( time(NULL) );
 	    // Initialize SDL with best video mode
 	    SDL_Init(SDL_INIT_VIDEO);
 	    const SDL_VideoInfo* info = SDL_GetVideoInfo();
