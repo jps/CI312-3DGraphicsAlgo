@@ -11,6 +11,8 @@
 #include "Vertex.h"
 #include "Edge.h"
 #include "Face.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 namespace Game
     {
@@ -19,15 +21,26 @@ namespace Game
 	{
     public:
 	GameObject();
+	GameObject(const Vertex *Varr,const Edge *Earr, const Face *Farr);
 	virtual ~GameObject();
 
-	Vertex varr[8];
-	Edge earr[18];
-	Face farr[8];
+	bool visible;
+	Vertex transformBy;
+	Vertex varr[];
+	Edge earr[];
+	Face farr[];
+
+	void Transform(Vertex v);
 
 	void Draw();
 
+	GameObject SubspaceDivision();
+
 	};
+
+
+
+
 
     }
 

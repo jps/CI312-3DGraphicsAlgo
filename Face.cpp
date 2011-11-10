@@ -10,6 +10,12 @@
 namespace Game
     {
 
+
+    Face::Face()
+    {
+
+    }
+
     Face::Face(Edge A, Edge B, Edge C)
     {
     a = A;
