@@ -11,6 +11,9 @@
 #include "GameObject.h"
 #include <stdlib.h>
 
+
+using namespace std;
+
 namespace Game
     {
 
@@ -23,9 +26,12 @@ namespace Game
 
 	void Draw();
 	virtual ~Cube();
+
 	Vertex varr[8];
 	Edge earr[18];
 	Face farr[12];
+	GameObject ButterflySubSpaceDivision();
+
     private:
 	void init(float size, Vertex v);
 	int r[12], g[12], b[12];

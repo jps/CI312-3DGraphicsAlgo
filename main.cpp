@@ -14,6 +14,7 @@
 //#include <stdio.h>
 //#include <stdlib.h>
 #include <time.h>
+#include <iostream>
 
 #include "Vertex.h"
 #include "Edge.h"
@@ -21,6 +22,7 @@
 
 #include "Cube.h"
 
+using namespace std;
 using namespace Game;
 
 #define window_width  640
@@ -48,29 +50,18 @@ using namespace Game;
 
     void main_loop_function()
     {
-	    /*Vertex varr[8];
-	    Edge earr[18];
-	    Face farr[12];
-*/
-	   /* int r[12], g[12], b[12];
-
-	    for( int i = 0; i < 12 ; ++i)
-		{
-		    r[i] = rand() % 255;
-		    g[i] = rand() % 255;
-		    b[i] = rand() % 255;
-		}*/
 	    Vertex vt = Vertex(0,0,0);
 	    Cube CubeTest = Cube(2.5f,vt);
 
-
+	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;
+	    float Zoom = -10;
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		    glLoadIdentity();
-		    glTranslatef(0,0, -10);
-		    glRotatef(RotationX,RotationY, RotationZ, 1);
+		    glTranslatef(0,0, Zoom);
+		    glRotatef(RotationX,RotationY, 45,45);
 
 		    glBegin(GL_TRIANGLES);
 		    // this should be the main gl draw loop here.
@@ -87,15 +78,20 @@ using namespace Game;
 		    if( key[SDLK_DOWN ] ){ RotationY+=0.5; }
 		    if( key[SDLK_l] ) { RotationZ -=0.5; }
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
-
-			    //if( key[SDLK_i] ) { ExecuteSubSpaceDivision(); }
-
-
+		    if( key[SDLK_i]) { Zoom += 0.5;}
+		    if( key[SDLK_o]) { Zoom -= 0.5;}
+		    ButtonPause = ButtonPause > 0 ? --ButtonPause : ButtonPause; //buffer to stop method being spammed cheap but it works...
+		    if( key[SDLK_a])
+			{
+			if( ButtonPause == 0)
+			    {
+			    cout << "ButterflySubSpaceDivision Called \n";
+			    CubeTest.ButterflySubSpaceDivision();
+			    ButtonPause = 30;
+			    }
+			}
 	    }
     }
-
-
-
 
 
     // Initialze OpenGL perspective matrix

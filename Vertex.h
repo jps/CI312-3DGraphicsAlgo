@@ -25,7 +25,10 @@ namespace Game
 	float GetY();
 	float GetZ();
 	//float[] Vertex::Get();
-
+	bool EqualTo(Vertex v);
+	bool operator==(const Vertex &inV);
+	//bool& operator==( float &inV);
+	bool operator!=(const Vertex &inV);
     private:
 	float x,y,z;
 	};

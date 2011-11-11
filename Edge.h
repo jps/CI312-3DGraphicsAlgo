@@ -25,6 +25,10 @@ namespace Game
 	Vertex a;
 	Vertex b;
 
+	bool operator==(Edge &inV);
+	bool operator!=(Edge &inV);
+
+
     private:
 
 

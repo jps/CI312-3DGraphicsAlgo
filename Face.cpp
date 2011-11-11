@@ -80,18 +80,17 @@ namespace Game
 	    }
     }
 
-    Vertex Face::LocateFinalVetex(Edge e)
+    Vertex Face::LocateFinalVertex(Edge e)
     {
 
 	for(int i = 0; i <3; i++)
 	    {
-	    if(earr[i] != e) // a more efficent implentation of this can be provided if current array location is provided saving potential 1/3 time
+	    if(earr[i] != e) // a more efficient implementation of this can be implemented if current array location is provided saving potential 1/3 time
 		{
 		    if( earr[i].a != e.a)
 			{
 			if( earr[i].a != e.b)
 			    {
-			    //break;
 			    return earr[i].a;
 			    }
 			}
@@ -135,6 +134,16 @@ namespace Game
 			}
 	 */
     }
+
+    bool Face::Contains( Edge e)
+	{
+	    for(int i = 0; i < 3; i++)
+		{
+		    if(earr[i] == e)
+			return true;
+		}
+	    return false;
+	}
 
     bool Face::operator==(Face &inV)
     {

@@ -9,7 +9,7 @@
 
 namespace Game
     {
-
+//Change to array based structure if opportunity/necessity calls for it
     Vertex::Vertex()
 	{
 	z = y = x = 0;
@@ -64,6 +64,31 @@ namespace Game
 	{
 	return z;
 	}
+
+
+ //TODO would be nice to have working
+    bool Vertex::operator==(const Vertex &inV)
+	{
+	if(x == inV.x && y == inV.y && z == inV.z)
+	    return true;
+	return false;
+	}
+
+    bool Vertex::operator!=(const Vertex &inV)
+	{
+	if(x == inV.x && y == inV.y && z == inV.z)
+	    return false;
+	return true;
+	}
+
+    //efectivly deprectated by operator overload
+    bool Vertex::EqualTo(Vertex v)
+	{
+	if(x == v.x && y == v.y && z == v.z)
+	    return true;
+	return false;
+	}
+
 
     Vertex::~Vertex()
 	{

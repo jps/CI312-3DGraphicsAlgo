@@ -5,10 +5,15 @@
  *      Author: Panda
  */
 
+#define ExceptionTrapping
+#define PrintToConsole
+#include <iostream>
+
 #include "Cube.h"
 
 namespace Game
     {
+
 
     Cube::Cube()
 	{
@@ -82,7 +87,7 @@ namespace Game
 		}
 	}
 
-    void Cube::Draw()
+     void Cube::Draw()
 	{
 	    for(int i = 0; i < 12; ++i)
 		{
@@ -91,9 +96,108 @@ namespace Game
 		}
 	}
 
+
+
+
+    GameObject Cube::ButterflySubSpaceDivision()
+	{
+
+	struct ControlPoints
+		{
+		    Vertex a[2];
+		    Vertex b[2];
+		    Vertex c[4];
+		    Vertex d[2];
+		}; //Controls[el]
+
+#ifdef PrintToConsole
+			    cout << "entered subspace division method \n";
+#endif
+
+	    GameObject NGO = GameObject();
+
+	    int fl = 12;//sizeof(farr[12] ) / sizeof( farr[0] );
+	    int el = 18;//sizeof(earr[18] ) / sizeof( earr[0] );
+	    int vl = 8;//sizeof(varr[8]) / sizeof( varr[0]);
+
+	    ControlPoints cp[el];
+	    /*Vertex midpoints[el];// = float[el];
+	    for(int ei = 0; ei < el; ++el )
+		    midpoints[ei] = earr[ei].MidPoint();*/
+
+
+
+	    for(int fi = 0; fi < fl; ++fi  )
+	    {
+#ifdef PrintToConsole
+			cout << "on face: "<< fi << " of " << fl << "\n";
+#endif
+		for(int ei = 0; ei < 3; ++ei)
+		    {
+
+		    //TODO: break into struct one first vertex calulated
+		    /*Vertex a[2];
+		    Vertex b[2];
+		    Vertex c[4];
+		    Vertex d[2];
+*/
+
+		    ControlPoints.a[fi] = farr[fi].earr[ei].a;
+		    ControlPoints.b[fi] = farr[fi].earr[ei].b;
+		    b[1] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
+
+		    /*
+		    a[0] = farr[fi].earr[ei].a;
+		    a[1] = farr[fi].earr[ei].b;
+		    b[1] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
+*/
+
+		    //find the fist b value  //TODO: refactor once working
+		    /*for(int i = 0; i < 3; i++)
+			{
+			if(i != ei)// can't be located on current edge - skip
+			    {
+			    if(farr[fi].earr[i].a != a[0])//consider renaming vars because this looks horrible...
+				{
+				if(farr[fi].earr[i].b != (a[0]))
+				    {
+#ifdef PrintToConsole
+				    cout << "b[0] has been set for face: "<< fi << " edge:" << ei << "\n";
+#endif
+				    b[0] = farr[fi].earr[i].a;
+				    break;
+				    }
+				}
+			    else if(farr[fi].earr[i].a != (a[1]))
+				{
+				if(farr[fi].earr[i].b != (a[1]))
+				    {
+#ifdef PrintToConsole
+				    cout << "b[0] has been set for face: "<< fi << " edge:" << ei << "\n";
+#endif
+				    b[0] = farr[fi].earr[i].b;
+				    break;
+				    }
+				}
+			    }
+			}
+		    */
+		}
+#ifdef PrintToConsole
+		cout << "exiting method \n";
+#endif
+	    }
+	    return NGO;
+	}
+
     Cube::~Cube()
 	{
 	// TODO Auto-generated destructor stub
 	}
+
+
+    //Remove from this class! and to game object
+
+
 
     }

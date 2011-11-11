@@ -5,6 +5,7 @@
  *      Author: Panda
  */
 #include "Edge.h"
+#include "Vertex.h"
 #include <GL/gl.h>
 
 #ifndef FACE_H_
@@ -24,11 +25,18 @@ namespace Game
 	virtual ~Face();
 	void Draw();
 	EdgeDirection edgeDirection;
+	Edge earr[3];
+	Vertex LocateFinalVertex(Edge e);
+	bool Contains(Edge e);
+
+	bool operator==(Face &inV);
+	bool operator!=(Face &inV);
+
     private:
-	//implemented only for tris at the moment.
-	Edge a;
-	Edge b;
-	Edge c;
+	//implemented only for triangles at the moment. huh ?
+	//Edge a;
+	//Edge b;
+	//Edge c;
 	};
     }
 #endif /* FACE_H_ */

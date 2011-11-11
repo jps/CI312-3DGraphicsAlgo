@@ -14,6 +14,7 @@ namespace Game
 
     GameObject::GameObject(const Vertex * Varr, const Edge Earr[], const Face Farr[])
 	{
+
 	    //varr = new Vertex[sizeof( Varr ) / sizeof( Varr[0] )];
 	    //earr = new Edge[sizeof( Earr ) / sizeof( Earr[0] )];
 	    //farr = new Face[sizeof( Farr ) / sizeof( Farr[0] )];
@@ -29,19 +30,17 @@ namespace Game
 
     GameObject::~GameObject()
 	{
-	    delete [] farr;
-	    delete [] earr;
-	    delete [] varr;
-	    /*varr = NULL;
-	    earr = NULL;
-	    farr = NULL;
-*/
-	// TODO Auto-generated destructor stub
+	   // delete farr;
+	   // delete earr;
+	   // delete varr;
 	}
 
-    GameObject SubspaceDivision()
+    GameObject GameObject::SubspaceDivision()
 	{
 	   GameObject NGO = GameObject();
+
+
+
 /*
 	   int farrLength = sizeof( farr[] ) / sizeof( farr[0] );
 
@@ -51,5 +50,23 @@ namespace Game
 		}*/
 	    return NGO;
 	}
+
+    void GameObject::Draw()
+	{
+	    for(unsigned int i = 0; i < farr.size(); ++i)
+		{
+		    glColor3ub(i%256,i%256,i%256);
+		    farr[i].Draw();
+		}
+	}
+/*
+    struct ControlPoints
+	{
+	    Vertex a[2];
+	    Vertex b[2];
+	    Vertex c[4];
+	    Vertex d[2];
+	};
+*/
     }
 

@@ -13,6 +13,7 @@
 #include "Face.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <vector>
 
 namespace Game
     {
@@ -26,9 +27,14 @@ namespace Game
 
 	bool visible;
 	Vertex transformBy;
-	Vertex varr[];
-	Edge earr[];
-	Face farr[];
+
+	std::vector<Vertex> varr;
+	std::vector<Edge> earr;
+	std::vector<Face> farr;
+
+//	Vertex varr[];
+//	Edge earr[];
+//	Face farr[];
 
 	void Transform(Vertex v);
 
