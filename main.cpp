@@ -51,11 +51,11 @@ using namespace Game;
     void main_loop_function()
     {
 	    Vertex vt = Vertex(0,0,0);
-	    Cube CubeTest = Cube(2.5f,vt);
+	    Cube CubeTest = Cube(1.0f,vt);
 
 	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;
-	    float Zoom = -10;
+	    float Zoom = -5;
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

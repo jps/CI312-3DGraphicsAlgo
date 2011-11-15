@@ -11,6 +11,8 @@
 #include "GameObject.h"
 #include <stdlib.h>
 
+#define PrintToConsole
+#include <iostream>
 
 using namespace std;
 
@@ -20,6 +22,9 @@ namespace Game
     class Cube: public Game::GameObject
 	{
     public:
+
+	//struct EdgeFaces;
+
 	Cube();
 	Cube(float size);
 	Cube(float size, Vertex v);
@@ -35,6 +40,7 @@ namespace Game
     private:
 	void init(float size, Vertex v);
 	int r[12], g[12], b[12];
+	//EdgeFaces* FindEdgeFaces(int el, int fl, Edge earr[], Face farr[]);
 	};
     }
 

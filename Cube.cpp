@@ -6,26 +6,24 @@
  */
 
 #define ExceptionTrapping
-#define PrintToConsole
-#include <iostream>
+
 
 #include "Cube.h"
 
 namespace Game
     {
 
-
     Cube::Cube()
 	{
 	Vertex v = Vertex(0, 0, 0);
-	init(0.5, v);//default to a size one cube
+	init(1, v);//default to a size one cube
 	}
 
     Cube::Cube(float size)
 	{
 
 	Vertex v = Vertex(0, 0, 0);
-	init(size/2, v );//default to a size one cube
+	init(size, v );//default to a size one cube
 	}
 
 
@@ -108,7 +106,7 @@ namespace Game
 		    Vertex b[2];
 		    Vertex c[4];
 		    Vertex d[2];
-		}; //Controls[el]
+		};
 
 #ifdef PrintToConsole
 			    cout << "entered subspace division method \n";
@@ -116,88 +114,119 @@ namespace Game
 
 	    GameObject NGO = GameObject();
 
-	    int fl = 12;//sizeof(farr[12] ) / sizeof( farr[0] );
-	    int el = 18;//sizeof(earr[18] ) / sizeof( earr[0] );
-	    int vl = 8;//sizeof(varr[8]) / sizeof( varr[0]);
-
-	    ControlPoints cp[el];
-	    /*Vertex midpoints[el];// = float[el];
-	    for(int ei = 0; ei < el; ++el )
-		    midpoints[ei] = earr[ei].MidPoint();*/
-
-
+	    //TODO: issue here not finding the correct vals. however these are already known.
+	    int fl = 12;
+	    int el = 18;
+	    int vl = 8;
+	    //EdgeFaces efs[el];
+	    ControlPoints cps[el];
+	    EdgesFaces ef = EdgesFaces(earr, farr,el,fl);
+#ifdef PrintToConsole
+			cout << "About to find edge faces \n";
+#endif
 
 	    for(int fi = 0; fi < fl; ++fi  )
 	    {
 #ifdef PrintToConsole
-			cout << "on face: "<< fi << " of " << fl << "\n";
+			cout << "on face: "<< fi+1 << " of " << fl << "\n";
 #endif
 		for(int ei = 0; ei < 3; ++ei)
-		    {
+		{
 
-		    //TODO: break into struct one first vertex calulated
-		    /*Vertex a[2];
-		    Vertex b[2];
-		    Vertex c[4];
-		    Vertex d[2];
-*/
-
-		    ControlPoints.a[fi] = farr[fi].earr[ei].a;
-		    ControlPoints.b[fi] = farr[fi].earr[ei].b;
-		    b[1] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
-
-		    /*
-		    a[0] = farr[fi].earr[ei].a;
-		    a[1] = farr[fi].earr[ei].b;
-		    b[1] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
-*/
-
-		    //find the fist b value  //TODO: refactor once working
-		    /*for(int i = 0; i < 3; i++)
-			{
-			if(i != ei)// can't be located on current edge - skip
-			    {
-			    if(farr[fi].earr[i].a != a[0])//consider renaming vars because this looks horrible...
-				{
-				if(farr[fi].earr[i].b != (a[0]))
-				    {
 #ifdef PrintToConsole
-				    cout << "b[0] has been set for face: "<< fi << " edge:" << ei << "\n";
+			cout << "on edge: "<< ei+1 << " of " << 3 << "\n";
 #endif
-				    b[0] = farr[fi].earr[i].a;
-				    break;
-				    }
-				}
-			    else if(farr[fi].earr[i].a != (a[1]))
-				{
-				if(farr[fi].earr[i].b != (a[1]))
-				    {
+
+		    cps[fi].a[0] = farr[fi].earr[ei].a;
+		    cps[fi].a[1] = farr[fi].earr[ei].b;
+		    cps[fi].b[0] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
 #ifdef PrintToConsole
-				    cout << "b[0] has been set for face: "<< fi << " edge:" << ei << "\n";
+		    cout << "b[0] Locate final vertex found :"<< cps[fi].b[0].ToString() <<"\n";
 #endif
-				    b[0] = farr[fi].earr[i].b;
-				    break;
-				    }
-				}
-			    }
-			}
-		    */
+
+		    Face fa = ef.FindFace(farr[fi].earr[ei], farr[fi]);
+		    Vertex va = fa.LocateFinalVertex(farr[fi].earr[ei]);
+
+#ifdef PrintToConsole
+		  //  cout << "b[1] FindFace found :" << fa.ToString() ;
+		  //  cout << "b[1] Locate final vertex found :"<<  va.ToString() <<"\n";
+#endif
+
+		    cps[fi].b[1] = va;
+#ifdef PrintToConsole
+		    cout << "b[1] Locate final vertex found :"<< cps[fi].b[1].ToString() <<"\n";
+#endif
+
+
+
+		    //locate b[1] : find face oposite to farr[fi] on farr[fi].earr[ei]
+
+		   // cps[fi].b[1] = farr[fi].earr[ei]
+/*
+		    cps[fi].b[1] =
+*/
+#ifdef PrintToConsole
+			cout << "\n";
+#endif
 		}
+#ifdef PrintToConsole
+			cout << "\n\n";
+#endif
+
+	    }
 #ifdef PrintToConsole
 		cout << "exiting method \n";
 #endif
-	    }
 	    return NGO;
 	}
+
+	//TODO: would rather this not be static...
+/*	EdgeFaces* FindEdgeFaces(int el, int fl, Edge earr[], Face farr[])
+	{
+#ifdef PrintToConsole
+			cout << "About to find edge faces \n";
+#endif
+	    EdgeFaces efs[el];
+	    //TODO: refactor and consider optimizing
+	    //find edge faces
+	    //for each face edge //find face that contains edge, then find other edge
+	    for(int i = 0; i < el; ++i)
+	    {
+	    bool ab , br = false;
+	    efs[i].e = earr[i];
+		for(int j = 0; j < fl; ++j)
+		{
+		    for(int k = 0; k < 3; ++k)
+		    {
+			if(farr[j].earr[k] == earr[i])
+			{
+			    if(!ab) //assign first face
+			    {
+				efs[i].f[0] = farr[j];
+				ab = !ab;
+			    }
+			    else   //assign second face
+			    {
+				efs[i].f[1] = farr[j];
+				br = !br;
+				break;
+			    }
+			}
+		    }
+		    if(br == true)
+		    break;
+		}
+	    }
+#ifdef PrintToConsole
+			cout << "Found edge faces \n";
+#endif
+			return efs;
+	}*/
+
 
     Cube::~Cube()
 	{
 	// TODO Auto-generated destructor stub
 	}
-
-
-    //Remove from this class! and to game object
-
-
 
     }

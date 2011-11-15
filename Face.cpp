@@ -82,6 +82,9 @@ namespace Game
 
     Vertex Face::LocateFinalVertex(Edge e)
     {
+#ifdef PrintToConsole
+	std::cout << "Locate final vertex called edge provided is " << e.ToString();
+#endif
 
 	for(int i = 0; i <3; i++)
 	    {
@@ -91,6 +94,9 @@ namespace Game
 			{
 			if( earr[i].a != e.b)
 			    {
+#ifdef PrintToConsole
+	std::cout << "Final vertex found given vertex is : " << earr[i].a.ToString() << "\n" ;
+#endif
 			    return earr[i].a;
 			    }
 			}
@@ -98,6 +104,9 @@ namespace Game
 			{
 			if( earr[i].b != e.b)
 			    {
+#ifdef PrintToConsole
+	std::cout << "Final vertex found given vertex is : " << earr[i].b.ToString() << "\n" ;
+#endif
 			    return earr[i].b;
 			    }
 			}
@@ -133,6 +142,10 @@ namespace Game
 			    }
 			}
 	 */
+
+#ifdef PrintToConsole
+	std::cout << "Final vertex no vertex found found!!!!!!!!!!!!! \n" ;
+#endif
     }
 
     bool Face::Contains( Edge e)
@@ -143,6 +156,11 @@ namespace Game
 			return true;
 		}
 	    return false;
+	}
+
+    string Face::ToString()
+	{
+	return " Face: "+ earr[0].ToString() + earr[1].ToString() + earr[2].ToString() + "\n";
 	}
 
     bool Face::operator==(Face &inV)

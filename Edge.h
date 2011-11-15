@@ -6,9 +6,14 @@
  */
 
 #include "Vertex.h"
+#include <string>
 
 #ifndef EDGE_H_
 #define EDGE_H_
+
+
+
+using namespace std;
 
 namespace Game
 {
@@ -25,6 +30,8 @@ namespace Game
 	Vertex a;
 	Vertex b;
 
+
+	string ToString();
 	bool operator==(Edge &inV);
 	bool operator!=(Edge &inV);
 

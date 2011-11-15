@@ -40,6 +40,12 @@ namespace Game
 	}
 
 
+	string Edge::ToString()
+	{
+	    return "Edge: a=" + a.ToString() + " b=" +b.ToString() +"\n"; //TODO: for each vertex
+	}
+
+
     Edge::~Edge()
 	{
 	// TODO Auto-generated destructor stub

@@ -65,6 +65,12 @@ namespace Game
 	return z;
 	}
 
+    string Vertex::ToString()
+	{
+	 stringstream ss (stringstream::in | stringstream::out);
+	 ss << " Vertex: x=" << x << " y=" << y << " z="<< z;
+	 return ss.str();
+	}
 
  //TODO would be nice to have working
     bool Vertex::operator==(const Vertex &inV)

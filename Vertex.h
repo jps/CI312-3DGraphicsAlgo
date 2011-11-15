@@ -5,8 +5,14 @@
  *      Author: Panda
  */
 
+#include <string>
+#include <iostream>
+#include <sstream>
+
 #ifndef VERTEX_H_
 #define VERTEX_H_
+
+using namespace std;
 
 namespace Game
     {
@@ -26,6 +32,7 @@ namespace Game
 	float GetZ();
 	//float[] Vertex::Get();
 	bool EqualTo(Vertex v);
+	string ToString();
 	bool operator==(const Vertex &inV);
 	//bool& operator==( float &inV);
 	bool operator!=(const Vertex &inV);

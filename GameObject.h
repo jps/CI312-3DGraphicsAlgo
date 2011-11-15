@@ -14,6 +14,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <vector>
+#include "EdgesFaces.h"
 
 namespace Game
     {

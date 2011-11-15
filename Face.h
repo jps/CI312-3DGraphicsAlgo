@@ -7,14 +7,20 @@
 #include "Edge.h"
 #include "Vertex.h"
 #include <GL/gl.h>
+#include <string>
+
+#define PrintToConsole
+#include <iostream>
 
 #ifndef FACE_H_
 #define FACE_H_
 
+using namespace std;
+
 namespace Game
     {
 
-    enum EdgeDirection { FFF, BFF, FBF, FFB, BBF, FBB, BFB, BBB};//not entirely sure if this is the best approach...
+    enum EdgeDirection { FFF, BFF, FBF, FFB, BBF, FBB, BFB, BBB};//not entirely sure if this is the best approach... bit array would be cheaper
 
     class Face
 	{
@@ -28,7 +34,7 @@ namespace Game
 	Edge earr[3];
 	Vertex LocateFinalVertex(Edge e);
 	bool Contains(Edge e);
-
+	string ToString();
 	bool operator==(Face &inV);
 	bool operator!=(Face &inV);
 

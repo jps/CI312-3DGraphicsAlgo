@@ -6,6 +6,8 @@
 CPP_SRCS += \
 ../Cube.cpp \
 ../Edge.cpp \
+../EdgeFaces.cpp \
+../EdgesFaces.cpp \
 ../Face.cpp \
 ../GameObject.cpp \
 ../Vertex.cpp \
@@ -14,6 +16,8 @@ CPP_SRCS += \
 OBJS += \
 ./Cube.o \
 ./Edge.o \
+./EdgeFaces.o \
+./EdgesFaces.o \
 ./Face.o \
 ./GameObject.o \
 ./Vertex.o \
@@ -22,6 +26,8 @@ OBJS += \
 CPP_DEPS += \
 ./Cube.d \
 ./Edge.d \
+./EdgeFaces.d \
+./EdgesFaces.d \
 ./Face.d \
 ./GameObject.d \
 ./Vertex.d \

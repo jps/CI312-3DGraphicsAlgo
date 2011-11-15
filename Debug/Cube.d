@@ -1,5 +1,5 @@
 Cube.d: ../Cube.cpp ../Cube.h ../GameObject.h ../Vertex.h ../Edge.h \
- ../Face.h
+ ../Face.h ../EdgesFaces.h ../EdgeFaces.h
 
 ../Cube.h:
 
@@ -10,3 +10,7 @@ Cube.d: ../Cube.cpp ../Cube.h ../GameObject.h ../Vertex.h ../Edge.h \
 ../Edge.h:
 
 ../Face.h:
+
+../EdgesFaces.h:
+
+../EdgeFaces.h:
