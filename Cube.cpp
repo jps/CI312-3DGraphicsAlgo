@@ -120,9 +120,12 @@ namespace Game
 	    int vl = 8;
 	    //EdgeFaces efs[el];
 	    ControlPoints cps[el];
-	    EdgesFaces ef = EdgesFaces(earr, farr,el,fl);
 #ifdef PrintToConsole
 			cout << "About to find edge faces \n";
+#endif
+	    EdgesFaces ef = EdgesFaces(earr, farr,el,fl);
+#ifdef PrintToConsole
+			cout << "Edge faces found \n";
 #endif
 
 	    for(int fi = 0; fi < fl; ++fi  )
@@ -136,35 +139,66 @@ namespace Game
 #ifdef PrintToConsole
 			cout << "on edge: "<< ei+1 << " of " << 3 << "\n";
 #endif
-
-		    cps[fi].a[0] = farr[fi].earr[ei].a;
-		    cps[fi].a[1] = farr[fi].earr[ei].b;
-		    cps[fi].b[0] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
-#ifdef PrintToConsole
-		    cout << "b[0] Locate final vertex found :"<< cps[fi].b[0].ToString() <<"\n";
-#endif
-
-		    Face fa = ef.FindFace(farr[fi].earr[ei], farr[fi]);
-		    Vertex va = fa.LocateFinalVertex(farr[fi].earr[ei]);
-
-#ifdef PrintToConsole
-		  //  cout << "b[1] FindFace found :" << fa.ToString() ;
-		  //  cout << "b[1] Locate final vertex found :"<<  va.ToString() <<"\n";
-#endif
-
-		    cps[fi].b[1] = va;
-#ifdef PrintToConsole
-		    cout << "b[1] Locate final vertex found :"<< cps[fi].b[1].ToString() <<"\n";
-#endif
-
-
-
-		    //locate b[1] : find face oposite to farr[fi] on farr[fi].earr[ei]
-
-		   // cps[fi].b[1] = farr[fi].earr[ei]
 /*
-		    cps[fi].b[1] =
+control point positions labeled for reference
+
+			 c1     b1     c2
+			/  \f10/  \ f2/  \
+		       / f9 \ / f1 \ / f3 \
+		     d1---- -a1--*--a2----d2
+		       \ f8 / \ f6 / \ f4 /
+			\  /f7 \  / f5\  /
+			 c4     b2     c3
 */
+		    //a1 /a[0]
+		    cps[fi].a[0] = farr[fi].earr[ei].a;
+
+
+		    //a1 /a[1]
+		    cps[fi].a[1] = farr[fi].earr[ei].b;
+
+
+		    //b1 /b[0]
+		    cps[fi].b[0] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
+
+
+		    //b1
+		    Face f1 = ef.FindFace(farr[fi].earr[ei], farr[fi]);
+		    cps[fi].b[1] = f1.LocateFinalVertex(farr[fi].earr[ei]);
+
+		    //c1 - neighbors f10 - b1 and a1 are known //TODO: check
+		    Edge e1 = farr[fi].LocateEdge(cps[fi].a[0],cps[fi].b[0]);
+		    Face f10 = ef.FindFace(e1,farr[fi]);
+		    cps[fi].c[0] = f10.LocateFinalVertex(e1);
+
+		    //c2 - neighbors f2 - b1 and a2 are known
+		    Edge e2 = farr[fi].LocateEdge(cps[fi].a[1],cps[fi].b[0]);
+		    Face f2 = ef.FindFace(e2,farr[fi]);
+		    cps[fi].c[2] = f2.LocateFinalVertex(e2);
+
+		    //c3 - neighbors f2 - b2 and a2 are known
+		    Edge e3 = f1.LocateEdge(cps[fi].a[1],cps[fi].b[1]);
+		    Face f5 = ef.FindFace(e3,f1);
+		    cps[fi].c[2] = f5.LocateFinalVertex(e3);
+
+		    //c4 - neighbors f7 - b2 and a1 are known
+		    Edge e4 = f1.LocateEdge(cps[fi].a[0], cps[fi].b[1]);
+		    Face f7 = ef.FindFace(e4, f1);
+		    cps[fi].c[3] = f7.LocateFinalVertex(e4);
+
+
+#ifdef PrintToConsole
+		    cout << "a[0] Located :"<< cps[fi].a[0].ToString() <<"\n";
+		    cout << "a[1] Located :"<< cps[fi].a[1].ToString() <<"\n";
+		    cout << "b[0] Located :"<< cps[fi].b[0].ToString() <<"\n";
+		    cout << "b[1] Located  :"<< cps[fi].b[1].ToString() <<"\n";
+		    cout << "c[0] Located  :"<< cps[fi].c[0].ToString() <<"\n";
+		    cout << "c[1] Located  :"<< cps[fi].c[1].ToString() <<"\n";
+		    cout << "c[2] Located  :"<< cps[fi].c[2].ToString() <<"\n";
+ 		    cout << "c[3] Located  :"<< cps[fi].c[3].ToString() <<"\n";
+#endif
+
+
 #ifdef PrintToConsole
 			cout << "\n";
 #endif
@@ -179,50 +213,6 @@ namespace Game
 #endif
 	    return NGO;
 	}
-
-	//TODO: would rather this not be static...
-/*	EdgeFaces* FindEdgeFaces(int el, int fl, Edge earr[], Face farr[])
-	{
-#ifdef PrintToConsole
-			cout << "About to find edge faces \n";
-#endif
-	    EdgeFaces efs[el];
-	    //TODO: refactor and consider optimizing
-	    //find edge faces
-	    //for each face edge //find face that contains edge, then find other edge
-	    for(int i = 0; i < el; ++i)
-	    {
-	    bool ab , br = false;
-	    efs[i].e = earr[i];
-		for(int j = 0; j < fl; ++j)
-		{
-		    for(int k = 0; k < 3; ++k)
-		    {
-			if(farr[j].earr[k] == earr[i])
-			{
-			    if(!ab) //assign first face
-			    {
-				efs[i].f[0] = farr[j];
-				ab = !ab;
-			    }
-			    else   //assign second face
-			    {
-				efs[i].f[1] = farr[j];
-				br = !br;
-				break;
-			    }
-			}
-		    }
-		    if(br == true)
-		    break;
-		}
-	    }
-#ifdef PrintToConsole
-			cout << "Found edge faces \n";
-#endif
-			return efs;
-	}*/
-
 
     Cube::~Cube()
 	{

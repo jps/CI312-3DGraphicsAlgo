@@ -112,41 +112,43 @@ namespace Game
 			}
 		}
 	    }
-	/*
-	   for(int i = 0; i < 3; i++)
-			{
-			if(i != ei)// can't be located on current edge - skip
-			    {
-			    if(farr[fi].earr[i].a != a[0])//consider renaming vars because this looks horrible...
-				{
-				if(farr[fi].earr[i].b != (a[0]))
-				    {
-#ifdef PrintToConsole
-				    cout << "b[0] has been set for face: "<< fi << " edge:" << ei << "\n";
-#endif
-				    b[0] = farr[fi].earr[i].a;
-				    break;
-				    }
-				}
-			    else if(farr[fi].earr[i].a != (a[1]))
-				{
-				if(farr[fi].earr[i].b != (a[1]))
-				    {
-#ifdef PrintToConsole
-				    cout << "b[0] has been set for face: "<< fi << " edge:" << ei << "\n";
-#endif
-				    b[0] = farr[fi].earr[i].b;
-				    break;
-				    }
-				}
-			    }
-			}
-	 */
 
 #ifdef PrintToConsole
 	std::cout << "Final vertex no vertex found found!!!!!!!!!!!!! \n" ;
 #endif
+	//return NULL;
     }
+
+
+    Edge Face::LocateEdge(Vertex a, Vertex b)
+	{
+#ifdef PrintToConsole
+	std::cout << "Locate Edge called \n" ;
+#endif
+	    for(int i = 0; i < 3; ++i)
+		{
+#ifdef PrintToConsole
+	std::cout << "Locate Edge iteration" << i << "of 3 \n" ;
+	std::cout << "If "<< earr[i].a.ToString() << " == " << a.ToString() << " && " <<   earr[i].b.ToString() << " == " << b.ToString() << "\n";
+	std::cout << "If "<< earr[i].a.ToString() << " == " << b.ToString() << " && " <<   earr[i].b.ToString() << " == " << a.ToString() << "\n";
+#endif
+		if(((earr[i].a == a) && (earr[i].b == b)) || ((earr[i].a == b) && (earr[i].b == a)))
+		    return earr[i];
+		}
+	    throw -1;
+	}
+
+    int Face::LocateEdgeIndex(Vertex a, Vertex b)
+	{
+	    for(int i = 0; i < 3; ++i)
+		{
+		if(((earr[i].a == a) && (earr[i].b == b)) || ((earr[i].a == b) && (earr[i].b == a)))
+		    return i;
+		}
+	    throw -1;
+	}
+
+
 
     bool Face::Contains( Edge e)
 	{

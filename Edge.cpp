@@ -35,7 +35,7 @@ namespace Game
 
 	bool Edge :: operator!=(Edge &inV)
 	{
-	inV.a != a && inV.b != b ? true : false;
+	inV.a == a && inV.b == b ? false : true;
 //	return inV.a.GetX() == a.GetX() && inV.a.GetY() == a.GetY() && inV.a.GetZ() == a.GetZ() && inV.b.GetX() == b.GetX() && inV.b.GetY() == b.GetY() && inV.b.GetZ() == b.GetZ()? false : true;
 	}
 

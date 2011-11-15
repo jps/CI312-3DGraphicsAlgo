@@ -51,7 +51,7 @@ using namespace Game;
     void main_loop_function()
     {
 	    Vertex vt = Vertex(0,0,0);
-	    Cube CubeTest = Cube(1.0f,vt);
+	    Cube CubeTest = Cube(2.0f,vt);
 
 	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;

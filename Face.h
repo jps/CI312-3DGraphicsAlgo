@@ -33,6 +33,8 @@ namespace Game
 	EdgeDirection edgeDirection;
 	Edge earr[3];
 	Vertex LocateFinalVertex(Edge e);
+	Edge LocateEdge(Vertex a, Vertex b);
+	int LocateEdgeIndex(Vertex a, Vertex b);
 	bool Contains(Edge e);
 	string ToString();
 	bool operator==(Face &inV);

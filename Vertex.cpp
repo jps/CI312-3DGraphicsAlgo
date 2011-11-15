@@ -72,7 +72,6 @@ namespace Game
 	 return ss.str();
 	}
 
- //TODO would be nice to have working
     bool Vertex::operator==(const Vertex &inV)
 	{
 	if(x == inV.x && y == inV.y && z == inV.z)
