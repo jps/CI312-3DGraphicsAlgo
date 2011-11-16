@@ -1,16 +1,24 @@
-main.d: ../main.cpp ../Vertex.h ../Edge.h ../Face.h ../Cube.h \
- ../GameObject.h ../EdgesFaces.h ../EdgeFaces.h
+main.d: ../main.cpp ../Header/Vertex.h ../Header/Edge.h \
+ ../Header/Vertex.h ../Header/Face.h ../Header/Edge.h ../Header/Cube.h \
+ ../Header/GameObject.h ../Header/Face.h ../Header/EdgesFaces.h \
+ ../Header/EdgeFaces.h
 
-../Vertex.h:
+../Header/Vertex.h:
 
-../Edge.h:
+../Header/Edge.h:
 
-../Face.h:
+../Header/Vertex.h:
 
-../Cube.h:
+../Header/Face.h:
 
-../GameObject.h:
+../Header/Edge.h:
 
-../EdgesFaces.h:
+../Header/Cube.h:
 
-../EdgeFaces.h:
+../Header/GameObject.h:
+
+../Header/Face.h:
+
+../Header/EdgesFaces.h:
+
+../Header/EdgeFaces.h:

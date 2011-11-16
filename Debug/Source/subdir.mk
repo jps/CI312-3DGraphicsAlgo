@@ -4,12 +4,30 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Source/Cube.cpp \
+../Source/Edge.cpp \
+../Source/EdgeFaces.cpp \
+../Source/EdgesFaces.cpp \
+../Source/Face.cpp \
+../Source/GameObject.cpp \
 ../Source/Vertex.cpp 
 
 OBJS += \
+./Source/Cube.o \
+./Source/Edge.o \
+./Source/EdgeFaces.o \
+./Source/EdgesFaces.o \
+./Source/Face.o \
+./Source/GameObject.o \
 ./Source/Vertex.o 
 
 CPP_DEPS += \
+./Source/Cube.d \
+./Source/Edge.d \
+./Source/EdgeFaces.d \
+./Source/EdgesFaces.d \
+./Source/Face.d \
+./Source/GameObject.d \
 ./Source/Vertex.d 
 
 

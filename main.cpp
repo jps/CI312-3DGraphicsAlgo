@@ -16,11 +16,11 @@
 #include <time.h>
 #include <iostream>
 
-#include "Vertex.h"
-#include "Edge.h"
-#include "Face.h"
+#include "Header/Vertex.h"
+#include "Header/Edge.h"
+#include "Header/Face.h"
 
-#include "Cube.h"
+#include "Header/Cube.h"
 
 using namespace std;
 using namespace Game;
