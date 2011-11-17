@@ -18,6 +18,15 @@ namespace Game
 	    Edge e;
 	};
 */
+
+    EdgesFaces::EdgesFaces(vector<Edge> earr, vector<Face> farr)
+	{
+	Edge* e = &earr[0];
+	Face* f = &farr[0];
+	EdgesFaces(e,f, earr.size(),farr.size());
+	}
+
+
     EdgesFaces::EdgesFaces(Edge earr[], Face farr[], int el, int fl)
 	{
 	    EdgeFaces efs[el];

@@ -20,8 +20,35 @@
 namespace Game
     {
 
+
+
     class GameObject
 	{
+	    public:
+	struct ControlPoints
+		{
+		    Vertex a[2];
+		    Vertex b[2];
+		    Vertex c[4];
+		    Vertex d[2];
+		};
+
+	struct EdgeEdges
+		{
+		    Edge parent; //TODO: these can be pointers
+		    Edge children[2];
+		};
+
+	struct FaceSplit
+	    {
+	    //TODO: Review could this be a collection of pointers to the new object to minimize memory consuption.
+		bool direction[3];
+		Edge nes[9];
+		Face nfs[4];
+		Vertex nvs[3];
+		Vertex ovs[3];
+	    };
+
 
 	struct FaceColor
 	    {
@@ -31,7 +58,7 @@ namespace Game
 	    };
 
 
-    public:
+
 	GameObject();
 	GameObject(const Vertex *Varr,const Edge *Earr, const Face *Farr);
 	virtual ~GameObject();
@@ -48,11 +75,14 @@ namespace Game
 
 	void Draw();
 
-	GameObject SubspaceDivision();
+	GameObject ButterflySubSpaceDivision();
 
 	void init();
 	private:
 	vector<FaceColor> faceColors;
+	Vertex ButterflyCalculateNewVertex(ControlPoints controlPoints);
+
+
 	};
 
 

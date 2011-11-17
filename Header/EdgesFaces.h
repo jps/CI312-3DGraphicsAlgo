@@ -26,6 +26,7 @@ namespace Game
 	{
     public:
 	std::vector<EdgeFaces> efsv;
+	EdgesFaces(vector<Edge> earr, vector<Face> farr);
 	EdgesFaces(Edge earr[], Face farr[], int el, int fl);
 	virtual ~EdgesFaces();
 	Face FindFace(Edge e, Face f);

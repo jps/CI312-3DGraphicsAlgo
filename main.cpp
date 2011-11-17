@@ -96,6 +96,9 @@ using namespace Game;
 			    {
 			    cout << "ButterflySubSpaceDivision Called \n";
 			    //if(!hasDevided)
+			    if(hasDevided)
+				go = go.ButterflySubSpaceDivision();
+			    else
 			    go = CubeTest.ButterflySubSpaceDivision();
 			    go.init();
 			    hasDevided = !hasDevided;

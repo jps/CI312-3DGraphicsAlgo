@@ -19,29 +19,6 @@ using namespace std;
 namespace Game
     {
 
-struct ControlPoints
-	{
-	    Vertex a[2];
-	    Vertex b[2];
-	    Vertex c[4];
-	    Vertex d[2];
-	};
-
-struct EdgeEdges
-	{
-	    Edge parent; //TODO: these can be pointers
-	    Edge children[2];
-	};
-
-struct FaceSplit
-    {
-    //TODO: Review could this be a collection of pointers to the new object to minimize memory consuption.
-	bool direction[3];
-	Edge nes[9];
-	Face nfs[4];
-	Vertex nvs[3];
-	Vertex ovs[3];
-    };
 
 
     class Cube: public Game::GameObject
