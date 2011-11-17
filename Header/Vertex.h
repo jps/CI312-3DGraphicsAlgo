@@ -33,9 +33,15 @@ namespace Game
 	//float[] Vertex::Get();
 	bool EqualTo(Vertex v);
 	string ToString();
-	bool operator==(const Vertex &inV);
-	//bool& operator==( float &inV);
-	bool operator!=(const Vertex &inV);
+	bool operator==(Vertex &inV);
+	bool operator!=(Vertex &inV);
+	Vertex operator +(Vertex &inV);
+	Vertex operator -(Vertex &inV);
+	Vertex operator *(Vertex &inV);
+	Vertex operator *(int &inV);
+	Vertex operator *(float &inV);
+	Vertex operator /(Vertex &inV);
+	Vertex operator /(int &inV);
     private:
 	float x,y,z;
 	};

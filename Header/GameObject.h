@@ -15,12 +15,22 @@
 #include <GL/glu.h>
 #include <vector>
 #include "EdgesFaces.h"
+#include <stdlib.h>
 
 namespace Game
     {
 
     class GameObject
 	{
+
+	struct FaceColor
+	    {
+	    int r;
+	    int g;
+	    int b;
+	    };
+
+
     public:
 	GameObject();
 	GameObject(const Vertex *Varr,const Edge *Earr, const Face *Farr);
@@ -29,13 +39,10 @@ namespace Game
 	bool visible;
 	Vertex transformBy;
 
-	std::vector<Vertex> varr;
-	std::vector<Edge> earr;
-	std::vector<Face> farr;
+	vector<Vertex> varr;
+	vector<Edge> earr;
+	vector<Face> farr;
 
-//	Vertex varr[];
-//	Edge earr[];
-//	Face farr[];
 
 	void Transform(Vertex v);
 
@@ -43,6 +50,9 @@ namespace Game
 
 	GameObject SubspaceDivision();
 
+	void init();
+	private:
+	vector<FaceColor> faceColors;
 	};
 
 

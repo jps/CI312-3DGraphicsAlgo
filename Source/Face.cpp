@@ -116,7 +116,7 @@ namespace Game
 #ifdef PrintToConsole
 	std::cout << "Final vertex no vertex found found!!!!!!!!!!!!! \n" ;
 #endif
-	//return NULL;
+	throw "Final Vertex not found invalid edge passed into face";
     }
 
 
@@ -158,6 +158,65 @@ namespace Game
 			return true;
 		}
 	    return false;
+	}
+
+//#define isForwardDebug
+
+    bool Face::isForward (int EdgeIndex)
+	{
+#ifdef isForwardDebug
+	std::cout << "give edge index is" << EdgeIndex << "\n";
+#endif
+	switch(EdgeIndex)
+	    {
+	    case 0:
+#ifdef isForwardDebug
+	std::cout << "edge direction is case 0 \n";
+#endif
+
+
+		switch(edgeDirection)
+		    {
+		    case FFF :
+		    case FFB :
+		    case FBB :
+		    case FBF :
+			return true;
+		    default:
+			return false;
+
+			}
+	    case 1:
+#ifdef isForwardDebug
+	std::cout << "edge direction is case 1 \n";
+#endif
+		switch(edgeDirection)
+		    {
+		    case FFF :
+		    case FFB :
+		    case BFB :
+		    case BFF :
+			return true;
+		    default:
+			return false;
+		    }
+	    case 2:
+#ifdef isForwardDebug
+	std::cout << "edge direction is case 2 \n";
+#endif
+		switch(edgeDirection)
+		    {
+		    case FFF :
+		    case BFF :
+		    case BBF :
+		    case FBF :
+			return true;
+		    default:
+			return false;
+		    }
+
+	    }
+	throw "Couldn't detect if the edge was forward or backward facing";
 	}
 
     string Face::ToString()

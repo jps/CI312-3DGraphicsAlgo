@@ -52,10 +52,11 @@ using namespace Game;
     {
 	    Vertex vt = Vertex(0,0,0);
 	    Cube CubeTest = Cube(2.0f,vt);
-
+	    GameObject go;
 	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;
 	    float Zoom = -5;
+	    bool hasDevided = false; //cheap way of chosing which object to draw TODO: change to something more suitable
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -66,7 +67,15 @@ using namespace Game;
 		    glBegin(GL_TRIANGLES);
 		    // this should be the main gl draw loop here.
 		    // ie all object within the game object manager that have visibility set to to true draw!
-		    CubeTest.Draw();
+
+		    if(!hasDevided)
+			CubeTest.Draw();
+		    else
+			{
+			std::cout << go.farr.size() << "\n";
+			go.Draw();
+			//CubeTest.Draw();
+			}
 
 
 		    glEnd();
@@ -86,7 +95,10 @@ using namespace Game;
 			if( ButtonPause == 0)
 			    {
 			    cout << "ButterflySubSpaceDivision Called \n";
-			    CubeTest.ButterflySubSpaceDivision();
+			    //if(!hasDevided)
+			    go = CubeTest.ButterflySubSpaceDivision();
+			    go.init();
+			    hasDevided = !hasDevided;
 			    ButtonPause = 30;
 			    }
 			}

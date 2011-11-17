@@ -35,6 +35,18 @@ namespace Game
 	   // delete varr;
 	}
 
+    void GameObject::init()
+	{
+	   for(unsigned int i = 0; i < varr.size(); ++i)
+		{
+		    FaceColor fc;
+		    fc.r = rand() % 255;
+		    fc.g  = rand() % 255;
+		    fc.b  = rand() % 255;
+		    faceColors.push_back(fc);
+		}
+	}
+
     GameObject GameObject::SubspaceDivision()
 	{
 	   GameObject NGO = GameObject();
@@ -55,7 +67,7 @@ namespace Game
 	{
 	    for(unsigned int i = 0; i < farr.size(); ++i)
 		{
-		    glColor3ub(i%256,i%256,i%256);
+		    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
 		    farr[i].Draw();
 		}
 	}

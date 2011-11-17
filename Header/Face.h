@@ -9,7 +9,7 @@
 #include <GL/gl.h>
 #include <string>
 
-#define PrintToConsole
+//#define PrintToConsole
 #include <iostream>
 
 #ifndef FACE_H_
@@ -35,6 +35,7 @@ namespace Game
 	Vertex LocateFinalVertex(Edge e);
 	Edge LocateEdge(Vertex a, Vertex b);
 	int LocateEdgeIndex(Vertex a, Vertex b);
+	bool isForward (int EdgeIndex);
 	bool Contains(Edge e);
 	string ToString();
 	bool operator==(Face &inV);

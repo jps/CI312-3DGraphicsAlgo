@@ -72,19 +72,45 @@ namespace Game
 	 return ss.str();
 	}
 
-    bool Vertex::operator==(const Vertex &inV)
+    bool Vertex::operator==(Vertex &inV)
 	{
 	if(x == inV.x && y == inV.y && z == inV.z)
 	    return true;
 	return false;
 	}
 
-    bool Vertex::operator!=(const Vertex &inV)
+    bool Vertex::operator!=(Vertex &inV)
 	{
 	if(x == inV.x && y == inV.y && z == inV.z)
 	    return false;
 	return true;
 	}
+
+    Vertex Vertex::operator +(Vertex &inV)
+	{
+	    return Vertex( x + inV.GetX(), y + inV.GetY(), z + inV.GetZ());
+	}
+
+    Vertex Vertex::operator -(Vertex &inV)
+	{
+	return Vertex( x - inV.GetX(), y - inV.GetY(), z - inV.GetZ());
+	}
+
+    Vertex Vertex::operator *(Vertex &inV)
+	{
+	return Vertex( x * inV.GetX(), y * inV.GetY(), z * inV.GetZ());
+	}
+
+    Vertex Vertex::operator *(float &inV)
+	{
+	return Vertex( x * inV, y * inV, z * inV);
+	}
+
+    Vertex Vertex::operator /(Vertex &inV)
+    	{
+    	return Vertex( x / inV.GetX(), y / inV.GetY(), z / inV.GetZ());
+    	}
+
 
     //efectivly deprectated by operator overload
     bool Vertex::EqualTo(Vertex v)
