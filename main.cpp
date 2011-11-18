@@ -25,8 +25,8 @@
 using namespace std;
 using namespace Game;
 
-#define window_width  640
-#define window_height 480
+#define window_width  800
+#define window_height 600
 
 
     // Keydown booleans
@@ -56,7 +56,8 @@ using namespace Game;
 	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;
 	    float Zoom = -5;
-	    bool hasDevided = false; //cheap way of chosing which object to draw TODO: change to something more suitable
+	    int drawOnly = 0;
+	    bool wireframe = false, hasDevided = false;//cheap way of chosing which object to draw TODO: change to something more suitable
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -72,8 +73,11 @@ using namespace Game;
 			CubeTest.Draw();
 		    else
 			{
-			std::cout << go.farr.size() << "\n";
+//			//std::cout << go.farr.size() << "\n";
+		    if(drawOnly == 0)
 			go.Draw();
+		    else
+			go.Draw(drawOnly);
 			//CubeTest.Draw();
 			}
 
@@ -89,6 +93,22 @@ using namespace Game;
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
 		    if( key[SDLK_i]) { Zoom += 0.5;}
 		    if( key[SDLK_o]) { Zoom -= 0.5;}
+		    if( key[SDLK_1]) { drawOnly = 1;}
+		    if( key[SDLK_2]) { drawOnly = 2;}
+		    if( key[SDLK_3]) { drawOnly = 3;}
+		    if( key[SDLK_4]) { drawOnly = 4;}
+		    if( key[SDLK_w]) {
+			wireframe =  !wireframe;
+			if( ButtonPause == 0)
+			    {
+			    if(!wireframe)
+				glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+			    else
+				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+			    ButtonPause = 30;
+			    }
+		    }
+
 		    ButtonPause = ButtonPause > 0 ? --ButtonPause : ButtonPause; //buffer to stop method being spammed cheap but it works...
 		    if( key[SDLK_a])
 			{
@@ -98,8 +118,21 @@ using namespace Game;
 			    //if(!hasDevided)
 			    if(hasDevided)
 				go = go.ButterflySubSpaceDivision();
-			    else
+				go.init();
+				go.init();
+				go.init();
+				go.init();
+				go.init();
+				go.init();
+				//hasDevided = !hasDevided;
+				ButtonPause = 30;
+			    }else{
 			    go = CubeTest.ButterflySubSpaceDivision();
+			    go.init();
+			    go.init();
+			    go.init();
+			    go.init();
+			    go.init();
 			    go.init();
 			    hasDevided = !hasDevided;
 			    ButtonPause = 30;
@@ -117,6 +150,7 @@ using namespace Game;
 	    glEnable( GL_DEPTH_TEST );
 	    gluPerspective( 45, (float)width/height, 0.1, 100 );
 	    glMatrixMode( GL_MODELVIEW );
+	    glEnable(GL_POLYGON_SMOOTH);
     }
     int main()
     {

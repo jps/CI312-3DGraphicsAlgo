@@ -55,9 +55,9 @@ namespace Game
   #endif
 
   	    GameObject NGO = GameObject();
-  	    int fl = 12;
-  	    int el = 18;
-  	    int vl = 8;
+  	    int fl = varr.size();
+  	    int el = varr.size();// edge array isn't popluated currently
+  	    //int vl = ;
 
   	    //TODO:readd this method
   	    //NGO.varr.assign(varr, varr.size());//assign current vertices to the new object as none of these will change.
@@ -200,20 +200,43 @@ namespace Game
 
   			Edge ne[9];
   			Face nf[4];
-  			ne[0] = Edge(fs.ovs[0], fs.nvs[0]); //left bottom
-  			ne[1] = Edge(fs.nvs[0], fs.ovs[1]); //left top
-  			ne[2] = Edge(fs.ovs[1], fs.nvs[1]); //right top
-  			ne[3] = Edge(fs.nvs[1], fs.ovs[2]); //right bottom
-  			ne[4] = Edge(fs.ovs[2], fs.nvs[2]); //bottom right
-  			ne[5] = Edge(fs.nvs[2], fs.ovs[0]); //bottom left
-  			ne[6] = Edge(fs.nvs[0], fs.nvs[1]); //center top
-  			ne[7] = Edge(fs.nvs[1], fs.nvs[2]); //center right
-  			ne[8] = Edge(fs.nvs[2], fs.nvs[0]); //center left
+			//Edge ne[9];
+			//Face nf[4];
+			ne[0] = Edge(fs.ovs[0], fs.nvs[0]); //left bottom
+			ne[1] = Edge(fs.nvs[0], fs.ovs[1]); //left top
+			ne[2] = Edge(fs.ovs[1], fs.nvs[1]); //right top
+			ne[3] = Edge(fs.nvs[1], fs.ovs[2]); //right bottom
+			ne[4] = Edge(fs.ovs[2], fs.nvs[2]); //bottom right
+			ne[5] = Edge(fs.nvs[2], fs.ovs[0]); //bottom left
+			ne[6] = Edge(fs.nvs[0], fs.nvs[1]); //center top
+			ne[7] = Edge(fs.nvs[1], fs.nvs[2]); //center right
+			ne[8] = Edge(fs.nvs[0], fs.nvs[2]); //center left
 
-  			nf[0] = Face(ne[0], ne[8], ne[5]);
-  			nf[1] = Face(ne[1], ne[2], ne[6]);
-  			nf[2] = Face(ne[3], ne[4], ne[7]);
-  			nf[3] = Face(ne[6], ne[7], ne[8]);
+			nf[0] = Face(ne[0], ne[8], ne[5]);
+			nf[1] = Face(ne[1], ne[2], ne[6]);
+			nf[2] = Face(ne[3], ne[4], ne[7], FFB);
+			nf[3] = Face(ne[6], ne[7], ne[8]);
+
+  			//TODO: selection block bellow can be optimized!
+
+  			if(fs.direction[0] && fs.direction[2])
+  			    nf[0] = Face(ne[0], ne[8], ne[5], FFF);
+  			else if(!fs.direction[0] && fs.direction[2])
+  			    nf[0] = Face(ne[0], ne[8], ne[5], BFF);
+  			else if(fs.direction[0] && !fs.direction[2])
+  			    nf[0] = Face(ne[0], ne[8], ne[5], FFB);
+  			else
+  			    nf[0] = Face(ne[0], ne[8], ne[5], BFB);
+
+  			if(fs.direction[0] && fs.direction[1])
+  			  nf[1] = Face(ne[1], ne[2], ne[6]);
+  			else if(!fs.direction[0] && fs.direction[1])
+  			  nf[1] = Face(ne[1], ne[2], ne[6], BFF);
+  			else if(fs.direction[0] && !fs.direction[1])
+			  nf[1] = Face(ne[1], ne[2], ne[6], FFB);
+  			else
+  			  nf[1] = Face(ne[1], ne[2], ne[6], BFB);
+
 
   			NGO.farr.push_back(nf[0]);
   			NGO.farr.push_back(nf[1]);
@@ -239,6 +262,16 @@ namespace Game
 	{
 	    for(unsigned int i = 0; i < farr.size(); ++i)
 		{
+		    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
+		    farr[i].Draw();
+		}
+	}
+
+    void GameObject::Draw(int a)
+	{
+	    for(unsigned int i = 0; i < farr.size(); ++i)
+		{
+		    if(i%a == 0)
 		    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
 		    farr[i].Draw();
 		}

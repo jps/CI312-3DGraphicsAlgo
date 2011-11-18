@@ -220,10 +220,15 @@ namespace Game
 			  if(farr[fi].earr[ei] == edgeEdges[i].parent)
 			      {
 				  //can assume is anti clockwise ??? //TODO: review
-				  fs.nes[ei*2] = edgeEdges[i].children[1];
-				  fs.nes[ei*2+1] = edgeEdges[i].children[0];
-				  fs.nvs[ei] = edgeEdges[i].children[0].b;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
+				  fs.nes[ei*2] = edgeEdges[i].children[0];
+				  fs.nes[ei*2+1] = edgeEdges[i].children[1];
+				  fs.nvs[ei] = edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
+#ifdef PrintToConsole
+			          cout << "edge Edges not found \n";
+			      }else{
+			          cout << "edge Edges is found \n";
 			      }
+#endif
 		      }
 
 		    }
@@ -245,6 +250,11 @@ namespace Game
 
 */
 
+
+#ifdef PrintToConsole
+			cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
+#endif
+
 			Edge ne[9];
 			Face nf[4];
 			ne[0] = Edge(fs.ovs[0], fs.nvs[0]); //left bottom
@@ -255,12 +265,32 @@ namespace Game
 			ne[5] = Edge(fs.nvs[2], fs.ovs[0]); //bottom left
 			ne[6] = Edge(fs.nvs[0], fs.nvs[1]); //center top
 			ne[7] = Edge(fs.nvs[1], fs.nvs[2]); //center right
-			ne[8] = Edge(fs.nvs[2], fs.nvs[0]); //center left
+			ne[8] = Edge(fs.nvs[0], fs.nvs[2]); //center left
 
 			nf[0] = Face(ne[0], ne[8], ne[5]);
 			nf[1] = Face(ne[1], ne[2], ne[6]);
-			nf[2] = Face(ne[3], ne[4], ne[7]);
+			nf[2] = Face(ne[3], ne[4], ne[7], FFB);
 			nf[3] = Face(ne[6], ne[7], ne[8]);
+/*
+  			if(fs.direction[0] && fs.direction[2])
+  			    nf[0] = Face(ne[0], ne[8], ne[5], FFF);
+  			else if(!fs.direction[0] && fs.direction[2])
+  			    nf[0] = Face(ne[0], ne[8], ne[5], BFF);
+  			else if(fs.direction[0] && !fs.direction[2])
+  			    nf[0] = Face(ne[0], ne[8], ne[5], FFB);
+  			else
+  			    nf[0] = Face(ne[0], ne[8], ne[5], BFB);
+*//*
+  			if(fs.direction[0] && fs.direction[1])
+  			  nf[1] = Face(ne[1], ne[2], ne[6]);
+  			else if(!fs.direction[0] && fs.direction[1])
+  			  nf[1] = Face(ne[1], ne[2], ne[6], BFF);
+  			else if(fs.direction[0] && !fs.direction[1])
+			  nf[1] = Face(ne[1], ne[2], ne[6], FFB);
+  			else
+  			  nf[1] = Face(ne[1], ne[2], ne[6], BFB);
+*/
+
 
 			NGO.farr.push_back(nf[0]);
 			NGO.farr.push_back(nf[1]);
@@ -272,7 +302,7 @@ namespace Game
 			 //3 new edges will still need to be created here!!! nes7 nes8 nes9 these are the edges of the internal tri!
 			//nes7 is a linking of nvs[0] and nvs[1]
 			//nes8 is a linking of nvs[1] and nvs[2]
-			//nes9 is a linking of nvs[2] and nvs[3]
+			//nes9 is a linking of nvs[2] and nvs[0]
 
 
 	    }//end face loop

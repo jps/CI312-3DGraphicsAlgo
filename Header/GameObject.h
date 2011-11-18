@@ -74,7 +74,7 @@ namespace Game
 	void Transform(Vertex v);
 
 	void Draw();
-
+	void Draw(int a);
 	GameObject ButterflySubSpaceDivision();
 
 	void init();
