@@ -7,7 +7,10 @@
 
 #include "../Header/GameObject.h"
 
+#define PrintToConsole
 
+
+//#define hardDebugVertexVals //turn this off!!!!!
 
 namespace Game
     {
@@ -55,8 +58,8 @@ namespace Game
   #endif
 
   	    GameObject NGO = GameObject();
-  	    int fl = varr.size();
-  	    int el = varr.size();// edge array isn't popluated currently
+  	    int fl = farr.size();
+  	    int el = earr.size();// edge array isn't popluated currently
   	    //int vl = ;
 
   	    //TODO:readd this method
@@ -70,9 +73,29 @@ namespace Game
   #ifdef PrintToConsole
   			cout << "About to find edge faces \n";
   #endif
-  	    EdgesFaces ef = EdgesFaces(earr, farr); //this could be stored on object creation...
+
+
+  vector<Edge> earr2;
+  for(unsigned int i = 0; i < farr.size(); i++)
+  {
+  	for(int ie = 0; ie < 3; ie++)
+  	{
+  		earr2.push_back(farr[i].earr[ie]);
+  	}
+  }
+  		EdgesFaces ef = EdgesFaces(earr2, farr);
+  	   // EdgesFaces ef = EdgesFaces(earr, farr); //this could be stored on object creation but makes sense to do it here.
   #ifdef PrintToConsole
   			cout << "Edge faces found \n";
+
+  			for(int i = 0; i < ef.efsv.size(); ++i)
+  			    {
+  			std::cout << "edge faces " << i << "\n";
+  			std::cout << "edge:" << ef.efsv[i].e.ToString() << "\n";
+  			std::cout << "face a:" << ef.efsv[i].f[0].ToString() << "\n";
+  			std::cout << "edge b:" << ef.efsv[i].f[1].ToString() << "\n";
+  			    }
+
   #endif
 
   	    for(int fi = 0, ec = 0; fi < fl; ++fi )
@@ -262,6 +285,17 @@ namespace Game
 	{
 	    for(unsigned int i = 0; i < farr.size(); ++i)
 		{
+
+
+#ifdef hardDebugVertexVals
+
+	    for(unsigned int b = 0; b < 3; ++b)
+		{
+		cout << farr[i].earr[b].a.ToString() << "\n";
+		cout << farr[i].earr[b].b.ToString() << "\n";
+		}
+#endif
+
 		    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
 		    farr[i].Draw();
 		}
@@ -269,8 +303,21 @@ namespace Game
 
     void GameObject::Draw(int a)
 	{
+
 	    for(unsigned int i = 0; i < farr.size(); ++i)
 		{
+
+
+
+#ifdef hardDebugVertexVals
+
+	    for(unsigned int b = 0; b < 3; ++b)
+		{
+		farr[i].earr[b].a.ToString();
+		farr[i].earr[b].b.ToString();
+		}
+#endif
+
 		    if(i%a == 0)
 		    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
 		    farr[i].Draw();

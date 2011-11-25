@@ -114,6 +114,7 @@ namespace Game
 	    //EdgeFaces efs[el];
 	    ControlPoints cps[el];
 	    EdgeEdges edgeEdges[el];
+
 #ifdef PrintToConsole
 			cout << "About to find edge faces \n";
 #endif
@@ -219,9 +220,10 @@ namespace Game
 		      {
 			  if(farr[fi].earr[ei] == edgeEdges[i].parent)
 			      {
+				  //
 				  //can assume is anti clockwise ??? //TODO: review
-				  fs.nes[ei*2] = edgeEdges[i].children[0];
-				  fs.nes[ei*2+1] = edgeEdges[i].children[1];
+				  fs.nes[ei*2] = edgeEdges[i].children[1];
+				  fs.nes[ei*2+1] = edgeEdges[i].children[0];
 				  fs.nvs[ei] = edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
 #ifdef PrintToConsole
 			          cout << "edge Edges not found \n";
@@ -250,7 +252,6 @@ namespace Game
 
 */
 
-
 #ifdef PrintToConsole
 			cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
 #endif
@@ -269,9 +270,14 @@ namespace Game
 
 			nf[0] = Face(ne[0], ne[8], ne[5]);
 			nf[1] = Face(ne[1], ne[2], ne[6]);
-			nf[2] = Face(ne[3], ne[4], ne[7], FFB);
+			nf[2] = Face(ne[3], ne[4], ne[7]);
 			nf[3] = Face(ne[6], ne[7], ne[8]);
-/*
+
+			NGO.varr.push_back(fs.nvs[0]);
+			NGO.varr.push_back(fs.nvs[1]);
+			NGO.varr.push_back(fs.nvs[2]);
+
+			/*
   			if(fs.direction[0] && fs.direction[2])
   			    nf[0] = Face(ne[0], ne[8], ne[5], FFF);
   			else if(!fs.direction[0] && fs.direction[2])
@@ -279,8 +285,8 @@ namespace Game
   			else if(fs.direction[0] && !fs.direction[2])
   			    nf[0] = Face(ne[0], ne[8], ne[5], FFB);
   			else
-  			    nf[0] = Face(ne[0], ne[8], ne[5], BFB);
-*//*
+  			    nf[0] = Face(ne[0], ne[8], ne[5], BFB);*/
+/*
   			if(fs.direction[0] && fs.direction[1])
   			  nf[1] = Face(ne[1], ne[2], ne[6]);
   			else if(!fs.direction[0] && fs.direction[1])
@@ -304,6 +310,10 @@ namespace Game
 			//nes8 is a linking of nvs[1] and nvs[2]
 			//nes9 is a linking of nvs[2] and nvs[0]
 
+			//NGO.varr.assign(varr, varr+vl)
+			//NGO.varr.assign(ne, ne+9)
+			for(int i = 0; i < 9; i++)
+			NGO.earr.push_back(ne[i]);//TODO: this appears to be putting random values in....
 
 	    }//end face loop
 #ifdef PrintToConsole

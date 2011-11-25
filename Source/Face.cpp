@@ -7,6 +7,8 @@
 
 #include "../Header/Face.h"
 
+#define PrintToConsole
+
 namespace Game
     {
 

@@ -22,6 +22,8 @@
 
 #include "Header/Cube.h"
 
+#define PrintToConsole
+
 using namespace std;
 using namespace Game;
 
@@ -80,8 +82,6 @@ using namespace Game;
 			go.Draw(drawOnly);
 			//CubeTest.Draw();
 			}
-
-
 		    glEnd();
 		    SDL_GL_SwapBuffers();
 		    // Check keypresses
@@ -117,6 +117,7 @@ using namespace Game;
 			    cout << "ButterflySubSpaceDivision Called \n";
 			    //if(!hasDevided)
 			    if(hasDevided)
+				{
 				go = go.ButterflySubSpaceDivision();
 				go.init();
 				go.init();
@@ -127,15 +128,25 @@ using namespace Game;
 				//hasDevided = !hasDevided;
 				ButtonPause = 30;
 			    }else{
-			    go = CubeTest.ButterflySubSpaceDivision();
-			    go.init();
-			    go.init();
-			    go.init();
-			    go.init();
-			    go.init();
-			    go.init();
-			    hasDevided = !hasDevided;
-			    ButtonPause = 30;
+				go = CubeTest.ButterflySubSpaceDivision();
+#ifdef PrintToConsole
+std::cout << "cheking the provided edge list" << "\n";
+for(int i = 0; i < go.earr.size(); i++)
+    {
+    std::cout << go.earr[i].a.ToString();
+    std::cout << go.earr[i].b.ToString();
+    }
+#endif
+
+				go.init();
+				go.init();
+				go.init();
+				go.init();
+				go.init();
+				go.init();
+				hasDevided = !hasDevided;
+				ButtonPause = 30;
+				}
 			    }
 			}
 	    }
@@ -155,7 +166,7 @@ using namespace Game;
     int main()
     {
 	    //Random Number seed
-	    srand ( time(NULL) );
+ 	    srand ( time(NULL) );
 	    // Initialize SDL with best video mode
 	    SDL_Init(SDL_INIT_VIDEO);
 	    const SDL_VideoInfo* info = SDL_GetVideoInfo();
