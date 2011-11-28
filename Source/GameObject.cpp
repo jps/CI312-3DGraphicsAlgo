@@ -68,7 +68,7 @@ namespace Game
   	    //TODO: issue here not finding the correct vals. however these are already known.
   	    //EdgeFaces efs[el];
 
-  	    ControlPoints cps[fl];
+  	    //ControlPoints cps[fl];
   	    EdgeEdges edgeEdges[el];
 
   #ifdef PrintToConsole
@@ -95,6 +95,7 @@ namespace Game
   #ifdef PrintToConsole
   	    cout << "on face: "<< fi+1 << " of " << fl << "\n";
   #endif
+  	    ControlPoints cps;
   	    FaceSplit fs;
 
   		for(int ei = 0; ei < 3; ++ei)
@@ -119,51 +120,51 @@ namespace Game
   			     c4     b2     c3
   		     */
   		    //a1 /a[0]
-  		    cps[fi].a[0] = farr[fi].earr[ei].a;
+  		    cps.a[0] = farr[fi].earr[ei].a;
 
   		    //a1 /a[1]
-  		    cps[fi].a[1] = farr[fi].earr[ei].b;
+  		    cps.a[1] = farr[fi].earr[ei].b;
 
   		    //b1 /b[0]
-  		    cps[fi].b[0] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
+  		    cps.b[0] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
 
   		    //b1
   		    Face f1 = ef.FindFace(farr[fi].earr[ei], farr[fi]);
-  		    cps[fi].b[1] = f1.LocateFinalVertex(farr[fi].earr[ei]);
+  		    cps.b[1] = f1.LocateFinalVertex(farr[fi].earr[ei]);
 
   		    //c1 - neighbors f10 - b1 and a1 are known
-  		    Edge e1 = farr[fi].LocateEdge(cps[fi].a[0],cps[fi].b[0]);
+  		    Edge e1 = farr[fi].LocateEdge(cps.a[0],cps.b[0]);
   		    Face f10 = ef.FindFace(e1,farr[fi]);
-  		    cps[fi].c[0] = f10.LocateFinalVertex(e1);
+  		    cps.c[0] = f10.LocateFinalVertex(e1);
 
   		    //c2 - neighbors f2 - b1 and a2 are known
-  		    Edge e2 = farr[fi].LocateEdge(cps[fi].a[1],cps[fi].b[0]);
+  		    Edge e2 = farr[fi].LocateEdge(cps.a[1],cps.b[0]);
   		    Face f2 = ef.FindFace(e2,farr[fi]);
-  		    cps[fi].c[1] = f2.LocateFinalVertex(e2);
+  		    cps.c[1] = f2.LocateFinalVertex(e2);
 
   		    //c3 - neighbors f2 - b2 and a2 are known
-  		    Edge e3 = f1.LocateEdge(cps[fi].a[1],cps[fi].b[1]);
+  		    Edge e3 = f1.LocateEdge(cps.a[1],cps.b[1]);
   		    Face f5 = ef.FindFace(e3,f1);
-  		    cps[fi].c[2] = f5.LocateFinalVertex(e3);
+  		    cps.c[2] = f5.LocateFinalVertex(e3);
 
   		    //c4 - neighbors f7 - b2 and a1 are known
-  		    Edge e4 = f1.LocateEdge(cps[fi].a[0], cps[fi].b[1]);
+  		    Edge e4 = f1.LocateEdge(cps.a[0], cps.b[1]);
   		    Face f7 = ef.FindFace(e4, f1);
-  		    cps[fi].c[3] = f7.LocateFinalVertex(e4);
+  		    cps.c[3] = f7.LocateFinalVertex(e4);
 
   #ifdef HardDebug
-  		    cout << "a[0] Located :"<< cps[fi].a[0].ToString() <<"\n";
-  		    cout << "a[1] Located :"<< cps[fi].a[1].ToString() <<"\n";
-  		    cout << "b[0] Located :"<< cps[fi].b[0].ToString() <<"\n";
-  		    cout << "b[1] Located :"<< cps[fi].b[1].ToString() <<"\n";
-  		    cout << "c[0] Located :"<< cps[fi].c[0].ToString() <<"\n";
-  		    cout << "c[1] Located :"<< cps[fi].c[1].ToString() <<"\n";
-  		    cout << "c[2] Located :"<< cps[fi].c[2].ToString() <<"\n";
-  		    cout << "c[3] Located :"<< cps[fi].c[3].ToString() <<"\n";
+  		    cout << "a[0] Located :"<< cps.a[0].ToString() <<"\n";
+  		    cout << "a[1] Located :"<< cps.a[1].ToString() <<"\n";
+  		    cout << "b[0] Located :"<< cps.b[0].ToString() <<"\n";
+  		    cout << "b[1] Located :"<< cps.b[1].ToString() <<"\n";
+  		    cout << "c[0] Located :"<< cps.c[0].ToString() <<"\n";
+  		    cout << "c[1] Located :"<< cps.c[1].ToString() <<"\n";
+  		    cout << "c[2] Located :"<< cps.c[2].ToString() <<"\n";
+  		    cout << "c[3] Located :"<< cps.c[3].ToString() <<"\n";
   #endif
 
   		//this list is built to help shared edges find new points.
-  		fs.nvs[ei] = ButterflyCalculateNewVertex(cps[fi]);
+  		fs.nvs[ei] = ButterflyCalculateNewVertex(cps);
   		edgeEdges[ec].parent = farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
   		edgeEdges[ec].children[0] = Edge(farr[fi].earr[ei].a, fs.nvs[ei]);
   		edgeEdges[ec].children[1] = Edge(fs.nvs[ei],farr[fi].earr[ei].b);
@@ -172,7 +173,7 @@ namespace Game
   		fs.nes[ei*2] = edgeEdges[ec].children[0];
   		fs.nes[ei*2+1] = edgeEdges[ec].children[1];
   #ifdef PrintToConsole
-  		cout << " New vertex calculated " << ButterflyCalculateNewVertex(cps[fi]).ToString() << "\n";
+  		cout << " New vertex calculated " << ButterflyCalculateNewVertex(cps).ToString() << "\n";
   #endif
   		    }else{		    //end if forward
   		    fs.direction[ei] = false;
