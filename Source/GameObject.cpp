@@ -28,7 +28,8 @@ namespace Game
 
     GameObject::GameObject()
 	{
-
+		visible = true;
+		transformBy = Vertex( 0.0f,0.0f,0.0f);
 	}
 
     GameObject::~GameObject()
@@ -58,37 +59,28 @@ namespace Game
   #endif
 
   	    GameObject NGO = GameObject();
+  	    vector<Face> faces;
   	    int fl = farr.size();
   	    int el = earr.size();// edge array isn't popluated currently
-  	    //int vl = ;
 
   	    //TODO:readd this method
   	    //NGO.varr.assign(varr, varr.size());//assign current vertices to the new object as none of these will change.
-
-
   	    //TODO: issue here not finding the correct vals. however these are already known.
   	    //EdgeFaces efs[el];
-  	    ControlPoints cps[el];
+
+  	    ControlPoints cps[fl];
   	    EdgeEdges edgeEdges[el];
+
   #ifdef PrintToConsole
   			cout << "About to find edge faces \n";
   #endif
 
-
-  vector<Edge> earr2;
-  for(unsigned int i = 0; i < farr.size(); i++)
-  {
-  	for(int ie = 0; ie < 3; ie++)
-  	{
-  		earr2.push_back(farr[i].earr[ie]);
-  	}
-  }
-  		EdgesFaces ef = EdgesFaces(earr2, farr);
-  	   // EdgesFaces ef = EdgesFaces(earr, farr); //this could be stored on object creation but makes sense to do it here.
-  #ifdef PrintToConsole
+  		//EdgesFaces ef = EdgesFaces(earr2, farr);
+  	   EdgesFaces ef = EdgesFaces(earr, farr); //this could be stored on object creation but makes sense to do it here.
+  #ifdef HardDebug
   			cout << "Edge faces found \n";
 
-  			for(int i = 0; i < ef.efsv.size(); ++i)
+  			for(unsigned int i = 0; i < ef.efsv.size(); ++i)
   			    {
   			std::cout << "edge faces " << i << "\n";
   			std::cout << "edge:" << ef.efsv[i].e.ToString() << "\n";
@@ -147,7 +139,7 @@ namespace Game
   		    //c2 - neighbors f2 - b1 and a2 are known
   		    Edge e2 = farr[fi].LocateEdge(cps[fi].a[1],cps[fi].b[0]);
   		    Face f2 = ef.FindFace(e2,farr[fi]);
-  		    cps[fi].c[2] = f2.LocateFinalVertex(e2);
+  		    cps[fi].c[1] = f2.LocateFinalVertex(e2);
 
   		    //c3 - neighbors f2 - b2 and a2 are known
   		    Edge e3 = f1.LocateEdge(cps[fi].a[1],cps[fi].b[1]);
@@ -159,7 +151,7 @@ namespace Game
   		    Face f7 = ef.FindFace(e4, f1);
   		    cps[fi].c[3] = f7.LocateFinalVertex(e4);
 
-  #ifdef PrintToConsole
+  #ifdef HardDebug
   		    cout << "a[0] Located :"<< cps[fi].a[0].ToString() <<"\n";
   		    cout << "a[1] Located :"<< cps[fi].a[1].ToString() <<"\n";
   		    cout << "b[0] Located :"<< cps[fi].b[0].ToString() <<"\n";
@@ -170,10 +162,7 @@ namespace Game
   		    cout << "c[3] Located :"<< cps[fi].c[3].ToString() <<"\n";
   #endif
 
-  		//Edge ne1 = Edge(farr[fi].earr[ei].a, nv1);
-  		//Edge ne2 = Edge(nv1,farr[fi].earr[ei].b);
-
-  		//this list is build to help shared edges find new points
+  		//this list is built to help shared edges find new points.
   		fs.nvs[ei] = ButterflyCalculateNewVertex(cps[fi]);
   		edgeEdges[ec].parent = farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
   		edgeEdges[ec].children[0] = Edge(farr[fi].earr[ei].a, fs.nvs[ei]);
@@ -182,11 +171,9 @@ namespace Game
   		//this object is built to aid the creation of the new faces
   		fs.nes[ei*2] = edgeEdges[ec].children[0];
   		fs.nes[ei*2+1] = edgeEdges[ec].children[1];
-
   #ifdef PrintToConsole
   		cout << " New vertex calculated " << ButterflyCalculateNewVertex(cps[fi]).ToString() << "\n";
   #endif
-
   		    }else{		    //end if forward
   		    fs.direction[ei] = false;
   		    fs.ovs[ei] = farr[fi].earr[ei].b;
@@ -220,11 +207,9 @@ namespace Game
   	ne6    ne5
 
   */
-
   			Edge ne[9];
   			Face nf[4];
-			//Edge ne[9];
-			//Face nf[4];
+
 			ne[0] = Edge(fs.ovs[0], fs.nvs[0]); //left bottom
 			ne[1] = Edge(fs.nvs[0], fs.ovs[1]); //left top
 			ne[2] = Edge(fs.ovs[1], fs.nvs[1]); //right top
@@ -241,7 +226,7 @@ namespace Game
 			nf[3] = Face(ne[6], ne[7], ne[8]);
 
   			//TODO: selection block bellow can be optimized!
-
+/*
   			if(fs.direction[0] && fs.direction[2])
   			    nf[0] = Face(ne[0], ne[8], ne[5], FFF);
   			else if(!fs.direction[0] && fs.direction[2])
@@ -259,26 +244,31 @@ namespace Game
 			  nf[1] = Face(ne[1], ne[2], ne[6], FFB);
   			else
   			  nf[1] = Face(ne[1], ne[2], ne[6], BFB);
+*/
 
-
+			faces.push_back(nf[0]);
+			faces.push_back(nf[1]);
+			faces.push_back(nf[2]);
+			faces.push_back(nf[3]);
+  			/*
   			NGO.farr.push_back(nf[0]);
   			NGO.farr.push_back(nf[1]);
   			NGO.farr.push_back(nf[2]);
   			NGO.farr.push_back(nf[3]);
-  			//Face nf = Face(ne1, ne9, ne6);
-  			/* use the facesplit object to create the 4 new faces and place them in the NGO object */
-
-  			 //3 new edges will still need to be created here!!! nes7 nes8 nes9 these are the edges of the internal tri!
-  			//nes7 is a linking of nvs[0] and nvs[1]
-  			//nes8 is a linking of nvs[1] and nvs[2]
-  			//nes9 is a linking of nvs[2] and nvs[3]
-
+*/
 
   	    }//end face loop
+//delete[] cps;
+//delete[] edgeEdges;
   #ifdef PrintToConsole
   		cout << "exiting method \n";
   #endif
-  	    return NGO;
+  	    GameObject go =GameObject();
+  	    go.farr = faces;
+	    //EdgesFaces.
+  	    //ef.~EdgesFaces();//EdgesFaces;
+  	    return go;
+  	    //return NGO;*
   	}
 
     void GameObject::Draw()
@@ -288,7 +278,6 @@ namespace Game
 
 
 #ifdef hardDebugVertexVals
-
 	    for(unsigned int b = 0; b < 3; ++b)
 		{
 		cout << farr[i].earr[b].a.ToString() << "\n";

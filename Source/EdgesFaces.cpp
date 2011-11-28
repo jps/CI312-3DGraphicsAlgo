@@ -9,7 +9,7 @@
 
 #include "../Header/EdgesFaces.h"
 
-#define Debug
+//#define Debug
 
 namespace Game
     {
@@ -23,7 +23,6 @@ namespace Game
 
     EdgesFaces::EdgesFaces(vector<Edge> earr, vector<Face> farr)
 	{
-
 	    std::vector<EdgeFaces> efs;
 	    //EdgeFaces efs[el];
 	    //ControlPoints cps[el];
@@ -48,7 +47,7 @@ namespace Game
 	    EdgeFaces nef;
 	    nef.e = earr[i];
 	    //efs[i].e = earr[i];
-		for(int j = 0; j < farr.size(); ++j)
+		for(unsigned int j = 0; j < farr.size(); ++j)
 		{
 		    for(int k = 0; k < 3; ++k)
 		    {
@@ -81,7 +80,9 @@ namespace Game
 			}
 		    if( j == (farr.size() - 1) && k == 2 )
 			{
+#ifdef Debug
 			    std::cout << "edge faces has failed on edge "<< i <<"/" << earr.size() <<" face "<< j+1 << "/" <<farr.size() << "edge:" << k+1 << "/3 \n";
+#endif
 			    throw 1;
 			}
 		    }
@@ -195,6 +196,9 @@ namespace Game
 
     EdgesFaces::~EdgesFaces()
 	{
+	//for(int i = 0; i < efsv.size(); i++)
+	//efsv.erase(efsv.begin(), efsv.end());
+	efsv.clear();
 	//TODO: Memleak here
 	// TODO Auto-generated destructor stub
 	}

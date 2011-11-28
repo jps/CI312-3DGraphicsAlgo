@@ -22,7 +22,7 @@
 
 #include "Header/Cube.h"
 
-#define PrintToConsole
+//#define PrintToConsole
 
 using namespace std;
 using namespace Game;
@@ -53,13 +53,13 @@ using namespace Game;
     void main_loop_function()
     {
 	    Vertex vt = Vertex(0,0,0);
-	    Cube CubeTest = Cube(2.0f,vt);
-	    GameObject go;
+	    Cube CubeTest = Cube(5.0f,vt);
+	    GameObject go, go1, go2;
 	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;
 	    float Zoom = -5;
-	    int drawOnly = 0;
-	    bool wireframe = false, hasDevided = false;//cheap way of chosing which object to draw TODO: change to something more suitable
+	    //int drawOnly = 0;
+	    bool wireframe = false, hasDevided = false, go1on = false;//cheap way of chosing which object to draw TODO: change to something more suitable
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -75,12 +75,10 @@ using namespace Game;
 			CubeTest.Draw();
 		    else
 			{
-//			//std::cout << go.farr.size() << "\n";
-		    if(drawOnly == 0)
-			go.Draw();
-		    else
-			go.Draw(drawOnly);
-			//CubeTest.Draw();
+			if(go1on)
+			    go1.Draw();
+			else
+			    go.Draw();
 			}
 		    glEnd();
 		    SDL_GL_SwapBuffers();
@@ -93,10 +91,6 @@ using namespace Game;
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
 		    if( key[SDLK_i]) { Zoom += 0.5;}
 		    if( key[SDLK_o]) { Zoom -= 0.5;}
-		    if( key[SDLK_1]) { drawOnly = 1;}
-		    if( key[SDLK_2]) { drawOnly = 2;}
-		    if( key[SDLK_3]) { drawOnly = 3;}
-		    if( key[SDLK_4]) { drawOnly = 4;}
 		    if( key[SDLK_w]) {
 			wireframe =  !wireframe;
 			if( ButtonPause == 0)
@@ -118,20 +112,16 @@ using namespace Game;
 			    //if(!hasDevided)
 			    if(hasDevided)
 				{
-				go = go.ButterflySubSpaceDivision();
-				go.init();
-				go.init();
-				go.init();
-				go.init();
-				go.init();
-				go.init();
+				go1 = go.ButterflySubSpaceDivision();
+std::cout << "Object returned"; //TODO: wtf is going on here....
+				go1on = true;
 				//hasDevided = !hasDevided;
 				ButtonPause = 30;
 			    }else{
 				go = CubeTest.ButterflySubSpaceDivision();
 #ifdef PrintToConsole
-std::cout << "cheking the provided edge list" << "\n";
-for(int i = 0; i < go.earr.size(); i++)
+std::cout << "Checking the provided edge list" << "\n";
+for(unsigned int i = 0; i < go.earr.size(); i++)
     {
     std::cout << go.earr[i].a.ToString();
     std::cout << go.earr[i].b.ToString();

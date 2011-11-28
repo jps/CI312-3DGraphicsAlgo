@@ -20,18 +20,16 @@
 namespace Game
     {
 
-
-
-    class GameObject
-	{
-	    public:
 	struct ControlPoints
 		{
 		    Vertex a[2];
 		    Vertex b[2];
 		    Vertex c[4];
-		    Vertex d[2];
+		    //Vertex d[2];
 		};
+    class GameObject
+	{
+	    public:
 
 	struct EdgeEdges
 		{

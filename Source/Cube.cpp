@@ -172,7 +172,7 @@ namespace Game
 		    //c2 - neighbors f2 - b1 and a2 are known
 		    Edge e2 = farr[fi].LocateEdge(cps[fi].a[1],cps[fi].b[0]);
 		    Face f2 = ef.FindFace(e2,farr[fi]);
-		    cps[fi].c[2] = f2.LocateFinalVertex(e2);
+		    cps[fi].c[1] = f2.LocateFinalVertex(e2);
 
 		    //c3 - neighbors f2 - b2 and a2 are known
 		    Edge e3 = f1.LocateEdge(cps[fi].a[1],cps[fi].b[1]);
@@ -213,7 +213,7 @@ namespace Game
 #endif
 
 		    }else{		    //end if forward
-		    fs.direction[ei] = false;
+		    fs.direction[ei] = false; //set backwards
 		    fs.ovs[ei] = farr[fi].earr[ei].b;
 		    //find the corresponding control point and edges here from using the edge array and edgeedges list and add it to the facesplit object.
 		    for(int i = 0; i < ec; ++i)
@@ -222,8 +222,8 @@ namespace Game
 			      {
 				  //
 				  //can assume is anti clockwise ??? //TODO: review
-				  fs.nes[ei*2] = edgeEdges[i].children[1];
-				  fs.nes[ei*2+1] = edgeEdges[i].children[0];
+				  fs.nes[ei*2] = edgeEdges[i].children[0];
+				  fs.nes[ei*2+1] = edgeEdges[i].children[1];
 				  fs.nvs[ei] = edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
 #ifdef PrintToConsole
 			          cout << "edge Edges not found \n";

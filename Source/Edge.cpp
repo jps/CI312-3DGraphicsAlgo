@@ -29,13 +29,14 @@ namespace Game
 
 	bool Edge:: operator==( Edge &inV)
 	{
-	inV.a == a && inV.b == b ? true : false;
+	    //have changed this to allow reverse edges to also be the same... this is a cheap hacky fix to a rather big issue in the subdivision routine...
+	(inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? true : false;
 //	return inV.a.GetX() == a.GetX() && inV.a.GetY() == a.GetY() && inV.a.GetZ() == a.GetZ() && inV.b.GetX() == b.GetX() && inV.b.GetY() == b.GetY() && inV.b.GetZ() == b.GetZ()? true : false;
 	}
 
 	bool Edge :: operator!=(Edge &inV)
 	{
-	inV.a == a && inV.b == b ? false : true;
+	(inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? false : true;
 //	return inV.a.GetX() == a.GetX() && inV.a.GetY() == a.GetY() && inV.a.GetZ() == a.GetZ() && inV.b.GetX() == b.GetX() && inV.b.GetY() == b.GetY() && inV.b.GetZ() == b.GetZ()? false : true;
 	}
 
