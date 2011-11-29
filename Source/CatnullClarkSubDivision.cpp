@@ -25,7 +25,7 @@ namespace Game
 		//for each face in the object calulcate the centroid
 		vector<Vertex> FaceCentroids;
 
-		for(int i = 0; i < go.farr; i++)
+		for(unsigned int i = 0; i < go.farr.size(); i++)
 		    go.farr[i].CaluclateCenteroid();
 
 		//vector<//fed>

@@ -34,9 +34,9 @@ namespace Game
 	void Draw();
 	virtual ~Cube();
 
-	Vertex varr[8];
+	/*Vertex varr[8];
 	Edge earr[18];
-	Face farr[12];
+	Face farr[12];*/
 	GameObject ButterflySubSpaceDivision();
 
     private:
