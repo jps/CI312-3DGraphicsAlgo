@@ -207,7 +207,6 @@ namespace Game
 		//this object is built to aid the creation of the new faces
 		fs.nes[ei*2] = edgeEdges[ec].children[0];
 		fs.nes[ei*2+1] = edgeEdges[ec].children[1];
-
 #ifdef PrintToConsole
 		cout << " New vertex calculated " << ButterflyCalculateNewVertex(cps[fi]).ToString() << "\n";
 #endif
@@ -296,7 +295,6 @@ namespace Game
   			else
   			  nf[1] = Face(ne[1], ne[2], ne[6], BFB);
 */
-
 
 			NGO.farr.push_back(nf[0]);
 			NGO.farr.push_back(nf[1]);

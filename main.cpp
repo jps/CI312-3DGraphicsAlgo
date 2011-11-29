@@ -57,7 +57,7 @@ using namespace Game;
 	    GameObject go, go1, go2;
 	    signed int ButtonPause = 0;
 	    float RotationX, RotationY, RotationZ;
-	    float Zoom = -5;
+	    float Zoom = -10;
 	    //int drawOnly = 0;
 	    bool wireframe = false, hasDevided = false, go1on = false;//cheap way of chosing which object to draw TODO: change to something more suitable
 	    while( events() )
@@ -76,13 +76,17 @@ using namespace Game;
 		    else
 			{
 			if(go1on)
+			{
 			    go1.Draw();
+			}
 			else
 			    go.Draw();
 			}
 		    glEnd();
 		    SDL_GL_SwapBuffers();
 		    // Check keypresses
+		    ButtonPause = ButtonPause > 0 ? --ButtonPause : ButtonPause; //buffer to stop method being spammed cheap but it works...
+
 		    if( key[SDLK_RIGHT] ){ RotationX-=0.5; }
 		    if( key[SDLK_LEFT ] ){ RotationX+=0.5; }
 		    if( key[SDLK_UP] ){ RotationY-=0.5; }
@@ -102,8 +106,8 @@ using namespace Game;
 			    ButtonPause = 30;
 			    }
 		    }
-
-		    ButtonPause = ButtonPause > 0 ? --ButtonPause : ButtonPause; //buffer to stop method being spammed cheap but it works...
+		    if( key[SDLK_0]) //reset to center
+			{RotationX = RotationY = RotationZ == 0;}
 		    if( key[SDLK_a])
 			{
 			if( ButtonPause == 0)
@@ -115,6 +119,18 @@ using namespace Game;
 				go1 = go.ButterflySubSpaceDivision();
 std::cout << "Object returned"; //TODO: wtf is going on here....
 				go1on = true;
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
+				    go1.init();
 				//hasDevided = !hasDevided;
 				ButtonPause = 30;
 			    }else{

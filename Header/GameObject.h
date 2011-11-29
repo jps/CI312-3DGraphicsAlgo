@@ -20,6 +20,9 @@
 namespace Game
     {
 
+    class GameObject
+	{
+	    public:
 	struct ControlPoints
 		{
 		    Vertex a[2];
@@ -27,9 +30,6 @@ namespace Game
 		    Vertex c[4];
 		    //Vertex d[2];
 		};
-    class GameObject
-	{
-	    public:
 
 	struct EdgeEdges
 		{
