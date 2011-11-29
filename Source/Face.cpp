@@ -121,6 +121,16 @@ namespace Game
 	throw "Final Vertex not found invalid edge passed into face";
     }
 
+    Vertex Face::CaluclateCenteroid()
+	{
+	//TODO: review Alternately could find midpoint of all edges and then find the midpoint of all edges then divide by 3
+	if( earr[1].a != earr[0].a && earr[1].a != earr[0].b)
+	    return Vertex(earr[0].a.GetX() + earr[0].b.GetX() + earr[1].a.GetX() / 3, earr[0].a.GetY() + earr[0].b.GetY() + earr[1].a.GetY() / 3,earr[0].a.GetZ() + earr[0].b.GetZ() + earr[1].a.GetZ() /3 );
+	if( earr[1].b != earr[0].a && earr[1].b != earr[0].b)
+	    return Vertex(earr[0].a.GetX() + earr[0].b.GetX() + earr[1].b.GetX() / 3, earr[0].a.GetY() + earr[0].b.GetY() + earr[1].b.GetY() / 3,earr[0].a.GetZ() + earr[0].b.GetZ() + earr[1].b.GetZ() /3 );
+	std::cout << "Calculating the centeroid has failed..... edges provided" << earr[0].ToString() << earr[0].ToString() << earr[0].ToString() << "\n";
+	throw "calculating centroid has failed";
+	}
 
     Edge Face::LocateEdge(Vertex a, Vertex b)
 	{

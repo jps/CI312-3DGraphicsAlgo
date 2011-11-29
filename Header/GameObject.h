@@ -75,6 +75,7 @@ namespace Game
 	void Draw(int a);
 	GameObject ButterflySubSpaceDivision();
 
+
 	void init();
 	private:
 	vector<FaceColor> faceColors;

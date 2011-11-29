@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Source/CatnullClarkSubDivision.cpp \
 ../Source/Cube.cpp \
 ../Source/Edge.cpp \
 ../Source/EdgeFaces.cpp \
@@ -13,6 +14,7 @@ CPP_SRCS += \
 ../Source/Vertex.cpp 
 
 OBJS += \
+./Source/CatnullClarkSubDivision.o \
 ./Source/Cube.o \
 ./Source/Edge.o \
 ./Source/EdgeFaces.o \
@@ -22,6 +24,7 @@ OBJS += \
 ./Source/Vertex.o 
 
 CPP_DEPS += \
+./Source/CatnullClarkSubDivision.d \
 ./Source/Cube.d \
 ./Source/Edge.d \
 ./Source/EdgeFaces.d \

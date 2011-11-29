@@ -32,8 +32,9 @@ namespace Game
 	void Draw();
 	EdgeDirection edgeDirection;
 	Edge earr[3];
-	Vertex LocateFinalVertex(Edge e);
 	Edge LocateEdge(Vertex a, Vertex b);
+	Vertex LocateFinalVertex(Edge e);
+	Vertex CaluclateCenteroid();
 	int LocateEdgeIndex(Vertex a, Vertex b);
 	bool isForward (int EdgeIndex);
 	bool Contains(Edge e);
