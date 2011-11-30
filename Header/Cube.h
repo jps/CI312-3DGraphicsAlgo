@@ -37,7 +37,7 @@ namespace Game
 	/*Vertex varr[8];
 	Edge earr[18];
 	Face farr[12];*/
-	GameObject ButterflySubSpaceDivision();
+	GameObject ButterflySubSpaceDivisionold();
 
     private:
 	void init(float size, Vertex v);

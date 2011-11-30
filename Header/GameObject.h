@@ -79,8 +79,6 @@ namespace Game
 	void init();
 	private:
 	vector<FaceColor> faceColors;
-	Vertex ButterflyCalculateNewVertex(ControlPoints controlPoints);
-
 
 	};
 

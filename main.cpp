@@ -21,7 +21,7 @@
 #include "Header/Face.h"
 
 #include "Header/Cube.h"
-
+#include "Header/ButterflySubspaceDivision.h"
 //#define PrintToConsole
 
 using namespace std;
@@ -105,6 +105,10 @@ using namespace Game;
 				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 			    ButtonPause = 30;
 			    }
+			if( key[SDLK_q]){
+			glEnable(GL_POINT_SPRITE);
+			glTexEnvf(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
+			}
 		    }
 		    if( key[SDLK_0]) //reset to center
 			{RotationX = RotationY = RotationZ == 0;}
@@ -116,7 +120,8 @@ using namespace Game;
 			    //if(!hasDevided)
 			    if(hasDevided)
 				{
-				go1 = go.ButterflySubSpaceDivision();
+			    go1 = ButterflySubspaceDivision().Tessellate(go);
+				//go1 = go.ButterflySubSpaceDivision();
 std::cout << "Object returned"; //TODO: wtf is going on here....
 				go1on = true;
 				    go1.init();
@@ -134,7 +139,8 @@ std::cout << "Object returned"; //TODO: wtf is going on here....
 				//hasDevided = !hasDevided;
 				ButtonPause = 30;
 			    }else{
-				go = CubeTest.ButterflySubSpaceDivision();
+				go = ButterflySubspaceDivision().Tessellate(CubeTest);
+
 #ifdef PrintToConsole
 std::cout << "Checking the provided edge list" << "\n";
 for(unsigned int i = 0; i < go.earr.size(); i++)

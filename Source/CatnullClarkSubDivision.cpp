@@ -28,6 +28,9 @@ namespace Game
 		for(unsigned int i = 0; i < go.farr.size(); i++)
 		    go.farr[i].CaluclateCenteroid();
 
+
+
+
 		//vector<//fed>
 
 

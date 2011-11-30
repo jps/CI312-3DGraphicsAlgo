@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Source/ButterflySubspaceDivision.cpp \
 ../Source/CatnullClarkSubDivision.cpp \
 ../Source/Cube.cpp \
 ../Source/Edge.cpp \
@@ -14,6 +15,7 @@ CPP_SRCS += \
 ../Source/Vertex.cpp 
 
 OBJS += \
+./Source/ButterflySubspaceDivision.o \
 ./Source/CatnullClarkSubDivision.o \
 ./Source/Cube.o \
 ./Source/Edge.o \
@@ -24,6 +26,7 @@ OBJS += \
 ./Source/Vertex.o 
 
 CPP_DEPS += \
+./Source/ButterflySubspaceDivision.d \
 ./Source/CatnullClarkSubDivision.d \
 ./Source/Cube.d \
 ./Source/Edge.d \

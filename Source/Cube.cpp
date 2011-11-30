@@ -149,7 +149,7 @@ namespace Game
 
 
 
-    GameObject Cube::ButterflySubSpaceDivision()
+    GameObject Cube::ButterflySubSpaceDivisionold()
 	{
 #ifdef PrintToConsole
 			    cout << "entered subspace division method \n";

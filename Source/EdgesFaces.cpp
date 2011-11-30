@@ -196,8 +196,6 @@ namespace Game
 
     EdgesFaces::~EdgesFaces()
 	{
-	//for(int i = 0; i < efsv.size(); i++)
-	//efsv.erase(efsv.begin(), efsv.end());
 	efsv.clear();
 	//TODO: Memleak here
 	// TODO Auto-generated destructor stub
