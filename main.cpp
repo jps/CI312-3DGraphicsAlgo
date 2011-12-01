@@ -22,6 +22,7 @@
 
 #include "Header/Cube.h"
 #include "Header/ButterflySubspaceDivision.h"
+#include "Header/CatnullClarkSubDivision.h"
 //#define PrintToConsole
 
 using namespace std;
@@ -55,17 +56,21 @@ using namespace Game;
 	    Vertex vt = Vertex(0,0,0);
 	    Cube CubeTest = Cube(5.0f,vt);
 	    GameObject go, go1, go2;
-	    signed int ButtonPause = 0;
-	    float RotationX, RotationY, RotationZ;
-	    float Zoom = -10;
+	    signed int ButtonPause = 0, wireframe = 0;
+	    float RotationX, RotationY, RotationZ, Zoom, Size;
+	    RotationX = RotationY = RotationZ = 0;
+	    Zoom = -10;
+	    Size = 10;
 	    //int drawOnly = 0;
-	    bool wireframe = false, hasDevided = false, go1on = false;//cheap way of chosing which object to draw TODO: change to something more suitable
+	    bool hasDevided = false, go1on = false;//cheap way of chosing which object to draw TODO: change to something more suitable
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		    glLoadIdentity();
 		    glTranslatef(0,0, Zoom);
 		    glRotatef(RotationX,RotationY, 45,45);
+		    glPointSize(Size);
+
 
 		    glBegin(GL_TRIANGLES);
 		    // this should be the main gl draw loop here.
@@ -96,13 +101,23 @@ using namespace Game;
 		    if( key[SDLK_i]) { Zoom += 0.5;}
 		    if( key[SDLK_o]) { Zoom -= 0.5;}
 		    if( key[SDLK_w]) {
-			wireframe =  !wireframe;
 			if( ButtonPause == 0)
 			    {
-			    if(!wireframe)
-				glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-			    else
-				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+			    switch(wireframe)
+				{
+				case 0:
+				    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+				    ++wireframe;
+				    break;
+				case 1:
+				    glPolygonMode( GL_FRONT_AND_BACK, GL_POINT );
+				    ++wireframe = 2
+				    break;
+				default:
+				    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+				    wireframe = 0;
+				    break;
+				}
 			    ButtonPause = 30;
 			    }
 			if( key[SDLK_q]){
@@ -110,37 +125,39 @@ using namespace Game;
 			glTexEnvf(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
 			}
 		    }
+		    if( key[SDLK_c])
+			{
+			if(ButtonPause == 0)
+			    {
+#ifdef PrintToConsole
+			    cout << "Catnell clark called";
+#endif
+			    ButtonPause = 30;
+			    CatnullClarkSubDivision().SubdivideGameObject(CubeTest);
+			    go.init();
+			    hasDevided = !hasDevided;
+			    }
+			}
 		    if( key[SDLK_0]) //reset to center
 			{RotationX = RotationY = RotationZ == 0;}
 		    if( key[SDLK_a])
 			{
 			if( ButtonPause == 0)
 			    {
+#ifdef PrintToConsole
 			    cout << "ButterflySubSpaceDivision Called \n";
-			    //if(!hasDevided)
+#endif
 			    if(hasDevided)
 				{
 			    go1 = ButterflySubspaceDivision().Tessellate(go);
 				//go1 = go.ButterflySubSpaceDivision();
 std::cout << "Object returned"; //TODO: wtf is going on here....
 				go1on = true;
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
-				    go1.init();
+				go1.init();
 				//hasDevided = !hasDevided;
 				ButtonPause = 30;
 			    }else{
 				go = ButterflySubspaceDivision().Tessellate(CubeTest);
-
 #ifdef PrintToConsole
 std::cout << "Checking the provided edge list" << "\n";
 for(unsigned int i = 0; i < go.earr.size(); i++)
@@ -149,12 +166,6 @@ for(unsigned int i = 0; i < go.earr.size(); i++)
     std::cout << go.earr[i].b.ToString();
     }
 #endif
-
-				go.init();
-				go.init();
-				go.init();
-				go.init();
-				go.init();
 				go.init();
 				hasDevided = !hasDevided;
 				ButtonPause = 30;
