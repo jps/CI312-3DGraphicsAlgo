@@ -196,7 +196,7 @@ namespace Game
 
     EdgesFaces::~EdgesFaces()
 	{
-	efsv.clear();
+	//efsv.clear();
 	//TODO: Memleak here
 	// TODO Auto-generated destructor stub
 	}

@@ -96,8 +96,9 @@ using namespace Game;
 		    if( key[SDLK_LEFT ] ){ RotationX+=0.5; }
 		    if( key[SDLK_UP] ){ RotationY-=0.5; }
 		    if( key[SDLK_DOWN ] ){ RotationY+=0.5; }
-		    if( key[SDLK_l] ) { RotationZ -=0.5; }
+		    if( key[SDLK_l] ) { glRotatef(45,4,0,0); }
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
+
 		    if( key[SDLK_i]) { Zoom += 0.5;}
 		    if( key[SDLK_o]) { Zoom -= 0.5;}
 		    if( key[SDLK_w]) {
@@ -111,7 +112,7 @@ using namespace Game;
 				    break;
 				case 1:
 				    glPolygonMode( GL_FRONT_AND_BACK, GL_POINT );
-				    ++wireframe = 2
+				    ++wireframe = 2;
 				    break;
 				default:
 				    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
@@ -154,6 +155,7 @@ using namespace Game;
 std::cout << "Object returned"; //TODO: wtf is going on here....
 				go1on = true;
 				go1.init();
+				go1.init();
 				//hasDevided = !hasDevided;
 				ButtonPause = 30;
 			    }else{
@@ -166,6 +168,7 @@ for(unsigned int i = 0; i < go.earr.size(); i++)
     std::cout << go.earr[i].b.ToString();
     }
 #endif
+				go.init();
 				go.init();
 				hasDevided = !hasDevided;
 				ButtonPause = 30;

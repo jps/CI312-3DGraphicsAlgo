@@ -56,7 +56,7 @@ GameObject ButterflySubspaceDivision::Tessellate(const GameObject& got)
 	    GameObject NGO = GameObject();
 	    int fl = go.farr.size();
 	    int el = go.earr.size();
-	    int vl = go.varr.size();
+	    //int vl = go.varr.size();
 	    NGO.varr = go.varr;//assign current vertices to the new object as none of these will change.
 
 
@@ -73,7 +73,7 @@ GameObject ButterflySubspaceDivision::Tessellate(const GameObject& got)
 			cout << "Edge faces found \n";
 #endif
 
-	    for(int fi = 0, ec = 0; fi < fl; ++fi )
+	    for(int fi = 0, ec = 0; fi < fl && fi < 36; ++fi )
 	    {
 
 
