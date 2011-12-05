@@ -22,15 +22,45 @@ using namespace std;
 namespace Game
     {
 
+    struct EdgeFace
+	{
+	public:
+    	EdgeFace();
+		EdgeFace(Edge E, Face Faces[2]);
+		Edge e;
+		Face f[2];
+	};
+
+	struct EdgeFaceCentroid : public EdgeFace
+	{
+		EdgeFaceCentroid();
+		EdgeFaceCentroid(Edge E, FaceCentroid Faces[2]);
+		Vertex centroid[2];
+		FaceCentroid f[2];
+	};
+
+
     class EdgesFaces
 	{
     public:
-	std::vector<EdgeFaces> efsv;
-	EdgesFaces(vector<Edge> earr, vector<Face> farr);
-	EdgesFaces(Edge earr[], Face farr[], int el, int fl);
-	virtual ~EdgesFaces();
-	Face FindFace(Edge e, Face f);
+
+		vector<EdgeFaces> efsv;
+		EdgesFaces();
+		EdgesFaces(vector<Edge> earr, vector<Face> farr);
+		virtual ~EdgesFaces();
+		Face FindFace(Edge e, Face f);
 	};
+
+    class EdgesFacesCentroid:EdgesFaces
+    {
+    public:
+    	vector<EdgeFaceCentroid> efsv;
+    	EdgesFacesCentroid();
+    	EdgesFacesCentroid(vector<Edge> earr, vector<FaceCentroid> farr);
+		virtual ~EdgesFacesCentroid();
+		//Face FindFace(Edge e, Face f);
+    };
+
 
     }
 

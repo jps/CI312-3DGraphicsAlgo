@@ -254,5 +254,18 @@ namespace Game
     // TODO Auto-generated destructor stub
     }
 
+    FaceCentroid::FaceCentroid(Face f)
+    {
+    	earr[0] = f.earr[0];
+    	earr[1] = f.earr[1];
+    	earr[2] = f.earr[2];
+    	edgeDirection = f.edgeDirection;
+    	centroid = f.CaluclateCenteroid();
+    }
+
+    FaceCentroid::FaceCentroid()
+    {
+    }
+
 
 }

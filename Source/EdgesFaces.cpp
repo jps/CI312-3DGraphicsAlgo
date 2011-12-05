@@ -14,12 +14,41 @@
 namespace Game
     {
 
-/*struct EdgeFaces
+	EdgeFace::EdgeFace()
 	{
-	    Face f[2];
-	    Edge e;
-	};
-*/
+
+	}
+
+	EdgeFace::EdgeFace(Edge E, Face Faces[2])
+	{
+		e = E;
+		f[0] = Faces[0];
+		f[1] = Faces[1];
+	}
+
+	EdgeFaceCentroid::EdgeFaceCentroid()
+	{
+
+	}
+
+	EdgeFaceCentroid::EdgeFaceCentroid(Edge E, FaceCentroid Faces[2])
+	{
+		//EdgeFace(E, Faces);
+		e = E;
+		f[0] = Faces[0];
+		f[1] = Faces[1];
+	}
+
+/*	EdgesFaces::EdgesFaces(vector<Edge> earr, vector<Face> farr)
+	{
+		EdgesFaces(earr,farr, false);
+	}*/
+
+	EdgesFaces::EdgesFaces()
+	{
+
+
+	}
 
     EdgesFaces::EdgesFaces(vector<Edge> earr, vector<Face> farr)
 	{
@@ -95,64 +124,6 @@ namespace Game
 	    //efsv.assign(efs, efs+el);
 	}
 
-
-    EdgesFaces::EdgesFaces(Edge earr[], Face farr[], int el, int fl)
-	{
-	    EdgeFaces efs[el];
-	    //ControlPoints cps[el];
-
-#ifdef Debug
-			cout << "About to find edge faces \n";
-#endif
-
-	    //TODO: refactor and consider optimizing
-	    //find edge faces
-	    //for each face edge //find face that contains edge, then find other edge
-
-	   // EdgeFaces efs[el];
-
-	    for(int i = 0; i < el; ++i)
-	    {
-	    bool ab = false, br = false;
-#ifdef Debug
-	std::cout << "Edge face construction iteration of edge:" << i << "\n";
-	std::cout << "ab == " << ab << "br == " << br << "\n";
-#endif
-	    efs[i].e = earr[i];
-		for(int j = 0; j < fl; ++j)
-		{
-		    for(int k = 0; k < 3; ++k)
-		    {
-			if(farr[j].earr[k] == earr[i])
-			{
-			    if(!ab) //assign first face
-			    {
-				efs[i].f[0] = farr[j];
-				ab = true;
-#ifdef Debug
-	std::cout << "Face 1 assigned for:" << i << "\n";
-	std::cout << "ab == " << ab << "\n";
-#endif
-			    }
-			    else   //assign second face
-			    {
-				efs[i].f[1] = farr[j];
-				br = true;
-#ifdef Debug
-	std::cout << "Face 2 assigned for:" << i << "\n";
-	std::cout << "ab == " << ab << "\n";
-#endif
-				break;
-			    }
-			}
-		    }
-		    if(br == true)
-		    break;
-		}
-	    }
-	    efsv.assign(efs, efs+el);
-	}
-
     Face EdgesFaces::FindFace(Edge e, Face f)
 	{
 
@@ -194,11 +165,100 @@ namespace Game
 	    throw "No Match!? ";
 	}
 
+
+
+
     EdgesFaces::~EdgesFaces()
 	{
-	//efsv.clear();
-	//TODO: Memleak here
-	// TODO Auto-generated destructor stub
+    	//efsv.clear();
+    	//TODO: Memleak here
+    	// TODO Auto-generated destructor stub
 	}
+
+    EdgesFacesCentroid::EdgesFacesCentroid()
+    {
+
+    }
+
+    EdgesFacesCentroid::~EdgesFacesCentroid()
+    {
+
+
+    }
+
+    EdgesFacesCentroid::EdgesFacesCentroid(vector<Edge> earr, vector<FaceCentroid> farr)
+   	{
+   	    std::vector<EdgeFaceCentroid> efs;
+   	    //EdgeFaces efs[el];
+   	    //ControlPoints cps[el];
+   #ifdef Debug
+   			cout << "About to find edge faces \n";
+   			cout << "earr size" << earr.size() << " farr size " << farr.size() << "\n";
+   #endif
+   			//TODO: this is all still very hacky memory is being copied all over the place this will need major cleaning up to get
+   			//to a nice optimized state.
+   	    //TODO: refactor and consider optimizing
+   	    //find edge faces
+   	    //for each face edge //find face that contains edge, then find other edge
+   	   // EdgeFaces efs[el];
+
+   	    for(unsigned int i = 0; i < earr.size(); ++i)
+   	    {
+   	    bool ab = false, br = false;
+   #ifdef Debug
+   	std::cout << "Edge face construction iteration of edge:" << i << "\n";
+   	std::cout << "ab == " << ab << "br == " << br << "\n";
+   #endif
+		EdgeFaceCentroid nef;
+   	    nef.e = earr[i];
+   	    //efs[i].e = earr[i];
+   		for(unsigned int j = 0; j < farr.size(); ++j)
+   		{
+   		    for(int k = 0; k < 3; ++k)
+   		    {
+   			if(farr[j].earr[k] == earr[i])
+   			{
+   #ifdef Debug
+   	std::cout << "Edge match! " << farr[j].earr[k].ToString() << "==" << earr[i].ToString();
+   #endif
+   			    if(!ab) //assign first face
+   			    {
+   				//efs[i].f[0] = farr[j];
+   				nef.f[0] = farr[j];
+   				ab = true;
+   #ifdef Debug
+   	std::cout << "Face 1 assigned edge "<< i <<"/" << earr.size() <<" face "<< j << "/" <<farr.size() << "edge:" << k << "/3 \n";
+   	std::cout << "ab == " << ab << "\n";
+   #endif
+   			    }
+   			    else   //assign second face
+   			    {
+   				//efs[i].f[1] = farr[j];
+   				nef.f[1] = farr[j];
+   				br = true;
+   #ifdef Debug
+   	std::cout << "Face 2 assigned edge "<< i <<"/" << earr.size() <<" face "<< j << "/" <<farr.size() << "edge:" << k << "/3 \n";
+   	std::cout << "ab == " << ab << "\n";
+   #endif
+   				break;
+   			    }
+   			}
+   		    if( j == (farr.size() - 1) && k == 2 )
+   			{
+   #ifdef Debug
+   			    std::cout << "edge faces has failed on edge "<< i <<"/" << earr.size() <<" face "<< j+1 << "/" <<farr.size() << "edge:" << k+1 << "/3 \n";
+   #endif
+   			    throw 1;
+   			}
+   		    }
+   		    if(br == true)
+   		    break;
+   		}
+   		efsv.push_back(nef); //TODO: optimize put directly into efsv?
+   	    }
+   	    //efsv = efs;
+   	    //efsv.assign(efs, efs+el);
+   	}
+
 
     }
