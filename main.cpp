@@ -22,7 +22,7 @@
 
 #include "Header/Cube.h"
 #include "Header/ButterflySubspaceDivision.h"
-#include "Header/CatnullClarkSubDivision.h"
+#include "Header/CatmullClarkSubDivision.h"
 //#define PrintToConsole
 
 using namespace std;
@@ -134,7 +134,7 @@ using namespace Game;
 			    cout << "Catnell clark called";
 #endif
 			    ButtonPause = 30;
-			    CatnullClarkSubDivision().SubdivideGameObject(CubeTest);
+			    CatmullClarkSubDivision().SubdivideGameObject(CubeTest);
 			    go.init();
 			    hasDevided = !hasDevided;
 			    }
