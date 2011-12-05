@@ -42,6 +42,9 @@ namespace Game
 	Vertex operator *(float &inV);
 	Vertex operator /(Vertex &inV);
 	Vertex operator /(int &inV);
+	//Vertex Divide(Vertex &inV);
+	Vertex Divide(int &inV);
+	static Vertex Divide(Vertex a , int b);
     private:
 	float x,y,z;
 	};

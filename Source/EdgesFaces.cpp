@@ -183,7 +183,6 @@ namespace Game
     EdgesFacesCentroid::~EdgesFacesCentroid()
     {
 
-
     }
 
     EdgesFacesCentroid::EdgesFacesCentroid(vector<Edge> earr, vector<FaceCentroid> farr)
@@ -236,6 +235,15 @@ namespace Game
    				//efs[i].f[1] = farr[j];
    				nef.f[1] = farr[j];
    				br = true;
+
+   				//set the midpoint
+
+   				//nef.edgeControlPoint = (nef.f[1].centroid + nef.f[2].centroid + nef.e.a + nef.e.b) / 4;
+
+   				//TODO: Replace
+   				//nef.edgeControlPoint = Vertex::Divide(nef.f[1].centroid + nef.f[2].centroid + nef.e.a + nef.e.b, 4);
+   				//TODO: Remove horrible horrible hack as operator overloading was not working from this method for some uknow reason...
+
    #ifdef Debug
    	std::cout << "Face 2 assigned edge "<< i <<"/" << earr.size() <<" face "<< j << "/" <<farr.size() << "edge:" << k << "/3 \n";
    	std::cout << "ab == " << ab << "\n";
@@ -259,6 +267,48 @@ namespace Game
    	    //efsv = efs;
    	    //efsv.assign(efs, efs+el);
    	}
+
+
+    Vertex EdgesFacesCentroid::FindFaceCentroid(Edge e, Face f)
+	{
+
+#ifdef Debug
+	    std::cout << "Find Face called" << e.ToString() << f.ToString() << "\n";
+	    for(unsigned int i = 0; i < efsv.size(); ++i)
+		{
+		std::cout << "Find Face Collection Check element :" << i << "Edge: " << efsv[i].e.ToString() << "\n Face a: " << efsv[i].f[0].ToString() << "\n Face b: " << efsv[i].f[0].ToString();
+		}
+		//std::cout << "FindFace checking iterations current : "<< i << " of " << efsv.size() << "\n";
+#endif
+	    for(unsigned int i = 0; i < efsv.size(); ++i) //TODO: issue here
+		{
+		    if(efsv[i].e == e)
+			{
+#ifdef Debug
+	std::cout << "edge match inputed edge: "<< e.ToString() << "matches edge" << efsv[i].e.ToString() << "\n";
+#endif
+			if(efsv[i].f[0] != f)
+			    {
+#ifdef Debug
+	std::cout << "find face found:" << efsv[i].f[0].ToString() << "\n";
+#endif
+			    return efsv[i].f[0].centroid;
+			    }
+			if(efsv[i].f[1] != f)
+			    {
+#ifdef Debug
+	std::cout << "find face found:" << efsv[i].f[1].ToString() << "\n";
+#endif
+			    return efsv[i].f[1].centroid;
+			    }
+			else
+			    {
+			    throw "Edge match but no face match?";
+			    }
+			}
+		}
+	    throw "No Match!? ";
+	}
 
 
     }

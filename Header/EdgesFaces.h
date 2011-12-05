@@ -36,6 +36,7 @@ namespace Game
 		EdgeFaceCentroid();
 		EdgeFaceCentroid(Edge E, FaceCentroid Faces[2]);
 		Vertex centroid[2];
+		Vertex edgeControlPoint;
 		FaceCentroid f[2];
 	};
 
@@ -56,6 +57,7 @@ namespace Game
     public:
     	vector<EdgeFaceCentroid> efsv;
     	EdgesFacesCentroid();
+    	Vertex FindFaceCentroid(Edge e, Face f);
     	EdgesFacesCentroid(vector<Edge> earr, vector<FaceCentroid> farr);
 		virtual ~EdgesFacesCentroid();
 		//Face FindFace(Edge e, Face f);

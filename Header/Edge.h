@@ -21,14 +21,14 @@ namespace Game
 	{
     public:
 	Edge();
-	Edge(Vertex A, Vertex B);
+	Edge(Vertex* A, Vertex* B);
 	Vertex MidPoint();
 
 	virtual ~Edge();
 
 	//TODO: should this be broken to getterSetter for protection...
-	Vertex a;
-	Vertex b;
+	Vertex* a;
+	Vertex* b;
 
 
 	string ToString();

@@ -13,19 +13,19 @@
 #include "Face.h"
 
 namespace Game
-    {
+{
 
-class EdgeFaces
+	class EdgeFaces
 	{
 	public:
-	EdgeFaces();
-	EdgeFaces(Edge E, Face Faces[2]);
-	Edge e;
-	Face f[2];
-	virtual ~EdgeFaces();
+		EdgeFaces();
+		EdgeFaces(Edge E, Face Faces[2]);
+		Edge e;
+		Face f[2];
+		virtual ~EdgeFaces();
 	};
 
 
-    }
+}
 
 #endif /* EDGEFACES_H_ */

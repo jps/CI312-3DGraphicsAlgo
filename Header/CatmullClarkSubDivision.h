@@ -19,20 +19,20 @@
 
 namespace Game
     {
+/*
+		struct ControlPoint
+		{
+			Vertex NewEdgePoint[3]; //Might want to set this to 4 to allow for f4
+		};
+*/
+		class CatmullClarkSubDivision
+		{
+		public:
+		GameObject SubdivideGameObject(GameObject go);
+		//CatmullClarkSubDivision();//not needed at this is going to be a static method
+		//virtual ~CatnullClarkSubDivision();
+		};
 
-	struct ControlPoint
-	{
-		Vertex NewEdgePoint[3]; //Might want to set this to 4 to allow for f4
-	};
-
-    class CatmullClarkSubDivision
-	{
-    public:
-	GameObject SubdivideGameObject(GameObject go);
-	//CatmullClarkSubDivision();//not needed at this is going to be a static method
-	//virtual ~CatnullClarkSubDivision();
-	};
-
-    }
+	}
 
 #endif /* CATNULLCLARKSUBDIVISION_H_ */

@@ -54,7 +54,7 @@ using namespace Game;
     void main_loop_function()
     {
 	    Vertex vt = Vertex(0,0,0);
-	    Cube CubeTest = Cube(5.0f,vt);
+	    Cube CubeTest = Cube(1.0f,vt);
 	    GameObject go, go1, go2;
 	    signed int ButtonPause = 0, wireframe = 0;
 	    float RotationX, RotationY, RotationZ, Zoom, Size;
@@ -164,8 +164,8 @@ std::cout << "Object returned"; //TODO: wtf is going on here....
 std::cout << "Checking the provided edge list" << "\n";
 for(unsigned int i = 0; i < go.earr.size(); i++)
     {
-    std::cout << go.earr[i].a.ToString();
-    std::cout << go.earr[i].b.ToString();
+    std::cout << go.earr[i].a->ToString();
+    std::cout << go.earr[i].b->ToString();
     }
 #endif
 				go.init();

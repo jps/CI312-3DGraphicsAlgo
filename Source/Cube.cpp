@@ -45,24 +45,24 @@ namespace Game
 	    varr.push_back(Vertex( size,-size, size)); //Right Face Bottom Right
 	    varr.push_back(Vertex(-size,-size, size)); //Back Face Bottom Right (if facing)
 
-	    earr.push_back(Edge(varr[0], varr[1])); //Front Face Left
-	    earr.push_back(Edge(varr[1], varr[2])); //Front Face Top
-	    earr.push_back(Edge(varr[2], varr[0])); //Front Face Diagonal
-	    earr.push_back(Edge(varr[2], varr[3])); //Front Face Right
-	    earr.push_back(Edge(varr[3], varr[0])); //Front Face Bottom
-	    earr.push_back(Edge(varr[1], varr[4])); //Top Face Left
-	    earr.push_back(Edge(varr[4], varr[5])); //Top Face Top
-	    earr.push_back(Edge(varr[5], varr[1])); //Top Face Diagonal
-	    earr.push_back(Edge(varr[5], varr[2])); //Top Face Right
-	    earr.push_back(Edge(varr[5], varr[3])); //Right Face Diagonal
-	    earr.push_back( Edge(varr[5], varr[6])); //Right Face Right
-	    earr.push_back( Edge(varr[6], varr[3])); //Right Face Bottom
-	    earr.push_back( Edge(varr[4], varr[6])); //Rear Diagonal
-	    earr.push_back( Edge(varr[4], varr[7])); //Rear Right (if facing)
-	    earr.push_back( Edge(varr[7], varr[6])); //Rear Bottom
-	    earr.push_back( Edge(varr[1], varr[7])); //Left Diagonal
-	    earr.push_back( Edge(varr[0], varr[7])); //Left Bottom
-	    earr.push_back( Edge(varr[3], varr[7])); //Bottom diagonal
+	    earr.push_back(Edge(&varr[0], &varr[1])); //Front Face Left
+	    earr.push_back(Edge(&varr[1], &varr[2])); //Front Face Top
+	    earr.push_back(Edge(&varr[2], &varr[0])); //Front Face Diagonal
+	    earr.push_back(Edge(&varr[2], &varr[3])); //Front Face Right
+	    earr.push_back(Edge(&varr[3], &varr[0])); //Front Face Bottom
+	    earr.push_back(Edge(&varr[1], &varr[4])); //Top Face Left
+	    earr.push_back(Edge(&varr[4], &varr[5])); //Top Face Top
+	    earr.push_back(Edge(&varr[5], &varr[1])); //Top Face Diagonal
+	    earr.push_back(Edge(&varr[5], &varr[2])); //Top Face Right
+	    earr.push_back(Edge(&varr[5], &varr[3])); //Right Face Diagonal
+	    earr.push_back( Edge(&varr[5], &varr[6])); //Right Face Right
+	    earr.push_back( Edge(&varr[6], &varr[3])); //Right Face Bottom
+	    earr.push_back( Edge(&varr[4], &varr[6])); //Rear Diagonal
+	    earr.push_back( Edge(&varr[4], &varr[7])); //Rear Right (if facing)
+	    earr.push_back( Edge(&varr[7], &varr[6])); //Rear Bottom
+	    earr.push_back( Edge(&varr[1], &varr[7])); //Left Diagonal
+	    earr.push_back( Edge(&varr[0], &varr[7])); //Left Bottom
+	    earr.push_back( Edge(&varr[3], &varr[7])); //Bottom diagonal
 
 	    farr.push_back(Face(earr[0],earr[1],earr[2]));      //Front Face Left Tri
 	    farr.push_back(Face(earr[2],earr[3],earr[4], BFF)); //Front Face Right Tri
@@ -190,7 +190,7 @@ namespace Game
 
 		if(farr[fi].isForward(ei))
 		    {
-		    fs.ovs[ei] = farr[fi].earr[ei].a;
+		    fs.ovs[ei] = *farr[fi].earr[ei].a;
 		    fs.direction[ei] = true;
 		    /*
     control point positions labeled for reference
@@ -204,10 +204,10 @@ namespace Game
 			     c4     b2     c3
 		     */
 		    //a1 /a[0]
-		    cps[fi].a[0] = farr[fi].earr[ei].a;
+		    cps[fi].a[0] = *farr[fi].earr[ei].a;
 
 		    //a1 /a[1]
-		    cps[fi].a[1] = farr[fi].earr[ei].b;
+		    cps[fi].a[1] = *farr[fi].earr[ei].b;
 
 		    //b1 /b[0]
 		    cps[fi].b[0] = farr[fi].LocateFinalVertex(farr[fi].earr[ei]);
@@ -253,8 +253,8 @@ namespace Game
 		//this list is build to help shared edges find new points
 		fs.nvs[ei] = ButterflyCalculateNewVertex(cps[fi]);
 		edgeEdges[ec].parent = farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
-		edgeEdges[ec].children[0] = Edge(farr[fi].earr[ei].a, fs.nvs[ei]);
-		edgeEdges[ec].children[1] = Edge(fs.nvs[ei],farr[fi].earr[ei].b);
+		edgeEdges[ec].children[0] = Edge(&*farr[fi].earr[ei].a, &fs.nvs[ei]);
+		edgeEdges[ec].children[1] = Edge(&fs.nvs[ei],&*farr[fi].earr[ei].b);
 		++ec;
 		//this object is built to aid the creation of the new faces
 		fs.nes[ei*2] = edgeEdges[ec].children[0];
@@ -265,7 +265,7 @@ namespace Game
 
 		    }else{		    //end if forward
 		    fs.direction[ei] = false; //set backwards
-		    fs.ovs[ei] = farr[fi].earr[ei].b;
+		    fs.ovs[ei] = *farr[fi].earr[ei].b;
 		    //find the corresponding control point and edges here from using the edge array and edgeedges list and add it to the facesplit object.
 		    for(int i = 0; i < ec; ++i)
 		      {
@@ -275,7 +275,7 @@ namespace Game
 				  //can assume is anti clockwise ??? //TODO: review
 				  fs.nes[ei*2] = edgeEdges[i].children[0];
 				  fs.nes[ei*2+1] = edgeEdges[i].children[1];
-				  fs.nvs[ei] = edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
+				  fs.nvs[ei] = *edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
 #ifdef PrintToConsole
 			          cout << "edge Edges not found \n";
 			      }else{
@@ -309,15 +309,15 @@ namespace Game
 
 			Edge ne[9];
 			Face nf[4];
-			ne[0] = Edge(fs.ovs[0], fs.nvs[0]); //left bottom
-			ne[1] = Edge(fs.nvs[0], fs.ovs[1]); //left top
-			ne[2] = Edge(fs.ovs[1], fs.nvs[1]); //right top
-			ne[3] = Edge(fs.nvs[1], fs.ovs[2]); //right bottom
-			ne[4] = Edge(fs.ovs[2], fs.nvs[2]); //bottom right
-			ne[5] = Edge(fs.nvs[2], fs.ovs[0]); //bottom left
-			ne[6] = Edge(fs.nvs[0], fs.nvs[1]); //center top
-			ne[7] = Edge(fs.nvs[1], fs.nvs[2]); //center right
-			ne[8] = Edge(fs.nvs[0], fs.nvs[2]); //center left
+			ne[0] = Edge(&fs.ovs[0], &fs.nvs[0]); //left bottom
+			ne[1] = Edge(&fs.nvs[0], &fs.ovs[1]); //left top
+			ne[2] = Edge(&fs.ovs[1], &fs.nvs[1]); //right top
+			ne[3] = Edge(&fs.nvs[1], &fs.ovs[2]); //right bottom
+			ne[4] = Edge(&fs.ovs[2], &fs.nvs[2]); //bottom right
+			ne[5] = Edge(&fs.nvs[2], &fs.ovs[0]); //bottom left
+			ne[6] = Edge(&fs.nvs[0], &fs.nvs[1]); //center top
+			ne[7] = Edge(&fs.nvs[1], &fs.nvs[2]); //center right
+			ne[8] = Edge(&fs.nvs[0], &fs.nvs[2]); //center left
 
 			nf[0] = Face(ne[0], ne[8], ne[5]);
 			nf[1] = Face(ne[1], ne[2], ne[6]);

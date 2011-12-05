@@ -94,7 +94,7 @@ GameObject ButterflySubspaceDivision::Tessellate(const GameObject& got)
 		if(go.farr[fi].isForward(ei))
 		    {
 		    ControlPoints cps;
-		    fs.ovs[ei] = go.farr[fi].earr[ei].a;
+		    fs.ovs[ei] = *go.farr[fi].earr[ei].a;
 		    fs.direction[ei] = true;
 		    /*
 control point positions labeled for reference
@@ -108,10 +108,10 @@ control point positions labeled for reference
 			     c4     b2     c3
 		     */
 		    //a1 /a[0]
-		    cps.a[0] = go.farr[fi].earr[ei].a;
+		    cps.a[0] = *go.farr[fi].earr[ei].a;
 
 		    //a1 /a[1]
-		    cps.a[1] = go.farr[fi].earr[ei].b;
+		    cps.a[1] = *go.farr[fi].earr[ei].b;
 
 		    //b1 /b[0]
 		    cps.b[0] = go.farr[fi].LocateFinalVertex(go.farr[fi].earr[ei]);
@@ -157,8 +157,8 @@ control point positions labeled for reference
 		//this list is build to help shared edges find new points
 		fs.nvs[ei] = ButterflyCalculateNewVertex(cps);
 		edgeEdges[ec].parent = go.farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
-		edgeEdges[ec].children[0] = Edge(go.farr[fi].earr[ei].a, fs.nvs[ei]);
-		edgeEdges[ec].children[1] = Edge(fs.nvs[ei],go.farr[fi].earr[ei].b);
+		edgeEdges[ec].children[0] = Edge(&*go.farr[fi].earr[ei].a, &fs.nvs[ei]);
+		edgeEdges[ec].children[1] = Edge(&fs.nvs[ei],&*go.farr[fi].earr[ei].b);
 		++ec;
 		//this object is built to aid the creation of the new faces
 		fs.nes[ei*2] = edgeEdges[ec].children[0];
@@ -169,7 +169,7 @@ control point positions labeled for reference
 
 		    }else{		    //end if forward
 		    fs.direction[ei] = false; //set backwards
-		    fs.ovs[ei] = go.farr[fi].earr[ei].b;
+		    fs.ovs[ei] = *go.farr[fi].earr[ei].b;
 		    //find the corresponding control point and edges here from using the edge array and edgeedges list and add it to the facesplit object.
 		    for(int i = 0; i < ec; ++i)
 		      {
@@ -179,7 +179,7 @@ control point positions labeled for reference
 				  //can assume is anti clockwise ??? //TODO: review
 				  fs.nes[ei*2] = edgeEdges[i].children[0];
 				  fs.nes[ei*2+1] = edgeEdges[i].children[1];
-				  fs.nvs[ei] = edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
+				  fs.nvs[ei] = *edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
 #ifdef PrintToConsole
 			          cout << "edge Edges not found \n";
 			      }else{
@@ -210,30 +210,62 @@ ne1  /__\/_ \ ne4
 */
 
 #ifdef PrintToConsole
-			cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
+	//		cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
 #endif
 
 			Edge ne[9];
 			Face nf[4];
-			ne[0] = Edge(fs.ovs[0], fs.nvs[0]); //left bottom
-			ne[1] = Edge(fs.nvs[0], fs.ovs[1]); //left top
-			ne[2] = Edge(fs.ovs[1], fs.nvs[1]); //right top
-			ne[3] = Edge(fs.nvs[1], fs.ovs[2]); //right bottom
-			ne[4] = Edge(fs.ovs[2], fs.nvs[2]); //bottom right
-			ne[5] = Edge(fs.nvs[2], fs.ovs[0]); //bottom left
-			ne[6] = Edge(fs.nvs[0], fs.nvs[1]); //center top
-			ne[7] = Edge(fs.nvs[1], fs.nvs[2]); //center right
-			ne[8] = Edge(fs.nvs[0], fs.nvs[2]); //center left
 
+			unsigned int startIndex = NGO.varr.size(); //this is the array index of where the first value is inserted into the vertex vector
+
+			NGO.varr.push_back(fs.ovs[0]);//0
+			NGO.varr.push_back(fs.ovs[1]);//1
+			NGO.varr.push_back(fs.ovs[2]);//2
+			NGO.varr.push_back(fs.nvs[0]);//3
+			NGO.varr.push_back(fs.nvs[1]);//4
+			NGO.varr.push_back(fs.nvs[2]);//5
+
+			ne[0] = Edge(&NGO.varr[startIndex], &NGO.varr[startIndex+3]); //left bottom
+			//ne[0] = Edge(&fs.ovs[0], &fs.nvs[0]); //left bottom
+			ne[1] = Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+1]); //left top
+			//ne[1] = Edge(&fs.nvs[0], &fs.ovs[1]); //left top
+			ne[2] = Edge(&NGO.varr[startIndex+1], &NGO.varr[startIndex+4]); //right top
+			//ne[2] = Edge(&fs.ovs[1], &fs.nvs[1]); //right top
+			ne[3] = Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+2]); //right bottom
+			//ne[3] = Edge(&fs.nvs[1], &fs.ovs[2]); //right bottom
+			ne[4] = Edge(&NGO.varr[startIndex+2], &NGO.varr[startIndex+5]); //bottom right
+			//ne[4] = Edge(&fs.ovs[2], &fs.nvs[2]); //bottom right
+			ne[5] = Edge(&NGO.varr[startIndex+5], &NGO.varr[startIndex+2]); //bottom left
+			//ne[5] = Edge(&fs.nvs[2], &fs.ovs[0]); //bottom left
+			ne[6] = Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+4]); //center top
+			//ne[6] = Edge(&fs.nvs[0], &fs.nvs[1]); //center top
+			ne[7] = Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+5]); //center right
+			//ne[7] = Edge(&fs.nvs[1], &fs.nvs[2]); //center right
+			ne[8] = Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+5]); //center right
+			//ne[8] = Edge(&fs.nvs[0], &fs.nvs[2]); //center left
+			/*
+			ne[0] = Edge(&fs.ovs[0], &fs.nvs[0]); //left bottom
+			ne[1] = Edge(&fs.nvs[0], &fs.ovs[1]); //left top
+			ne[2] = Edge(&fs.ovs[1], &fs.nvs[1]); //right top
+			ne[3] = Edge(&fs.nvs[1], &fs.ovs[2]); //right bottom
+			ne[4] = Edge(&fs.ovs[2], &fs.nvs[2]); //bottom right
+			ne[5] = Edge(&fs.nvs[2], &fs.ovs[0]); //bottom left
+			ne[6] = Edge(&fs.nvs[0], &fs.nvs[1]); //center top
+			ne[7] = Edge(&fs.nvs[1], &fs.nvs[2]); //center right
+			ne[8] = Edge(&fs.nvs[0], &fs.nvs[2]); //center left
+			*/
 			nf[0] = Face(ne[0], ne[8], ne[5]);
 			nf[1] = Face(ne[1], ne[2], ne[6]);
 			nf[2] = Face(ne[3], ne[4], ne[7]);
 			nf[3] = Face(ne[6], ne[7], ne[8]);
 
-			NGO.varr.push_back(fs.nvs[0]);
-			NGO.varr.push_back(fs.nvs[1]);
-			NGO.varr.push_back(fs.nvs[2]);
+			for(int i = 0; i < 9; i++)
+				NGO.earr.push_back(ne[i]);//TODO: this appears to be putting random values in....
 
+			NGO.farr.push_back(nf[0]);
+			NGO.farr.push_back(nf[1]);
+			NGO.farr.push_back(nf[2]);
+			NGO.farr.push_back(nf[3]);
 			/*
 			if(fs.direction[0] && fs.direction[2])
 			    nf[0] = Face(ne[0], ne[8], ne[5], FFF);
@@ -254,10 +286,6 @@ ne1  /__\/_ \ ne4
 			  nf[1] = Face(ne[1], ne[2], ne[6], BFB);
 */
 
-			NGO.farr.push_back(nf[0]);
-			NGO.farr.push_back(nf[1]);
-			NGO.farr.push_back(nf[2]);
-			NGO.farr.push_back(nf[3]);
 			//Face nf = Face(ne1, ne9, ne6);
 			/* use the facesplit object to create the 4 new faces and place them in the NGO object */
 
@@ -268,14 +296,45 @@ ne1  /__\/_ \ ne4
 
 			//NGO.varr.assign(varr, varr+vl)
 			//NGO.varr.assign(ne, ne+9)
-			for(int i = 0; i < 9; i++)
-			NGO.earr.push_back(ne[i]);//TODO: this appears to be putting random values in....
+
+#ifdef PrintToConsole
+		std::cout << "Vertex Pointer Value Check face "<< fi << "\n";
+
+		std::cout << "new vertex 0 "<< fs.nvs[0].ToString() << " Edge  \n";
+		std::cout << "new vertex 1 "<< fs.nvs[1].ToString() << " Edge  \n";
+		std::cout << "new vertex 2 "<< fs.nvs[2].ToString() << " Edge  \n";
+		std::cout << "old vertex 0 "<< fs.ovs[0].ToString() << " Edge  \n";
+		std::cout << "old vertex 1 "<< fs.ovs[1].ToString() << " Edge  \n";
+		std::cout << "old vertex 2 "<< fs.ovs[2].ToString() << " Edge  \n";
+
+//		&fs.nvs[0],
+		std::cout << "new edge 0 "<< ne
+
+[0].ToString() << " Edge  \n";
+		std::cout << "new edge 1 "<< ne[1].ToString() << " Edge  \n";
+		std::cout << "new edge 2 "<< ne[2].ToString() << " Edge  \n";
+		std::cout << "new edge 3 "<< ne[3].ToString() << " Edge  \n";
+		std::cout << "new edge 4 "<< ne[4].ToString() << " Edge  \n";
+		std::cout << "new edge 5 "<< ne[5].ToString() << " Edge  \n";
+		std::cout << "new edge 6 "<< ne[6].ToString() << " Edge  \n";
+		std::cout << "new edge 7 "<< ne[7].ToString() << " Edge  \n";
+		std::cout << "new edge 8 "<< ne[8].ToString() << " Edge  \n";
+		//std::cout << "Vertex Pointer Value Check face "<< fi << " Edge " << ei << " \n";
+
+
+#endif
 
 	    }
 	}//end face loop
 #ifdef PrintToConsole
 		cout << "exiting method \n";
 #endif
+		std::cout << NGO.farr[0].ToString() << "\n";
+		std::cout << NGO.farr[1].ToString() << "\n";
+		std::cout << NGO.farr[2].ToString() << "\n";
+		std::cout << NGO.farr[3].ToString() << "\n";
+		std::cout << NGO.farr[4].ToString() << "\n";
+		std::cout << NGO.farr[5].ToString() << "\n";
 	    return NGO;
 	}
     }

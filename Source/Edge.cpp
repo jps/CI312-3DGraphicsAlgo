@@ -15,7 +15,7 @@ namespace Game
 
 	}
 
-    Edge::Edge(Vertex A, Vertex B)
+    Edge::Edge(Vertex* A, Vertex* B)
 	{
 	    a = A;
 	    b = B;
@@ -23,27 +23,29 @@ namespace Game
 
     Vertex Edge::MidPoint()
 	{
-	    return Vertex(a.GetX()+b.GetX()/2,a.GetY()+b.GetY()/2,a.GetZ()+b.GetZ()/2);
+	    return Vertex(a->GetX()+b->GetX()/2,a->GetY()+b->GetY()/2,a->GetZ()+b->GetZ()/2);
 	}
 
 
 	bool Edge:: operator==( Edge &inV)
 	{
-	    //have changed this to allow reverse edges to also be the same... this is a cheap hacky fix to a rather big issue in the subdivision routine...
-	(inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? true : false;
+		//TODO: edge compare is could do with limiting to only a = a or b = b
+	    //have changed this to allow reverse edges to also be the same...
+		//this is a cheap hacky fix to a rather big issue in the subdivision routine...
+	return (inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? true : false;
 //	return inV.a.GetX() == a.GetX() && inV.a.GetY() == a.GetY() && inV.a.GetZ() == a.GetZ() && inV.b.GetX() == b.GetX() && inV.b.GetY() == b.GetY() && inV.b.GetZ() == b.GetZ()? true : false;
 	}
 
 	bool Edge :: operator!=(Edge &inV)
 	{
-	(inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? false : true;
+	return (inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? false : true;
 //	return inV.a.GetX() == a.GetX() && inV.a.GetY() == a.GetY() && inV.a.GetZ() == a.GetZ() && inV.b.GetX() == b.GetX() && inV.b.GetY() == b.GetY() && inV.b.GetZ() == b.GetZ()? false : true;
 	}
 
 
 	string Edge::ToString()
 	{
-	    return "Edge: a=" + a.ToString() + " b=" +b.ToString() +"\n"; //TODO: for each vertex
+	    return "Edge: a=" + a->ToString() + " b=" +b->ToString() +"\n"; //TODO: for each vertex
 	}
 
 

@@ -40,45 +40,44 @@ namespace Game
 	    {
 	case FFB:
 
-	    glVertex3f(earr[0].a.GetX(),earr[0].a.GetY(),earr[0].a.GetZ());
-	    glVertex3f(earr[1].a.GetX(),earr[1].a.GetY(),earr[1].a.GetZ());
-	    glVertex3f(earr[2].b.GetX(),earr[2].b.GetY(),earr[2].b.GetZ());
+	    glVertex3f(earr[0].a->GetX(),earr[0].a->GetY(),earr[0].a->GetZ());
+	    glVertex3f(earr[1].a->GetX(),earr[1].a->GetY(),earr[1].a->GetZ());
+	    glVertex3f(earr[2].b->GetX(),earr[2].b->GetY(),earr[2].b->GetZ());
 	break;
 	case BFF:
-	    glVertex3f(earr[0].b.GetX(),earr[0].b.GetY(),earr[0].b.GetZ());
-	    glVertex3f(earr[1].a.GetX(),earr[1].a.GetY(),earr[1].a.GetZ());
-	    glVertex3f(earr[2].a.GetX(),earr[2].a.GetY(),earr[2].a.GetZ());
+	    glVertex3f(earr[0].b->GetX(),earr[0].b->GetY(),earr[0].b->GetZ());
+	    glVertex3f(earr[1].a->GetX(),earr[1].a->GetY(),earr[1].a->GetZ());
+	    glVertex3f(earr[2].a->GetX(),earr[2].a->GetY(),earr[2].a->GetZ());
 	break;
 	case FBF:
-	    glVertex3f(earr[0].a.GetX(),earr[0].a.GetY(),earr[0].a.GetZ());
-	    glVertex3f(earr[1].b.GetX(),earr[1].b.GetY(),earr[1].b.GetZ());
-	    glVertex3f(earr[2].a.GetX(),earr[2].a.GetY(),earr[2].a.GetZ());
+	    glVertex3f(earr[0].a->GetX(),earr[0].a->GetY(),earr[0].a->GetZ());
+	    glVertex3f(earr[1].b->GetX(),earr[1].b->GetY(),earr[1].b->GetZ());
+	    glVertex3f(earr[2].a->GetX(),earr[2].a->GetY(),earr[2].a->GetZ());
 	break;
 	case FBB:
-	    glVertex3f(earr[0].a.GetX(),earr[0].a.GetY(),earr[0].a.GetZ());
-	    glVertex3f(earr[1].b.GetX(),earr[1].b.GetY(),earr[1].b.GetZ());
-	    glVertex3f(earr[2].b.GetX(),earr[2].b.GetY(),earr[2].b.GetZ());
+	    glVertex3f(earr[0].a->GetX(),earr[0].a->GetY(),earr[0].a->GetZ());
+	    glVertex3f(earr[1].b->GetX(),earr[1].b->GetY(),earr[1].b->GetZ());
+	    glVertex3f(earr[2].b->GetX(),earr[2].b->GetY(),earr[2].b->GetZ());
 	break;
 	case BFB:
-	    glVertex3f(earr[0].b.GetX(),earr[0].b.GetY(),earr[0].b.GetZ());
-	    glVertex3f(earr[1].a.GetX(),earr[1].a.GetY(),earr[1].a.GetZ());
-	    glVertex3f(earr[2].b.GetX(),earr[2].b.GetY(),earr[2].b.GetZ());
+	    glVertex3f(earr[0].b->GetX(),earr[0].b->GetY(),earr[0].b->GetZ());
+	    glVertex3f(earr[1].a->GetX(),earr[1].a->GetY(),earr[1].a->GetZ());
+	    glVertex3f(earr[2].b->GetX(),earr[2].b->GetY(),earr[2].b->GetZ());
 	break;
 	case BBF:
-	    glVertex3f(earr[0].b.GetX(),earr[0].b.GetY(),earr[0].b.GetZ());
-	    glVertex3f(earr[1].b.GetX(),earr[1].b.GetY(),earr[1].b.GetZ());
-	    glVertex3f(earr[2].a.GetX(),earr[2].a.GetY(),earr[2].a.GetZ());
-
+	    glVertex3f(earr[0].b->GetX(),earr[0].b->GetY(),earr[0].b->GetZ());
+	    glVertex3f(earr[1].b->GetX(),earr[1].b->GetY(),earr[1].b->GetZ());
+	    glVertex3f(earr[2].a->GetX(),earr[2].a->GetY(),earr[2].a->GetZ());
 	break;
 	case BBB:
-	    glVertex3f(earr[0].b.GetX(),earr[0].b.GetY(),earr[0].b.GetZ());
-	    glVertex3f(earr[1].b.GetX(),earr[1].b.GetY(),earr[1].b.GetZ());
-	    glVertex3f(earr[2].b.GetX(),earr[2].b.GetY(),earr[2].b.GetZ());
+	    glVertex3f(earr[0].b->GetX(),earr[0].b->GetY(),earr[0].b->GetZ());
+	    glVertex3f(earr[1].b->GetX(),earr[1].b->GetY(),earr[1].b->GetZ());
+	    glVertex3f(earr[2].b->GetX(),earr[2].b->GetY(),earr[2].b->GetZ());
 	break;
 	default:
-	    glVertex3f(earr[0].a.GetX(),earr[0].a.GetY(),earr[0].a.GetZ());
-	    glVertex3f(earr[0].b.GetX(),earr[0].b.GetY(),earr[0].b.GetZ());
-	    glVertex3f(earr[1].b.GetX(),earr[1].b.GetY(),earr[1].b.GetZ());
+	    glVertex3f(earr[0].a->GetX(),earr[0].a->GetY(),earr[0].a->GetZ());
+	    glVertex3f(earr[0].b->GetX(),earr[0].b->GetY(),earr[0].b->GetZ());
+	    glVertex3f(earr[1].b->GetX(),earr[1].b->GetY(),earr[1].b->GetZ());
 	    }
     }
 
@@ -99,7 +98,7 @@ namespace Game
 #ifdef PrintToConsole
 	std::cout << "Final vertex found given vertex is : " << earr[i].a.ToString() << "\n" ;
 #endif
-			    return earr[i].a;
+			    return *earr[i].a;
 			    }
 			}
 		    else if(earr[i].b != e.a)
@@ -109,7 +108,7 @@ namespace Game
 #ifdef PrintToConsole
 	std::cout << "Final vertex found given vertex is : " << earr[i].b.ToString() << "\n" ;
 #endif
-			    return earr[i].b;
+			    return *earr[i].b;
 			    }
 			}
 		}
@@ -125,9 +124,9 @@ namespace Game
 	{
 	//TODO: review Alternately could find midpoint of all edges and then find the midpoint of all edges then divide by 3
 	if( earr[1].a != earr[0].a && earr[1].a != earr[0].b)
-	    return Vertex(earr[0].a.GetX() + earr[0].b.GetX() + earr[1].a.GetX() / 3, earr[0].a.GetY() + earr[0].b.GetY() + earr[1].a.GetY() / 3,earr[0].a.GetZ() + earr[0].b.GetZ() + earr[1].a.GetZ() /3 );
+	    return Vertex(earr[0].a->GetX() + earr[0].b->GetX() + earr[1].a->GetX() / 3, earr[0].a->GetY() + earr[0].b->GetY() + earr[1].a->GetY() / 3,earr[0].a->GetZ() + earr[0].b->GetZ() + earr[1].a->GetZ() /3 );
 	if( earr[1].b != earr[0].a && earr[1].b != earr[0].b)
-	    return Vertex(earr[0].a.GetX() + earr[0].b.GetX() + earr[1].b.GetX() / 3, earr[0].a.GetY() + earr[0].b.GetY() + earr[1].b.GetY() / 3,earr[0].a.GetZ() + earr[0].b.GetZ() + earr[1].b.GetZ() /3 );
+	    return Vertex(earr[0].a->GetX() + earr[0].b->GetX() + earr[1].b->GetX() / 3, earr[0].a->GetY() + earr[0].b->GetY() + earr[1].b->GetY() / 3,earr[0].a->GetZ() + earr[0].b->GetZ() + earr[1].b->GetZ() /3 );
 	std::cout << "Calculating the centeroid has failed..... edges provided" << earr[0].ToString() << earr[0].ToString() << earr[0].ToString() << "\n";
 	throw "calculating centroid has failed";
 	}
@@ -144,7 +143,7 @@ namespace Game
 	std::cout << "If "<< earr[i].a.ToString() << " == " << a.ToString() << " && " <<   earr[i].b.ToString() << " == " << b.ToString() << "\n";
 	std::cout << "If "<< earr[i].a.ToString() << " == " << b.ToString() << " && " <<   earr[i].b.ToString() << " == " << a.ToString() << "\n";
 #endif
-		if(((earr[i].a == a) && (earr[i].b == b)) || ((earr[i].a == b) && (earr[i].b == a)))
+		if(((*earr[i].a == a) && (*earr[i].b == b)) || ((*earr[i].a == b) && (*earr[i].b == a)))
 		    return earr[i];
 		}
 	    throw -1;
@@ -154,7 +153,7 @@ namespace Game
 	{
 	    for(int i = 0; i < 3; ++i)
 		{
-		if(((earr[i].a == a) && (earr[i].b == b)) || ((earr[i].a == b) && (earr[i].b == a)))
+		if(((*earr[i].a == a) && (*earr[i].b == b)) || ((*earr[i].a == b) && (*earr[i].b == a)))
 		    return i;
 		}
 	    throw -1;
