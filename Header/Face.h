@@ -26,11 +26,11 @@ namespace Game
 	{
     public:
 		Face();
-		Face(Edge A, Edge B, Edge C);
-		Face(Edge A, Edge B, Edge C, EdgeDirection faceDirection);
+		Face(Edge* A, Edge* B, Edge* C);
+		Face(Edge* A, Edge* B, Edge* C, EdgeDirection faceDirection);
 		virtual ~Face();
 		void Draw();
-		Edge earr[3];
+		Edge* earr[3];
 		EdgeDirection edgeDirection;
 		Edge LocateEdge(Vertex a, Vertex b);
 		Vertex LocateFinalVertex(Edge e);

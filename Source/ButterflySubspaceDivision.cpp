@@ -90,7 +90,7 @@ namespace Game
 			if(go.farr[fi].isForward(ei))
 				{
 				ControlPoints cps;
-				fs[fi].ovs[ei] = *go.farr[fi].earr[ei].a;
+				fs[fi].ovs[ei] = *go.farr[fi].earr[ei]->a;
 				fs[fi].direction[ei] = true;
 				/*
 	control point positions labeled for reference
@@ -104,17 +104,17 @@ namespace Game
 					 c4     b2     c3
 				 */
 				//a1 /a[0]
-				cps.a[0] = *go.farr[fi].earr[ei].a;
+				cps.a[0] = *go.farr[fi].earr[ei]->a;
 
 				//a1 /a[1]
-				cps.a[1] = *go.farr[fi].earr[ei].b;
+				cps.a[1] = *go.farr[fi].earr[ei]->b;
 
 				//b1 /b[0]
-				cps.b[0] = go.farr[fi].LocateFinalVertex(go.farr[fi].earr[ei]);
+				cps.b[0] = go.farr[fi].LocateFinalVertex(*go.farr[fi].earr[ei]);
 
 				//b1
-				Face f1 = ef.FindFace(go.farr[fi].earr[ei], go.farr[fi]);
-				cps.b[1] = f1.LocateFinalVertex(go.farr[fi].earr[ei]);
+				Face f1 = ef.FindFace(*go.farr[fi].earr[ei], go.farr[fi]);
+				cps.b[1] = f1.LocateFinalVertex(*go.farr[fi].earr[ei]);
 
 				//c1 - neighbors f10 - b1 and a1 are known
 				Edge e1 = go.farr[fi].LocateEdge(cps.a[0],cps.b[0]);
@@ -152,9 +152,9 @@ namespace Game
 
 			//this list is build to help shared edges find new points
 			fs[fi].nvs[ei] = ButterflyCalculateNewVertex(cps);
-			edgeEdges[ec].parent = go.farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
-			edgeEdges[ec].children[0] = Edge(&*go.farr[fi].earr[ei].a, &fs[fi].nvs[ei]);
-			edgeEdges[ec].children[1] = Edge(&fs[fi].nvs[ei],&*go.farr[fi].earr[ei].b);
+			edgeEdges[ec].parent = *go.farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
+			edgeEdges[ec].children[0] = Edge(&*go.farr[fi].earr[ei]->a, &fs[fi].nvs[ei]);
+			edgeEdges[ec].children[1] = Edge(&fs[fi].nvs[ei],&*go.farr[fi].earr[ei]->b);
 			++ec;
 			//this object is built to aid the creation of the new faces
 			//fs.nes[ei*2] = edgeEdges[ec].children[0];
@@ -165,11 +165,11 @@ namespace Game
 
 				}else{		    //end if forward
 				fs[fi].direction[ei] = false; //set backwards
-				fs[fi].ovs[ei] = *go.farr[fi].earr[ei].b;
+				fs[fi].ovs[ei] = *go.farr[fi].earr[ei]->b;
 				//find the corresponding control point and edges here from using the edge array and edgeedges list and add it to the facesplit object.
 				for(int i = 0; i < ec; ++i)
 				  {
-				  if(go.farr[fi].earr[ei] == edgeEdges[i].parent)
+				  if(*go.farr[fi].earr[ei] == edgeEdges[i].parent)
 					  {
 					  //
 					  //can assume is anti clockwise ??? //TODO: review
@@ -214,9 +214,6 @@ namespace Game
 #ifdef PrintToConsole
 	//		cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
 #endif
-
-				Edge ne[9];
-				Face nf[4];
 
 				unsigned int startIndex = NGO.varr.size(); //this is the array index of where the first value is inserted into the vertex vector
 
@@ -287,10 +284,10 @@ namespace Game
 
 				//NGO.earr[EstartIndex]
 
-				NGO.farr.push_back(Face(NGO.earr[EstartIndex], NGO.earr[EstartIndex+8], NGO.earr[EstartIndex+5]));     // 0              // left
-				NGO.farr.push_back(Face(NGO.earr[EstartIndex+1], NGO.earr[EstartIndex+2], NGO.earr[EstartIndex+6]));     // 1             // top
-				NGO.farr.push_back(Face(NGO.earr[EstartIndex+3], NGO.earr[EstartIndex+4], NGO.earr[EstartIndex+7]));     // 2             // right
-				NGO.farr.push_back(Face(NGO.earr[EstartIndex+6], NGO.earr[EstartIndex+7], NGO.earr[EstartIndex+8]));     // 3             // center
+				NGO.farr.push_back(Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]));     // 0              // left
+				NGO.farr.push_back(Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]));     // 1             // top
+				NGO.farr.push_back(Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]));     // 2             // right
+				NGO.farr.push_back(Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]));     // 3             // center
 /*
 				NGO.farr.push_back(Face(ne[0], ne[8], ne[5]));     // 0              // left
 				NGO.farr.push_back(Face(ne[1], ne[2], ne[6]));     // 1             // top

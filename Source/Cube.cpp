@@ -64,18 +64,18 @@ namespace Game
 	    earr.push_back( Edge(&varr[0], &varr[7])); //Left Bottom
 	    earr.push_back( Edge(&varr[3], &varr[7])); //Bottom diagonal
 
-	    farr.push_back(Face(earr[0],earr[1],earr[2]));      //Front Face Left Tri
-	    farr.push_back(Face(earr[2],earr[3],earr[4], BFF)); //Front Face Right Tri
-	    farr.push_back(Face(earr[5], earr[6], earr[7]));    //Top Face Left Tri
-	    farr.push_back(Face(earr[7], earr[8], earr[1], BFB)); //Top Face Right
-	    farr.push_back(Face(earr[3], earr[8] ,earr[9] , BBF)); //Right Face Left
-	    farr.push_back(Face(earr[9], earr[10] ,earr[11] , BFF)); //Right Face Right
-	    farr.push_back(Face(earr[10], earr[6], earr[12], BBF)); //Back Face Left
-	    farr.push_back(Face(earr[12], earr[13], earr[14], BFF)); //Back Face Right
-	    farr.push_back(Face(earr[13], earr[5], earr[15] , BBF)); //Left Face Left
-	    farr.push_back(Face(earr[15], earr[0] , earr[16] , BBF)); //Left Face Right
-	    farr.push_back(Face(earr[16], earr[4] , earr[17] , BBF)); //Bottom Face Left
-	    farr.push_back(Face(earr[17], earr[11] ,earr[14] , BBB)); //Bottom Face Right
+	    farr.push_back(Face(&earr[0], &earr[1],  &earr[2]));      //Front Face Left Tri
+	    farr.push_back(Face(&earr[2], &earr[3],  &earr[4],BFF)); //Front Face Right Tri
+	    farr.push_back(Face(&earr[5], &earr[6],  &earr[7]));    //Top Face Left Tri
+	    farr.push_back(Face(&earr[7], &earr[8],  &earr[1],BFB)); //Top Face Right
+	    farr.push_back(Face(&earr[3], &earr[8],  &earr[9],BBF)); //Right Face Left
+	    farr.push_back(Face(&earr[9], &earr[10], &earr[11],BFF)); //Right Face Right
+	    farr.push_back(Face(&earr[10],&earr[6],  &earr[12],BBF)); //Back Face Left
+	    farr.push_back(Face(&earr[12],&earr[13], &earr[14],BFF)); //Back Face Right
+	    farr.push_back(Face(&earr[13],&earr[5],  &earr[15],BBF)); //Left Face Left
+	    farr.push_back(Face(&earr[15],&earr[0],  &earr[16],BBF)); //Left Face Right
+	    farr.push_back(Face(&earr[16],&earr[4],  &earr[17],BBF)); //Bottom Face Left
+	    farr.push_back(Face(&earr[17],&earr[11], &earr[14],BBB)); //Bottom Face Right
 
 	    for( int i = 0; i < 12 ; ++i)
 		{

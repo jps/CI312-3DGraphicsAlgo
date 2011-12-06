@@ -80,7 +80,7 @@ namespace Game
 			{
 				for(int k = 0; k < 3; ++k)
 				{
-					if(farr[j].earr[k] == earr[i])
+					if(*farr[j].earr[k] == earr[i])
 					{
 #ifdef Debug
 	std::cout << "Edge match! " << farr[j].earr[k].ToString() << "==" << earr[i].ToString();
@@ -215,7 +215,7 @@ namespace Game
    		{
    		    for(int k = 0; k < 3; ++k)
    		    {
-   			if(farr[j].earr[k] == earr[i])
+   			if(*farr[j].earr[k] == earr[i])
    			{
    #ifdef Debug
    	std::cout << "Edge match! " << farr[j].earr[k].ToString() << "==" << earr[i].ToString();
