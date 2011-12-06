@@ -52,7 +52,7 @@ namespace Game
 
     EdgesFaces::EdgesFaces(vector<Edge> earr, vector<Face> farr)
 	{
-	    std::vector<EdgeFaces> efs;
+	    //std::vector<EdgeFaces> efs;
 	    //EdgeFaces efs[el];
 	    //ControlPoints cps[el];
 #ifdef Debug
@@ -67,58 +67,58 @@ namespace Game
 	   // EdgeFaces efs[el];
 
 	    for(unsigned int i = 0; i < earr.size(); ++i)
-	    {
-	    bool ab = false, br = false;
+			{
+			bool ab = false, br = false;
 #ifdef Debug
 	std::cout << "Edge face construction iteration of edge:" << i << "\n";
 	std::cout << "ab == " << ab << "br == " << br << "\n";
 #endif
-	    EdgeFaces nef;
-	    nef.e = earr[i];
-	    //efs[i].e = earr[i];
-		for(unsigned int j = 0; j < farr.size(); ++j)
-		{
-		    for(int k = 0; k < 3; ++k)
-		    {
-			if(farr[j].earr[k] == earr[i])
+			EdgeFaces nef;
+			nef.e = earr[i];
+			//efs[i].e = earr[i];
+			for(unsigned int j = 0; j < farr.size(); ++j)
 			{
+				for(int k = 0; k < 3; ++k)
+				{
+					if(farr[j].earr[k] == earr[i])
+					{
 #ifdef Debug
 	std::cout << "Edge match! " << farr[j].earr[k].ToString() << "==" << earr[i].ToString();
 #endif
-			    if(!ab) //assign first face
-			    {
-				//efs[i].f[0] = farr[j];
-				nef.f[0] = farr[j];
-				ab = true;
+						if(!ab) //assign first face
+						{
+						//efs[i].f[0] = farr[j];
+						nef.f[0] = farr[j];
+						ab = true;
 #ifdef Debug
 	std::cout << "Face 1 assigned edge "<< i <<"/" << earr.size() <<" face "<< j << "/" <<farr.size() << "edge:" << k << "/3 \n";
 	std::cout << "ab == " << ab << "\n";
 #endif
-			    }
-			    else   //assign second face
-			    {
-				//efs[i].f[1] = farr[j];
-				nef.f[1] = farr[j];
-				br = true;
+						}
+						else   //assign second face
+						{
+						//efs[i].f[1] = farr[j];
+						nef.f[1] = farr[j];
+						br = true;
 #ifdef Debug
 	std::cout << "Face 2 assigned edge "<< i <<"/" << earr.size() <<" face "<< j << "/" <<farr.size() << "edge:" << k << "/3 \n";
 	std::cout << "ab == " << ab << "\n";
 #endif
-				break;
-			    }
-			}
-		    if( j == (farr.size() - 1) && k == 2 )
-			{
+						break;
+						}
+					}
+					if( j == (farr.size() - 1) && k == 2 )
+					{
 #ifdef Debug
-			    std::cout << "edge faces has failed on edge "<< i <<"/" << earr.size() <<" face "<< j+1 << "/" <<farr.size() << "edge:" << k+1 << "/3 \n";
+				std::cout << "edge faces has failed on edge "<< i <<"/" << earr.size() <<" face "<< j+1 << "/" <<farr.size() << "edge:" << k+1 << "/3 \n";
 #endif
-			    throw 1;
+						throw 1/0;
+					}
+				}
+				if(br == true)
+				break;
 			}
-		    }
-		    if(br == true)
-		    break;
-		}
-		efsv.push_back(nef); //TODO: optimize put directly into efsv?
+			efsv.push_back(nef); //TODO: optimize put directly into efsv?
 	    }
 	    //efsv = efs;
 	    //efsv.assign(efs, efs+el);

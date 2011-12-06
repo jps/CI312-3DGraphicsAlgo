@@ -22,29 +22,26 @@ namespace Game
 
 
     class Cube: public Game::GameObject
-	{
-    public:
+		{
+		public:
 
-	//struct EdgeFaces;
+		//struct EdgeFaces;
 
-	Cube();
-	Cube(float size);
-	Cube(float size, Vertex v);
+		Cube();
+		Cube(float size);
+		Cube(float size, Vertex v);
 
-	void Draw();
-	virtual ~Cube();
+		void Draw();
+		virtual ~Cube();
 
-	/*Vertex varr[8];
-	Edge earr[18];
-	Face farr[12];*/
-	GameObject ButterflySubSpaceDivisionold();
+		/*Vertex varr[8];
+		Edge earr[18];
+		Face farr[12];*/
 
-    private:
-	void init(float size, Vertex v);
-	int r[12], g[12], b[12];
-	Vertex ButterflyCalculateNewVertex(ControlPoints controlPoints);
-	//EdgeFaces* FindEdgeFaces(int el, int fl, Edge earr[], Face farr[]);
-	};
+		private:
+		void init(float size, Vertex v);
+		int r[12], g[12], b[12];
+		};
     }
 
 #endif /* CUBE_H_ */

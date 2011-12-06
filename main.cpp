@@ -179,7 +179,7 @@ for(unsigned int i = 0; i < go.earr.size(); i++)
     }
 
 
-    // Initialze OpenGL perspective matrix
+    // Initialize OpenGL perspective matrix
     void GL_Setup(int width, int height)
     {
 	    glViewport( 0, 0, width, height );

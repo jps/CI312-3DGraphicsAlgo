@@ -39,7 +39,7 @@ namespace Game
 	    {
 	    //TODO: Review could this be a collection of pointers to the new object to minimize memory consuption.
 		bool direction[3];
-		Edge nes[9];
+		//Edge nes[9];
 		Face nfs[4];
 		Vertex nvs[3];
 		Vertex ovs[3];
