@@ -50,14 +50,17 @@ namespace Game
 #ifdef PrintToConsole
 				cout << "entered subspace division method \n";
 #endif
+			vector<Vertex> varr;
+			vector<Edge> earr;
+			vector<Face> farr;
 
 			GameObject go = got;
 
-			GameObject NGO = GameObject();
+			//GameObject NGO = GameObject();
 			int fl = go.farr.size();
 			int el = go.earr.size();
 			//int vl = go.varr.size();
-			NGO.varr = go.varr;//assign current vertices to the new object as none of these will change.
+			//NGO.varr = go.varr;//assign current vertices to the new object as none of these will change.
 
 
 			//TODO: issue here not finding the correct vals. however these are already known.
@@ -153,7 +156,7 @@ namespace Game
 			//this list is build to help shared edges find new points
 			fs[fi].nvs[ei] = ButterflyCalculateNewVertex(cps);
 			edgeEdges[ec].parent = *go.farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
-			edgeEdges[ec].children[0] = Edge(&*go.farr[fi].earr[ei]->a, &fs[fi].nvs[ei]);
+			edgeEdges[ec].children[0] = Edge(go.farr[fi].earr[ei]->a, &fs[fi].nvs[ei]);
 			edgeEdges[ec].children[1] = Edge(&fs[fi].nvs[ei],&*go.farr[fi].earr[ei]->b);
 			++ec;
 			//this object is built to aid the creation of the new faces
@@ -215,7 +218,7 @@ namespace Game
 	//		cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
 #endif
 
-				unsigned int startIndex = NGO.varr.size(); //this is the array index of where the first value is inserted into the vertex vector
+				unsigned int startIndex = varr.size(); //this is the array index of where the first value is inserted into the vertex vector
 
 				/*NGO.varr.push_back(Vertex(fs[fi].ovs[0].GetX(), fs[fi].ovs[0].GetY(), fs[fi].ovs[0].GetZ()));//0
 				NGO.varr.push_back(Vertex(fs[fi].ovs[1].GetX(), fs[fi].ovs[1].GetY(), fs[fi].ovs[1].GetZ()));//0
@@ -226,17 +229,37 @@ namespace Game
 				NGO.varr.push_back(Vertex(fs[fi].nvs[2].GetX(), fs[fi].nvs[2].GetY(), fs[fi].nvs[2].GetZ()));//0
 				*/
 
-				NGO.varr.push_back(Vertex(fs[fi].ovs[0]));//0
-				NGO.varr.push_back(Vertex(fs[fi].ovs[1]));//1
-				NGO.varr.push_back(Vertex(fs[fi].ovs[2]));//2
-				NGO.varr.push_back(Vertex(fs[fi].nvs[0]));//3
-				NGO.varr.push_back(Vertex(fs[fi].nvs[1]));//4
-				NGO.varr.push_back(Vertex(fs[fi].nvs[2]));//5
+				varr.push_back(Vertex(fs[fi].ovs[0]));//0
+				varr.push_back(Vertex(fs[fi].ovs[1]));//1
+				varr.push_back(Vertex(fs[fi].ovs[2]));//2
+				varr.push_back(Vertex(fs[fi].nvs[0]));//3
+				varr.push_back(Vertex(fs[fi].nvs[1]));//4
+				varr.push_back(Vertex(fs[fi].nvs[2]));//5
 
+				/*
 				cout<< "fs[fi].ovs[0]" << fs[fi].ovs[0].ToString() << " == ? " << NGO.varr[startIndex].ToString() <<  "\n";
 				cout<< "fs[fi].nvs[0]" << fs[fi].nvs[0].ToString() << " == ? " << NGO.varr[startIndex+3].ToString() <<  "\n";
 				cout<< "fs[fi].nvs[1]" << fs[fi].nvs[1].ToString() << " == ? " << NGO.varr[startIndex+4].ToString() <<  "\n";
 				cout<< "fs[fi].nvs[2]" << fs[fi].nvs[2].ToString() << " == ? " << NGO.varr[startIndex+5].ToString() <<  "\n";
+*/
+				unsigned int EstartIndex = farr.size();
+
+
+				earr.push_back(Edge(&varr[startIndex],   &varr[startIndex+3])); //  0       //left bottom
+				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+1])); //  1       //left top
+				earr.push_back(Edge(&varr[startIndex+1], &varr[startIndex+4])); //  2       //right top
+				earr.push_back(Edge(&varr[startIndex+4], &varr[startIndex+2])); //  3      //right bottom
+				earr.push_back(Edge(&varr[startIndex+2], &varr[startIndex+5])); //  4       //bottom right
+				earr.push_back(Edge(&varr[startIndex+5], &varr[startIndex+2])); //  5       //bottom left
+				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+4])); //  6       //center top
+				earr.push_back(Edge(&varr[startIndex+4], &varr[startIndex+5])); //  7      //center right
+				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+5])); //  8      //center right
+
+				farr.push_back(Face(&earr.at(EstartIndex),   &earr.at(EstartIndex+8), &earr[EstartIndex+5]));     // 0              // left
+				farr.push_back(Face(&earr[EstartIndex+1], &earr[EstartIndex+2], &earr[EstartIndex+6]));     // 1             // top
+				farr.push_back(Face(&earr[EstartIndex+3], &earr[EstartIndex+4], &earr[EstartIndex+7]));     // 2             // right
+				farr.push_back(Face(&earr[EstartIndex+6], &earr[EstartIndex+7], &earr[EstartIndex+8]));     // 3             // center
+
 
 				/*
 				ne[0] = Edge(&NGO.varr[startIndex], &NGO.varr[startIndex+3]); //left bottom
@@ -268,7 +291,7 @@ namespace Game
 				ne[7] = Edge(&fs.nvs[1], &fs.nvs[2]); //center right
 				ne[8] = Edge(&fs.nvs[0], &fs.nvs[2]); //center left
 				*/
-
+/*
 
 				unsigned int EstartIndex = NGO.earr.size();
 
@@ -281,13 +304,28 @@ namespace Game
 				NGO.earr.push_back(Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+4])); //  6       //center top
 				NGO.earr.push_back(Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+5])); //  7      //center right
 				NGO.earr.push_back(Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+5])); //  8      //center right
+*/
+				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]));     // 0              // left
+				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]));     // 1             // top
+				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]));     // 2             // right
+				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]));     // 3             // center
 
 				//NGO.earr[EstartIndex]
 
-				NGO.farr.push_back(Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]));     // 0              // left
-				NGO.farr.push_back(Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]));     // 1             // top
-				NGO.farr.push_back(Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]));     // 2             // right
-				NGO.farr.push_back(Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]));     // 3             // center
+				/*Face FTest1 = Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]);
+				Face FTest2 = Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]);
+				Face FTest3 = Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]);
+				Face FTest4 = Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]);
+
+				NGO.farr.push_back(FTest1);
+				NGO.farr.push_back(FTest2);
+				NGO.farr.push_back(FTest3);
+				NGO.farr.push_back(FTest4);
+*/
+			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]));     // 0              // left
+			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]));     // 1             // top
+			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]));     // 2             // right
+			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]));     // 3             // center
 /*
 				NGO.farr.push_back(Face(ne[0], ne[8], ne[5]));     // 0              // left
 				NGO.farr.push_back(Face(ne[1], ne[2], ne[6]));     // 1             // top
@@ -342,8 +380,11 @@ namespace Game
 		for(unsigned int i = 0; i < NGO.farr.size(); i++)
 		std::cout << i <<'/'<< NGO.farr.size() << NGO.farr[i].ToString() << "\n";
 #endif
-
-			return NGO;
+			GameObject NGO;
+			NGO.varr = varr;
+			NGO.earr = earr;
+			NGO.farr = farr;
+			return NGO ;
 		}
 
 

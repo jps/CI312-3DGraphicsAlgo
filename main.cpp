@@ -5,28 +5,12 @@
  *      Author: Panda
  */
 
-//#include "main.h"
-
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <SDL/SDL.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-#include <time.h>
-#include <iostream>
-
-#include "Header/Vertex.h"
-#include "Header/Edge.h"
-#include "Header/Face.h"
-
-#include "Header/Cube.h"
-#include "Header/ButterflySubspaceDivision.h"
-#include "Header/CatmullClarkSubDivision.h"
-//#define PrintToConsole
+#include "main.h"
 
 using namespace std;
 using namespace Game;
+//#define PrintToConsole
+
 
 #define window_width  800
 #define window_height 600
@@ -134,8 +118,9 @@ using namespace Game;
 			    cout << "Catnell clark called";
 #endif
 			    ButtonPause = 30;
-			    CatmullClarkSubDivision().SubdivideGameObject(CubeTest);
-			    go.init();
+			    go1 = CatmullClarkSubDivision().SubdivideGameObject(CubeTest);
+			    go1.init();
+			    go1on = true;
 			    hasDevided = !hasDevided;
 			    }
 			}
@@ -204,4 +189,3 @@ for(unsigned int i = 0; i < go.earr.size(); i++)
 	    GL_Setup(window_width, window_height);
 	    main_loop_function();
     }
-

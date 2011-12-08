@@ -15,6 +15,14 @@ namespace Game
 
 	}
 
+
+    Edge::Edge(Vertex &A, Vertex &B)
+    {
+    	a = &A;
+    	b = &B;
+    }
+
+
     Edge::Edge(Vertex* A, Vertex* B)
 	{
 	    a = A;

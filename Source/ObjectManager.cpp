@@ -1,21 +1,24 @@
 /*
  * ObjectManager.cpp
  *
- *  Created on: Dec 1, 2011
+ *  Created on: Dec 8, 2011
  *      Author: Panda
  */
 
 #include "../Header/ObjectManager.h"
-#include <stdlib.h>
 
+namespace Game
+{
 
 ObjectManager::ObjectManager()
-    {
-    // TODO Auto-generated constructor stub
+{
+	// TODO Auto-generated constructor stub
 
-    }
+}
 
 ObjectManager::~ObjectManager()
-    {
-    // TODO Auto-generated destructor stub
-    }
+{
+	// TODO Auto-generated destructor stub
+}
+
+}

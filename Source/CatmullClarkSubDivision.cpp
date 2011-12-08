@@ -25,7 +25,7 @@ namespace Game
 
 		EdgesFacesCentroid ef = EdgesFacesCentroid(go.earr, faceCentroids);
 
-
+/*
 		for(unsigned int fi = 0; fi < go.farr.size(); ++fi)
 		{
 
@@ -38,14 +38,39 @@ namespace Game
 				//TODO: attempt to revert back to operator overload... this works for now
 			}
 		}
-
+*/
 		//vector<//fed>
 
 
 
 		GameObject ngo;
 
+		/*ngo.varr.push_back(Vertex(-1, 0, 0));
+		ngo.varr.push_back(Vertex(0, 1, 0));
+		ngo.varr.push_back(Vertex(1, 0, 0));
+		ngo.earr.push_back(Edge(ngo.varr[0], ngo.varr[1]));
+		ngo.earr.push_back(Edge(ngo.varr[1], ngo.varr[2]));
+		ngo.earr.push_back(Edge(ngo.varr[2], ngo.varr[0]));
+		ngo.farr.push_back(Face(&ngo.earr[0],&ngo.earr[1], &ngo.earr[2]));
+*/
 
+		Vertex * a = new Vertex(-1, 0, 0);
+		Vertex * b = new Vertex(0, 1, 0);
+		Vertex * c = new Vertex(1, 0, 0);
+
+		Edge * d = new Edge( a, b);
+		Edge * e = new Edge( b, c);
+		Edge * f = new Edge( c, a);
+
+		Face * g = new Face(d , e, f);
+
+		ngo.varr.push_back(*a );
+		ngo.varr.push_back(*b );
+		ngo.varr.push_back(*c );
+		ngo.earr.push_back(*d );
+		ngo.earr.push_back(*e );
+		ngo.earr.push_back(*f );
+		ngo.farr.push_back(*g );
 
 		return ngo;
 	    }

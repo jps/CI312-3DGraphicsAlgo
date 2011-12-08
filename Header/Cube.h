@@ -23,7 +23,7 @@ namespace Game
 
     class Cube: public Game::GameObject
 		{
-		public:
+	public:
 
 		//struct EdgeFaces;
 
@@ -38,7 +38,7 @@ namespace Game
 		Edge earr[18];
 		Face farr[12];*/
 
-		private:
+	private:
 		void init(float size, Vertex v);
 		int r[12], g[12], b[12];
 		};

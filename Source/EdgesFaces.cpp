@@ -112,7 +112,7 @@ namespace Game
 #ifdef Debug
 				std::cout << "edge faces has failed on edge "<< i <<"/" << earr.size() <<" face "<< j+1 << "/" <<farr.size() << "edge:" << k+1 << "/3 \n";
 #endif
-						throw 1/0;
+						throw 1;
 					}
 				}
 				if(br == true)

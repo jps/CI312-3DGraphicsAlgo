@@ -21,6 +21,7 @@ namespace Game
 	{
     public:
 	Edge();
+	Edge(Vertex& A, Vertex& B);
 	Edge(Vertex* A, Vertex* B);
 	Vertex MidPoint();
 
