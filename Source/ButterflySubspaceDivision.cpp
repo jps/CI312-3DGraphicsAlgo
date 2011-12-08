@@ -257,7 +257,7 @@ namespace Game
 				Edge * ne7 = new Edge( *nvs1, *nvs2);
 				Edge * ne8 = new Edge( *nvs2, *nvs0);
 
-				Face * nf0 = new Face(*ne0, *ne8, *ne5);
+				Face * nf0 = new Face(*ne0, *ne8, *ne5, FBF);
 				Face * nf1 = new Face(*ne1, *ne2, *ne6);
 				Face * nf2 = new Face(*ne3, *ne4, *ne7);
 				Face * nf3 = new Face(*ne6, *ne7, *ne8);

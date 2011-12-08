@@ -27,8 +27,9 @@ namespace Game
     public:
 		Face();
 		Face(Edge& A, Edge& B, Edge& C);
-		Face(Edge* A, Edge* B, Edge* C);
-		Face(Edge* A, Edge* B, Edge* C, EdgeDirection faceDirection);
+		Face(Edge* A, Edge* B, Edge* C); //TODO: Remove Deprecated pass by reference is safer
+		Face(Edge* A, Edge* B, Edge* C, EdgeDirection faceDirection);//TODO: Remove Deprecated pass by reference is safer
+		Face(Edge& A, Edge& B, Edge& C, EdgeDirection faceDirection);
 		virtual ~Face();
 		void Draw();
 		Edge* earr[3];

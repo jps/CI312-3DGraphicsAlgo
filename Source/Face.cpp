@@ -27,6 +27,13 @@ namespace Game
 	edgeDirection = FFF;
     }
 
+    Face::Face(Edge& A, Edge& B, Edge& C, EdgeDirection EdgeDirection)
+    {
+    earr[0] = &A;
+    earr[1] = &B;
+    earr[2] = &C;
+    edgeDirection = EdgeDirection;
+    }
 
     Face::Face(Edge* A, Edge* B, Edge* C)
     {
