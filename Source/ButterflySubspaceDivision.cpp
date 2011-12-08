@@ -47,6 +47,9 @@ namespace Game
 
 	GameObject ButterflySubspaceDivision::Tessellate(const GameObject& got)
 		{
+
+		GameObject NGO;
+
 #ifdef PrintToConsole
 				cout << "entered subspace division method \n";
 #endif
@@ -229,12 +232,64 @@ namespace Game
 				NGO.varr.push_back(Vertex(fs[fi].nvs[2].GetX(), fs[fi].nvs[2].GetY(), fs[fi].nvs[2].GetZ()));//0
 				*/
 
+				/*
 				varr.push_back(Vertex(fs[fi].ovs[0]));//0
 				varr.push_back(Vertex(fs[fi].ovs[1]));//1
 				varr.push_back(Vertex(fs[fi].ovs[2]));//2
 				varr.push_back(Vertex(fs[fi].nvs[0]));//3
 				varr.push_back(Vertex(fs[fi].nvs[1]));//4
 				varr.push_back(Vertex(fs[fi].nvs[2]));//5
+*/
+				Vertex * ovs0 = new Vertex(fs[fi].ovs[0]);
+				Vertex * ovs1 = new Vertex(fs[fi].ovs[1]);
+				Vertex * ovs2 = new Vertex(fs[fi].ovs[2]);
+				Vertex * nvs0 = new Vertex(fs[fi].nvs[0]);
+				Vertex * nvs1 = new Vertex(fs[fi].nvs[1]);
+				Vertex * nvs2 = new Vertex(fs[fi].nvs[2]);
+
+				Edge * ne0 = new Edge( *ovs0, *nvs0);
+				Edge * ne1 = new Edge( *nvs0, *ovs1);
+				Edge * ne2 = new Edge( *ovs1, *nvs1);
+				Edge * ne3 = new Edge( *nvs1, *ovs2);
+				Edge * ne4 = new Edge( *ovs2, *nvs2);
+				Edge * ne5 = new Edge( *nvs2, *ovs0);
+				Edge * ne6 = new Edge( *nvs0, *nvs1);
+				Edge * ne7 = new Edge( *nvs1, *nvs2);
+				Edge * ne8 = new Edge( *nvs2, *nvs0);
+
+				Face * nf0 = new Face(*ne0, *ne8, *ne5);
+				Face * nf1 = new Face(*ne1, *ne2, *ne6);
+				Face * nf2 = new Face(*ne3, *ne4, *ne7);
+				Face * nf3 = new Face(*ne6, *ne7, *ne8);
+
+				NGO.varr.push_back(*ovs0);
+				NGO.varr.push_back(*ovs1);
+				NGO.varr.push_back(*ovs2);
+				NGO.varr.push_back(*nvs0);
+				NGO.varr.push_back(*nvs1);
+				NGO.varr.push_back(*nvs2);
+
+				NGO.earr.push_back(*ne0);
+				NGO.earr.push_back(*ne1);
+				NGO.earr.push_back(*ne2);
+				NGO.earr.push_back(*ne3);
+				NGO.earr.push_back(*ne4);
+				NGO.earr.push_back(*ne5);
+				NGO.earr.push_back(*ne6);
+				NGO.earr.push_back(*ne7);
+				NGO.earr.push_back(*ne8);
+
+				NGO.farr.push_back(*nf0);
+				NGO.farr.push_back(*nf1);
+				NGO.farr.push_back(*nf2);
+				NGO.farr.push_back(*nf3);
+
+				/*
+				farr.push_back(Face(&earr.at(EstartIndex),   &earr.at(EstartIndex+8), &earr[EstartIndex+5]));     // 0
+				farr.push_back(Face(&earr[EstartIndex+1], &earr[EstartIndex+2], &earr[EstartIndex+6]));     // 1
+				farr.push_back(Face(&earr[EstartIndex+3], &earr[EstartIndex+4], &earr[EstartIndex+7]));     // 2
+				farr.push_back(Face(&earr[EstartIndex+6], &earr[EstartIndex+7], &earr[EstartIndex+8]));     // 3
+				*/
 
 				/*
 				cout<< "fs[fi].ovs[0]" << fs[fi].ovs[0].ToString() << " == ? " << NGO.varr[startIndex].ToString() <<  "\n";
@@ -245,6 +300,7 @@ namespace Game
 				unsigned int EstartIndex = farr.size();
 
 
+/*
 				earr.push_back(Edge(&varr[startIndex],   &varr[startIndex+3])); //  0       //left bottom
 				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+1])); //  1       //left top
 				earr.push_back(Edge(&varr[startIndex+1], &varr[startIndex+4])); //  2       //right top
@@ -380,10 +436,7 @@ namespace Game
 		for(unsigned int i = 0; i < NGO.farr.size(); i++)
 		std::cout << i <<'/'<< NGO.farr.size() << NGO.farr[i].ToString() << "\n";
 #endif
-			GameObject NGO;
-			NGO.varr = varr;
-			NGO.earr = earr;
-			NGO.farr = farr;
+
 			return NGO ;
 		}
 

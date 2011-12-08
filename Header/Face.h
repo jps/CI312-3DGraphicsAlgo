@@ -26,6 +26,7 @@ namespace Game
 	{
     public:
 		Face();
+		Face(Edge& A, Edge& B, Edge& C);
 		Face(Edge* A, Edge* B, Edge* C);
 		Face(Edge* A, Edge* B, Edge* C, EdgeDirection faceDirection);
 		virtual ~Face();
