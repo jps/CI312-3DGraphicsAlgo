@@ -37,16 +37,16 @@ using namespace Game;
 
     void main_loop_function()
     {
-	    Vertex vt = Vertex(0,0,0);
-	    Cube CubeTest = Cube(1.0f,vt);
-	    GameObject go, go1, go2;
-	    signed int ButtonPause, wireframe;
+	    ObjectManager * objManager = ObjectManager::Inst(); //create object manager
+
+	    Cube CubeTest = Cube(1.0f,Vertex(0,0,0)); //create cube and push to object manager
+	    objManager->GameObjects.push_back(CubeTest);
+
+	    signed int buttonPause, wireframe, CurrentObj;
 	    float RotationX, RotationY, RotationZ, Zoom, Size;
-	    RotationX = RotationY = RotationZ = ButtonPause = wireframe = 0;
+	    RotationX = RotationY = RotationZ = buttonPause = wireframe = CurrentObj = 0;
 	    Zoom = -10;
 	    Size = 10;
-	    //int drawOnly = 0;
-	    bool hasDevided = false, go1on = false;//cheap way of chosing which object to draw TODO: change to something more suitable
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -55,26 +55,15 @@ using namespace Game;
 		    glRotatef(RotationX,RotationY, 45,45);
 		    glPointSize(Size);
 
-
 		    glBegin(GL_TRIANGLES);
-		    // this should be the main gl draw loop here.
-		    // ie all object within the game object manager that have visibility set to to true draw!
-
-		    if(!hasDevided)
-			CubeTest.Draw();
-		    else
-			{
-			if(go1on)
-			{
-			    go1.Draw();
-			}
-			else
-			    go.Draw();
-			}
+		    objManager->Draw();
 		    glEnd();
+
+
 		    SDL_GL_SwapBuffers();
+
 		    // Check keypresses
-		    ButtonPause = ButtonPause > 0 ? --ButtonPause : ButtonPause; //buffer to stop method being spammed cheap but it works...
+		    buttonPause = buttonPause > 0 ? --buttonPause : buttonPause; //buffer to stop method being spammed cheap but it works...
 
 		    if( key[SDLK_RIGHT] ){ RotationX-=0.5; }
 		    if( key[SDLK_LEFT ] ){ RotationX+=0.5; }
@@ -82,85 +71,63 @@ using namespace Game;
 		    if( key[SDLK_DOWN ] ){ RotationY+=0.5; }
 		    if( key[SDLK_l] ) { glRotatef(45,4,0,0); }
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
-
 		    if( key[SDLK_i]) { Zoom += 0.5;}
 		    if( key[SDLK_o]) { Zoom -= 0.5;}
-		    if( key[SDLK_w]) {
-			if( ButtonPause == 0)
+		    if( key[SDLK_0]){RotationX = RotationY = RotationZ == 0;} //reset to center
+		    if( key[SDLK_w])
+		    {
+		    	if( buttonPause == 0)
 			    {
-			    switch(wireframe)
-				{
-				case 0:
-				    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-				    ++wireframe;
-				    break;
-				case 1:
-				    glPolygonMode( GL_FRONT_AND_BACK, GL_POINT );
-				    ++wireframe = 2;
-				    break;
-				default:
-				    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-				    wireframe = 0;
-				    break;
-				}
-			    ButtonPause = 30;
+					switch(wireframe)
+					{
+					case 0:
+						glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+						++wireframe;
+						break;
+					case 1:
+						glPolygonMode( GL_FRONT_AND_BACK, GL_POINT );
+						++wireframe;
+						break;
+					default:
+						glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+						wireframe = 0;
+						break;
+					}
+					buttonPause = 30;
 			    }
-			if( key[SDLK_q]){
-			glEnable(GL_POINT_SPRITE);
-			glTexEnvf(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
-			}
 		    }
 		    if( key[SDLK_c])
 			{
-			if(ButtonPause == 0)
+		    	if(buttonPause == 0)
 			    {
 #ifdef PrintToConsole
-			    cout << "Catnell clark called";
+		    		cout << "Catnell clark called";
 #endif
-			    ButtonPause = 30;
-			    go1 = CatmullClarkSubDivision().SubdivideGameObject(CubeTest);
-			    go1.init();
-			    go1on = true;
-			    hasDevided = !hasDevided;
+					objManager->GameObjects[CurrentObj].visible = false;
+					GameObject _ngobj = CatmullClarkSubDivision().Subdivide(objManager->GameObjects[CurrentObj]);
+					GameObject* ngobj = new GameObject(_ngobj);
+					ngobj->init();
+					objManager->GameObjects.push_back(*ngobj);
+					++CurrentObj;
+					buttonPause = 30;
 			    }
 			}
-		    if( key[SDLK_0]) //reset to center
-			{RotationX = RotationY = RotationZ == 0;}
 		    if( key[SDLK_a])
 			{
-			if( ButtonPause == 0)
-			    {
-#ifdef PrintToConsole
-			    cout << "ButterflySubSpaceDivision Called \n";
-#endif
-			    if(hasDevided)
-				{
-			    go1 = ButterflySubspaceDivision().Tessellate(go);
-				//go1 = go.ButterflySubSpaceDivision();
-std::cout << "Object returned"; //TODO: wtf is going on here....
-				go1on = true;
-				go1.init();
-				go1.init();
-				//hasDevided = !hasDevided;
-				ButtonPause = 30;
-			    }else{
-				go = ButterflySubspaceDivision().Tessellate(CubeTest);
-#ifdef PrintToConsole
-std::cout << "Checking the provided edge list" << "\n";
-for(unsigned int i = 0; i < go.earr.size(); i++)
-    {
-    std::cout << go.earr[i].a->ToString();
-    std::cout << go.earr[i].b->ToString();
-    }
-#endif
-				go.init();
-				go.init();
-				hasDevided = !hasDevided;
-				ButtonPause = 30;
-				}
-			    }
+		    	if(buttonPause == 0)
+		    	{
+					objManager->GameObjects[CurrentObj].visible = false;
+					GameObject _ngobj = ButterflySubspaceDivision().Tessellate(objManager->GameObjects[CurrentObj]);
+					GameObject* ngobj = new GameObject(_ngobj);
+					ngobj->init();
+					objManager->GameObjects.push_back(*ngobj);
+					++CurrentObj;
+					buttonPause = 30;
+		    	}
 			}
 	    }
+
+	    objManager->~ObjectManager();
     }
 
 

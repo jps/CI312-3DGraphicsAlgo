@@ -7,69 +7,39 @@
 
 #include "../Header/ButterflySubspaceDivision.h"
 
-#define PrintToConsole
+//#define PrintToConsole
 
 namespace Game
     {
-/*
-    ButterflySubspaceDivision::ButterflySubspaceDivision()
-	{
-	// TODO Auto-generated constructor stub
-
-	}
-
-    ButterflySubspaceDivision::~ButterflySubspaceDivision()
-	{
-	// TODO Auto-generated destructor stub
-	}
-*/
 
     Vertex ButterflySubspaceDivision::ButterflyCalculateNewVertex(ControlPoints controlPoints)
 		{
 		//TODO: not happy with this would rather it be in one line.
-		float w =0.0625;
+		float w = 0.0625;//tension of control net // 1 will equate to plane teseleation ie just increase poly count;
 		float w2 = w*2;
 		float h = 0.5;
 		Vertex v1 = (controlPoints.a[0] + controlPoints.a[1]) * h;
 		Vertex v2 = (controlPoints.b[0]+controlPoints.b[1])*w2;
 		Vertex v3 = (controlPoints.c[0] + controlPoints.c[1] + controlPoints.c[2] + controlPoints.c[3])* w;
 
-	#ifdef PrintToConsole
-	//		cout << "v1: "<< v1.ToString() << "\n";
-	//		cout << "v2: "<< v2.ToString() << "\n";
-	//		cout << "v3: "<< v3.ToString() << "\n";
-	#endif
-
 		return v1 + v2 - v3;
+
 		}
-
-
 
 	GameObject ButterflySubspaceDivision::Tessellate(const GameObject& got)
 		{
-
 		GameObject NGO;
 
 #ifdef PrintToConsole
 				cout << "entered subspace division method \n";
 #endif
-			vector<Vertex> varr;
-			vector<Edge> earr;
-			vector<Face> farr;
-
 			GameObject go = got;
 
-			//GameObject NGO = GameObject();
 			int fl = go.farr.size();
 			int el = go.earr.size();
-			//int vl = go.varr.size();
 			//NGO.varr = go.varr;//assign current vertices to the new object as none of these will change.
-
-
-			//TODO: issue here not finding the correct vals. however these are already known.
-			//EdgeFaces efs[el];
-			//ControlPoints cps[el];
 			EdgeEdges edgeEdges[el];
+
 
 #ifdef PrintToConsole
 			cout << "About to find edge faces \n";
@@ -143,59 +113,48 @@ namespace Game
 				cps.c[3] = f7.LocateFinalVertex(e4);
 
 #ifdef PrintToConsole
-			cout << "a[0] Located :"<< cps.a[0].ToString() <<"\n";
-			cout << "a[1] Located :"<< cps.a[1].ToString() <<"\n";
-			cout << "b[0] Located :"<< cps.b[0].ToString() <<"\n";
-			cout << "b[1] Located :"<< cps.b[1].ToString() <<"\n";
-			cout << "c[0] Located :"<< cps.c[0].ToString() <<"\n";
-			cout << "c[1] Located :"<< cps.c[1].ToString() <<"\n";
-			cout << "c[2] Located :"<< cps.c[2].ToString() <<"\n";
-			cout << "c[3] Located :"<< cps.c[3].ToString() <<"\n";
+				cout << "a[0] Located :"<< cps.a[0].ToString() <<"\n";
+				cout << "a[1] Located :"<< cps.a[1].ToString() <<"\n";
+				cout << "b[0] Located :"<< cps.b[0].ToString() <<"\n";
+				cout << "b[1] Located :"<< cps.b[1].ToString() <<"\n";
+				cout << "c[0] Located :"<< cps.c[0].ToString() <<"\n";
+				cout << "c[1] Located :"<< cps.c[1].ToString() <<"\n";
+				cout << "c[2] Located :"<< cps.c[2].ToString() <<"\n";
+				cout << "c[3] Located :"<< cps.c[3].ToString() <<"\n";
 #endif
-
-			//Edge ne1 = Edge(farr[fi].earr[ei].a, nv1);
-			//Edge ne2 = Edge(nv1,farr[fi].earr[ei].b);
-
-			//this list is build to help shared edges find new points
-			fs[fi].nvs[ei] = ButterflyCalculateNewVertex(cps);
-			edgeEdges[ec].parent = *go.farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
-			edgeEdges[ec].children[0] = Edge(go.farr[fi].earr[ei]->a, &fs[fi].nvs[ei]);
-			edgeEdges[ec].children[1] = Edge(&fs[fi].nvs[ei],&*go.farr[fi].earr[ei]->b);
-			++ec;
-			//this object is built to aid the creation of the new faces
-			//fs.nes[ei*2] = edgeEdges[ec].children[0];
-			//fs.nes[ei*2+1] = edgeEdges[ec].children[1];
+				fs[fi].nvs[ei] = ButterflyCalculateNewVertex(cps);
+				//this list is build to help shared edges find new points
+				edgeEdges[ec].parent = *go.farr[fi].earr[ei];//TODO: this should be handled with pointers to minimize memory consumption
+				edgeEdges[ec].children[0] = Edge(go.farr[fi].earr[ei]->a, &fs[fi].nvs[ei]);
+				edgeEdges[ec].children[1] = Edge(&fs[fi].nvs[ei],&*go.farr[fi].earr[ei]->b);
+				++ec;
 #ifdef PrintToConsole
 		cout << " New vertex calculated " << ButterflyCalculateNewVertex(cps).ToString() << "\n";
 #endif
-
-				}else{		    //end if forward
+				}
+				else
+				{		    //end if forward
 				fs[fi].direction[ei] = false; //set backwards
 				fs[fi].ovs[ei] = *go.farr[fi].earr[ei]->b;
 				//find the corresponding control point and edges here from using the edge array and edgeedges list and add it to the facesplit object.
 				for(int i = 0; i < ec; ++i)
 				  {
-				  if(*go.farr[fi].earr[ei] == edgeEdges[i].parent)
+					  if(*go.farr[fi].earr[ei] == edgeEdges[i].parent)
+						  {
+						  fs[fi].nvs[ei] = *edgeEdges[i].children[1].a;
+	#ifdef PrintToConsole
+						  cout << "edge Edges is found \n";
+						  cout << "fs.nvs["<<ei<<"]"<< fs[fi].nvs[ei].ToString() << "\n";
+	#endif
+							  break;
+	#ifdef PrintToConsole
+					  }else if(i == ec-1)
 					  {
-					  //
-					  //can assume is anti clockwise ??? //TODO: review
-					  //fs.nes[ei*2] = edgeEdges[i].children[0];
-					  //fs.nes[ei*2+1] = edgeEdges[i].children[1];
-					  fs[fi].nvs[ei] = *edgeEdges[i].children[1].a;//TODO:should be provided as a pointer //TODO: another assumption review!!!!!
 
-#ifdef PrintToConsole
-					  cout << "edge Edges is found \n";
-					  cout << "fs.nvs["<<ei<<"]"<< fs[fi].nvs[ei].ToString() << "\n";
-#endif
-						  break;
-#ifdef PrintToConsole
-				  }else if(i == ec-1){
-
-					  cout << "edge Edges not found \n";
-#endif
+						  cout << "edge Edges not found \n";
+	#endif
 					  }
 				  }
-
 				}
 #ifdef PrintToConsole
 			cout << "\n";
@@ -217,29 +176,6 @@ namespace Game
 
 	*/
 
-#ifdef PrintToConsole
-	//		cout << "Verticies for new faces ovs[o] " << fs.ovs[0].ToString() << " ovs[1] " << fs.ovs[1].ToString() << " ovs[2] " << fs.ovs[2].ToString() << "\n" << " nvs[0] " << fs.nvs[0].ToString() << "nvs[1] " << fs.nvs[1].ToString() << " nvs[2] " << fs.nvs[2].ToString() << "\n";
-#endif
-
-				unsigned int startIndex = varr.size(); //this is the array index of where the first value is inserted into the vertex vector
-
-				/*NGO.varr.push_back(Vertex(fs[fi].ovs[0].GetX(), fs[fi].ovs[0].GetY(), fs[fi].ovs[0].GetZ()));//0
-				NGO.varr.push_back(Vertex(fs[fi].ovs[1].GetX(), fs[fi].ovs[1].GetY(), fs[fi].ovs[1].GetZ()));//0
-				NGO.varr.push_back(Vertex(fs[fi].ovs[2].GetX(), fs[fi].ovs[2].GetY(), fs[fi].ovs[2].GetZ()));//0
-
-				NGO.varr.push_back(Vertex(fs[fi].nvs[0].GetX(), fs[fi].nvs[0].GetY(), fs[fi].nvs[0].GetZ()));//0
-				NGO.varr.push_back(Vertex(fs[fi].nvs[1].GetX(), fs[fi].nvs[1].GetY(), fs[fi].nvs[1].GetZ()));//0
-				NGO.varr.push_back(Vertex(fs[fi].nvs[2].GetX(), fs[fi].nvs[2].GetY(), fs[fi].nvs[2].GetZ()));//0
-				*/
-
-				/*
-				varr.push_back(Vertex(fs[fi].ovs[0]));//0
-				varr.push_back(Vertex(fs[fi].ovs[1]));//1
-				varr.push_back(Vertex(fs[fi].ovs[2]));//2
-				varr.push_back(Vertex(fs[fi].nvs[0]));//3
-				varr.push_back(Vertex(fs[fi].nvs[1]));//4
-				varr.push_back(Vertex(fs[fi].nvs[2]));//5
-*/
 				Vertex * ovs0 = new Vertex(fs[fi].ovs[0]);
 				Vertex * ovs1 = new Vertex(fs[fi].ovs[1]);
 				Vertex * ovs2 = new Vertex(fs[fi].ovs[2]);
@@ -284,125 +220,8 @@ namespace Game
 				NGO.farr.push_back(*nf2);
 				NGO.farr.push_back(*nf3);
 
-				/*
-				farr.push_back(Face(&earr.at(EstartIndex),   &earr.at(EstartIndex+8), &earr[EstartIndex+5]));     // 0
-				farr.push_back(Face(&earr[EstartIndex+1], &earr[EstartIndex+2], &earr[EstartIndex+6]));     // 1
-				farr.push_back(Face(&earr[EstartIndex+3], &earr[EstartIndex+4], &earr[EstartIndex+7]));     // 2
-				farr.push_back(Face(&earr[EstartIndex+6], &earr[EstartIndex+7], &earr[EstartIndex+8]));     // 3
-				*/
 
-				/*
-				cout<< "fs[fi].ovs[0]" << fs[fi].ovs[0].ToString() << " == ? " << NGO.varr[startIndex].ToString() <<  "\n";
-				cout<< "fs[fi].nvs[0]" << fs[fi].nvs[0].ToString() << " == ? " << NGO.varr[startIndex+3].ToString() <<  "\n";
-				cout<< "fs[fi].nvs[1]" << fs[fi].nvs[1].ToString() << " == ? " << NGO.varr[startIndex+4].ToString() <<  "\n";
-				cout<< "fs[fi].nvs[2]" << fs[fi].nvs[2].ToString() << " == ? " << NGO.varr[startIndex+5].ToString() <<  "\n";
-*/
-				unsigned int EstartIndex = farr.size();
-
-
-/*
-				earr.push_back(Edge(&varr[startIndex],   &varr[startIndex+3])); //  0       //left bottom
-				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+1])); //  1       //left top
-				earr.push_back(Edge(&varr[startIndex+1], &varr[startIndex+4])); //  2       //right top
-				earr.push_back(Edge(&varr[startIndex+4], &varr[startIndex+2])); //  3      //right bottom
-				earr.push_back(Edge(&varr[startIndex+2], &varr[startIndex+5])); //  4       //bottom right
-				earr.push_back(Edge(&varr[startIndex+5], &varr[startIndex+2])); //  5       //bottom left
-				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+4])); //  6       //center top
-				earr.push_back(Edge(&varr[startIndex+4], &varr[startIndex+5])); //  7      //center right
-				earr.push_back(Edge(&varr[startIndex+3], &varr[startIndex+5])); //  8      //center right
-
-				farr.push_back(Face(&earr.at(EstartIndex),   &earr.at(EstartIndex+8), &earr[EstartIndex+5]));     // 0              // left
-				farr.push_back(Face(&earr[EstartIndex+1], &earr[EstartIndex+2], &earr[EstartIndex+6]));     // 1             // top
-				farr.push_back(Face(&earr[EstartIndex+3], &earr[EstartIndex+4], &earr[EstartIndex+7]));     // 2             // right
-				farr.push_back(Face(&earr[EstartIndex+6], &earr[EstartIndex+7], &earr[EstartIndex+8]));     // 3             // center
-
-
-				/*
-				ne[0] = Edge(&NGO.varr[startIndex], &NGO.varr[startIndex+3]); //left bottom
-				//ne[0] = Edge(&fs.ovs[0], &fs.nvs[0]); //left bottom
-				ne[1] = Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+1]); //left top
-				//ne[1] = Edge(&fs.nvs[0], &fs.ovs[1]); //left top
-				ne[2] = Edge(&NGO.varr[startIndex+1], &NGO.varr[startIndex+4]); //right top
-				//ne[2] = Edge(&fs.ovs[1], &fs.nvs[1]); //right top
-				ne[3] = Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+2]); //right bottom
-				//ne[3] = Edge(&fs.nvs[1], &fs.ovs[2]); //right bottom
-				ne[4] = Edge(&NGO.varr[startIndex+2], &NGO.varr[startIndex+5]); //bottom right
-				//ne[4] = Edge(&fs.ovs[2], &fs.nvs[2]); //bottom right
-				ne[5] = Edge(&NGO.varr[startIndex+5], &NGO.varr[startIndex+0]); //bottom left
-				//ne[5] = Edge(&fs.nvs[2], &fs.ovs[0]); //bottom left
-				ne[6] = Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+4]); //center top
-				//ne[6] = Edge(&fs.nvs[0], &fs.nvs[1]); //center top
-				ne[7] = Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+5]); //center right
-				//ne[7] = Edge(&fs.nvs[1], &fs.nvs[2]); //center right
-				ne[8] = Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+5]); //center right
-				//ne[8] = Edge(&fs.nvs[0], &fs.nvs[2]); //center left
-				*//*
-				ne[0] = Edge(&fs.ovs[0], &fs.nvs[0]); //left bottom
-				ne[1] = Edge(&fs.nvs[0], &fs.ovs[1]); //left top
-				ne[2] = Edge(&fs.ovs[1], &fs.nvs[1]); //right top
-				ne[3] = Edge(&fs.nvs[1], &fs.ovs[2]); //right bottom
-				ne[4] = Edge(&fs.ovs[2], &fs.nvs[2]); //bottom right
-				ne[5] = Edge(&fs.nvs[2], &fs.ovs[0]); //bottom left
-				ne[6] = Edge(&fs.nvs[0], &fs.nvs[1]); //center top
-				ne[7] = Edge(&fs.nvs[1], &fs.nvs[2]); //center right
-				ne[8] = Edge(&fs.nvs[0], &fs.nvs[2]); //center left
-				*/
-/*
-
-				unsigned int EstartIndex = NGO.earr.size();
-
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex],   &NGO.varr[startIndex+3])); //  0       //left bottom
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+1])); //  1       //left top
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+1], &NGO.varr[startIndex+4])); //  2       //right top
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+2])); //  3      //right bottom
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+2], &NGO.varr[startIndex+5])); //  4       //bottom right
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+5], &NGO.varr[startIndex+2])); //  5       //bottom left
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+4])); //  6       //center top
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+4], &NGO.varr[startIndex+5])); //  7      //center right
-				NGO.earr.push_back(Edge(&NGO.varr[startIndex+3], &NGO.varr[startIndex+5])); //  8      //center right
-*/
-				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]));     // 0              // left
-				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]));     // 1             // top
-				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]));     // 2             // right
-				//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]));     // 3             // center
-
-				//NGO.earr[EstartIndex]
-
-				/*Face FTest1 = Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]);
-				Face FTest2 = Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]);
-				Face FTest3 = Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]);
-				Face FTest4 = Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]);
-
-				NGO.farr.push_back(FTest1);
-				NGO.farr.push_back(FTest2);
-				NGO.farr.push_back(FTest3);
-				NGO.farr.push_back(FTest4);
-*/
-			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex], &NGO.earr[EstartIndex+8], &NGO.earr[EstartIndex+5]));     // 0              // left
-			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+1], &NGO.earr[EstartIndex+2], &NGO.earr[EstartIndex+6]));     // 1             // top
-			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+3], &NGO.earr[EstartIndex+4], &NGO.earr[EstartIndex+7]));     // 2             // right
-			//	NGO.farr.push_back(Face(&NGO.earr[EstartIndex+6], &NGO.earr[EstartIndex+7], &NGO.earr[EstartIndex+8]));     // 3             // center
-/*
-				NGO.farr.push_back(Face(ne[0], ne[8], ne[5]));     // 0              // left
-				NGO.farr.push_back(Face(ne[1], ne[2], ne[6]));     // 1             // top
-				NGO.farr.push_back(Face(ne[3], ne[4], ne[7]));     // 2             // right
-				NGO.farr.push_back(Face(ne[6], ne[7], ne[8]));     // 3             // center
-*/
-				/*nf[0] = Face(ne[0], ne[8], ne[5]);
-				nf[1] = Face(ne[1], ne[2], ne[6]);
-				nf[2] = Face(ne[3], ne[4], ne[7]);
-				nf[3] = Face(ne[6], ne[7], ne[8]);
-*/
-				//for(int i = 0; i < 9; i++)
-					//NGO.earr.push_back(ne[i]);//TODO: this appears to be putting random values in....
-	/*
-				NGO.farr.push_back(nf[0]);
-				NGO.farr.push_back(nf[1]);
-				NGO.farr.push_back(nf[2]);
-				NGO.farr.push_back(nf[3]);
-	*/
-
-#ifdef DPrintToConsole
+#ifdef SPrintToConsole
 		std::cout << "Vertex Pointer Value Check face "<< fi << "\n";
 
 		std::cout << "new vertex 0 "<< fs[fi].nvs[0].ToString() << " Edge  \n";
@@ -412,10 +231,6 @@ namespace Game
 		std::cout << "old vertex 1 "<< fs[fi].ovs[1].ToString() << " Edge  \n";
 		std::cout << "old vertex 2 "<< fs[fi].ovs[2].ToString() << " Edge  \n";
 
-//		&fs.nvs[0],
-		std::cout << "new edge 0 "<< ne
-
-[0].ToString() << " Edge  \n";
 		std::cout << "new edge 1 "<< ne[1].ToString() << " Edge  \n";
 		std::cout << "new edge 2 "<< ne[2].ToString() << " Edge  \n";
 		std::cout << "new edge 3 "<< ne[3].ToString() << " Edge  \n";
@@ -424,9 +239,6 @@ namespace Game
 		std::cout << "new edge 6 "<< ne[6].ToString() << " Edge  \n";
 		std::cout << "new edge 7 "<< ne[7].ToString() << " Edge  \n";
 		std::cout << "new edge 8 "<< ne[8].ToString() << " Edge  \n";
-		//std::cout << "Vertex Pointer Value Check face "<< fi << " Edge " << ei << " \n";
-
-
 #endif
 
 

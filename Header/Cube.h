@@ -40,7 +40,6 @@ namespace Game
 
 	private:
 		void init(float size, Vertex v);
-		int r[12], g[12], b[12];
 		};
     }
 

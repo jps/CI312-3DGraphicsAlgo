@@ -10,15 +10,35 @@
 namespace Game
 {
 
-ObjectManager::ObjectManager()
-{
-	// TODO Auto-generated constructor stub
+	ObjectManager::ObjectManager()
+	{
 
-}
+	}
 
-ObjectManager::~ObjectManager()
-{
-	// TODO Auto-generated destructor stub
-}
+	ObjectManager* ObjectManager::pInstance = NULL;
+
+	ObjectManager* ObjectManager::Inst()
+	{
+		if(pInstance == NULL)
+		{
+			pInstance = new ObjectManager();
+		}
+		  return pInstance;
+	}
+
+
+	void ObjectManager::Draw()
+	{
+		for (vector<GameObject>::iterator it = GameObjects.begin(); it!=GameObjects.end(); ++it) {
+			if(it->visible)
+				it->Draw();
+		}
+	}
+
+	ObjectManager::~ObjectManager()
+	{
+
+		// TODO Auto-generated destructor stub
+	}
 
 }

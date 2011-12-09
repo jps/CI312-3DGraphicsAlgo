@@ -77,8 +77,9 @@ namespace Game
 
 
 	void init();
-	private:
+	protected:
 	vector<FaceColor> faceColors;
+	private:
 
 	};
 

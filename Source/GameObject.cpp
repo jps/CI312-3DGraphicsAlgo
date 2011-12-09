@@ -41,7 +41,7 @@ namespace Game
 
     void GameObject::init()
 	{
-	   for(unsigned int i = 0; i < /*varr.size()*/72; ++i)//todo: remove hard coded value
+	   for(unsigned int i = 0; i < varr.size(); ++i)
 		{
 		    FaceColor fc;
 		    fc.r = rand() % 255;

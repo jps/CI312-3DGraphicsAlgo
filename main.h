@@ -19,7 +19,7 @@
 #include "Header/Edge.h"
 #include "Header/Face.h"
 #include "Header/GameObject.h"
-
+#include "Header/ObjectManager.h"
 #include "Header/Cube.h"
 #include "Header/ButterflySubspaceDivision.h"
 #include "Header/CatmullClarkSubDivision.h"

@@ -13,7 +13,7 @@ namespace Game
 
 
 
-	GameObject CatmullClarkSubDivision::SubdivideGameObject(GameObject go)
+	GameObject CatmullClarkSubDivision::Subdivide(GameObject go)
 	    {
 		//for each face in the object calculate the centroid
 		vector<FaceCentroid> faceCentroids;

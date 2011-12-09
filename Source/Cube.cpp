@@ -35,6 +35,8 @@ namespace Game
 		void Cube::init(float size, Vertex v)
 		{
 
+			visible = true;
+
 			varr.push_back(Vertex(-size,-size,-size)); //Front Face Bottom Left
 			varr.push_back(Vertex(-size, size,-size)); //Front Face Top Left
 			varr.push_back(Vertex( size, size,-size)); //Front Face Top Right
@@ -76,11 +78,13 @@ namespace Game
 			farr.push_back(Face(&earr[16],&earr[4],  &earr[17],BBF)); //Bottom Face Left
 			farr.push_back(Face(&earr[17],&earr[11], &earr[14],BBB)); //Bottom Face Right
 
-			for( int i = 0; i < 12 ; ++i)
+		   for(unsigned int i = 0; i < varr.size(); ++i)
 			{
-				r[i] = rand() % 255;
-				g[i] = rand() % 255;
-				b[i] = rand() % 255;
+				FaceColor fc;
+				fc.r = rand() % 255;
+				fc.g  = rand() % 255;
+				fc.b  = rand() % 255;
+				faceColors.push_back(fc);
 			}
 		}
 
@@ -88,7 +92,7 @@ namespace Game
 		{
 			for(int i = 0; i < 12; ++i)
 			{
-				glColor3ub(r[i],g[i],b[i]);
+				glColor3ub(faceColors[i].r, faceColors[i].g, faceColors[i].b);
 				farr[i].Draw();
 			}
 		}

@@ -28,7 +28,7 @@ namespace Game
 		class CatmullClarkSubDivision
 		{
 		public:
-		GameObject SubdivideGameObject(GameObject go);
+		GameObject Subdivide(GameObject go);
 		//CatmullClarkSubDivision();//not needed at this is going to be a static method
 		//virtual ~CatnullClarkSubDivision();
 		};
