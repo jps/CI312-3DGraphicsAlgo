@@ -19,12 +19,12 @@
 
 namespace Game
     {
-/*
-		struct ControlPoint
+
+		struct NewControlPoints
 		{
-			Vertex NewEdgePoint[3]; //Might want to set this to 4 to allow for f4
+			Vertex varr[3]; //Might want to set this to 4 to allow for f4
 		};
-*/
+
 		class CatmullClarkSubDivision
 		{
 		public:

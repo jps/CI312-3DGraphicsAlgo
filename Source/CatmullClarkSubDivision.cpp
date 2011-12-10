@@ -24,11 +24,14 @@ namespace Game
 			for(unsigned int i = 0; i < go.earr.size(); ++i)
 				edgeMidpoints.push_back((go.varr[go.earr[i].a] + go.varr[go.earr[i].b]).Divide(2));
 
-			vector<Vertex> newPoints;
+			vector<NewControlPoints> newControlPoints;
+			//vector<Vertex> newPoints;
 
 			//foreach face
 			for(unsigned int fi = 0;fi < go.farr.size(); fi++)
 			{
+				NewControlPoints newPoints;
+
 				//foreach edge in faces
 				for(int ei = 0; ei < 3; ei++)
 				{
@@ -94,11 +97,26 @@ namespace Game
 
 					std::cout<< "new point"<< newPoint->ToString() <<"\n";
 
-					newPoints.push_back(*newPoint);
+					newPoints.varr[ei]= *newPoint;
 				}
+					newControlPoints.push_back(newPoints);
 			}
 
+
+
+
 			GameObject ngo;
+
+			for(int fi = 0; fi < go.farr.size(); fi++)
+			{
+
+
+
+
+
+
+			}
+
 
 			Vertex * a = new Vertex(-1, 0, 0);
 			Vertex * b = new Vertex(0, 1, 0);
