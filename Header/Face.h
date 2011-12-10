@@ -22,19 +22,19 @@ namespace Game
 
     enum EdgeDirection { FFF, BFF, FBF, FFB, BBF, FBB, BFB, BBB};//not entirely sure if this is the best approach... bit array would be cheaper
 
-    class Face
+    class Face3
 	{
     public:
-		Face();
+		Face3();
 	/*
 		Face(Edge& A, Edge& B, Edge& C);
 		Face(Edge* A, Edge* B, Edge* C); //TODO: Remove Deprecated pass by reference is safer
 		Face(Edge* A, Edge* B, Edge* C, EdgeDirection faceDirection);//TODO: Remove Deprecated pass by reference is safer
 		Face(Edge& A, Edge& B, Edge& C, EdgeDirection faceDirection);*/
 
-		Face(int A, int B, int C);
-		Face(int A, int B, int C, EdgeDirection faceDirection);
-		virtual ~Face();
+		Face3(int A, int B, int C);
+		Face3(int A, int B, int C, EdgeDirection faceDirection);
+		virtual ~Face3();
 		//void Draw();
 		int earr[3];
 		EdgeDirection edgeDirection;
@@ -55,10 +55,10 @@ namespace Game
 	//Edge c;
 	};
 
-    class FaceCentroid : public Face
+    class FaceCentroid : public Face3
     {
     public:
-    	FaceCentroid(Face Face);
+    	FaceCentroid(Face3 Face);
     	FaceCentroid();
     	Vertex centroid;
     };

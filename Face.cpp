@@ -10,13 +10,13 @@
 namespace Game
 {
 
-Face::Face()
+Face3::Face3()
 {
 	// TODO Auto-generated constructor stub
 
 }
 
-Face::~Face()
+Face3::~Face3()
 {
 	// TODO Auto-generated destructor stub
 }
