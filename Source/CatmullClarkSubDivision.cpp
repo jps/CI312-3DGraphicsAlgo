@@ -27,44 +27,66 @@ namespace Game
 
 
 		//foreach face
-		for(int fi = 0; go.farr.size(); fi++)
+		for(unsigned int fi = 0;fi < go.farr.size(); fi++)
 		{
 			//foreach edge in faces
 			for(int ei = 0; ei < 3; ei++)
 			{
 				//take facepoint
 				int & currentEdge = go.farr[fi].earr[ei];
-				bool isForward = go.farr[fi].isForward(currentEdge);
+				bool isForward = go.farr[fi].isForward(ei);
 				int VertexId = isForward ? go.earr[go.farr[fi].earr[ei]].a : go.earr[go.farr[fi].earr[ei]].b;
-				int nextFace;
+				int nextEdge, EdgeID;
+				int currentFace = fi;
 				int valance = 1;
+				int nextFace = -1;
 
+				vector<int> edgePoints;
 				vector<int> facePoints;
+
+				edgePoints.push_back(ei);
+				facePoints.push_back(fi);
 
 				while(nextFace != fi)
 				{
 					bool br = false;
 					for(unsigned int _fi = 0; _fi < go.farr.size() && !br; _fi++)
 					{
-						for(int _ei = 0; _ei < 3; _ei++)
+						if(_fi != currentFace && fi != _fi)//fi != _fi && _fi != nextFace))
 						{
-							if(go.farr[_fi].earr[_ei] == currentEdge)
+							for(int _ei = 0; _ei < 3; _ei++)
 							{
-								nextFace = _fi;
-								facePoints.push_back(_fi);
-								br = true;
-								break;
+								if(go.farr[_fi].earr[_ei] == currentEdge)
+								{
+									EdgeID = _ei;
+									nextFace = _fi;
+									facePoints.push_back(_fi);
+									br = true;
+									break;
+								}
 							}
+						}
+						else if(br)
+						{
+							break;
 						}
 					}
 
+					if(!br)
+					break;
 
-//					for(int _ei = 0; _ei < 3; _ei++)
-//						if(go.earr[go.farr[nextFace].earr[ei]].a == VertexId || go.earr[go.farr[nextFace].earr[ei]].a == VertexId)
 
+					for(int _ei = 0; _ei < 3; _ei++)
+						if(EdgeID != _ei)
+							if(go.earr[go.farr[nextFace].earr[_ei]].a == VertexId || go.earr[go.farr[nextFace].earr[_ei]].b == VertexId)
+							{
+								nextEdge = go.farr[nextFace].earr[_ei];
+								edgePoints.push_back(_ei);
+							}
+
+					currentEdge = nextEdge;
+					currentFace = nextFace;
 						//if(go.earr[go.farr[nextFace].earr[_ei]]. //if is forward
-
-
 				}
 
 				//currentEdge
