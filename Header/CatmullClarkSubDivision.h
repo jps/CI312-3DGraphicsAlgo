@@ -33,7 +33,9 @@ namespace Game
 		//virtual ~CatnullClarkSubDivision();
 		private:
 		static Vertex FindCentroid(GameObject &go, int Face);
-		Vertex CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, Vertex &ControlPoint);
+
+		static Vertex CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, int ControlPoint);
+
 
 		};
 

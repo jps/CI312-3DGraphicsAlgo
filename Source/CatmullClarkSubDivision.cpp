@@ -16,15 +16,15 @@ namespace Game
 	GameObject CatmullClarkSubDivision::Subdivide(GameObject go)
 		{
 			//for each face in the object calculate the centroid
-			Vertex faceCentroids[go.farr.size()];
+			vector<Vertex> faceCentroids;
 			for(unsigned int i = 0; i < go.farr.size(); ++i)
-				faceCentroids[i] = FindCentroid(go, i);
+				faceCentroids.push_back(FindCentroid(go, i));
 
-			Vertex edgeMidpoints[go.earr.size()];
+			vector<Vertex> edgeMidpoints;
 			for(unsigned int i = 0; i < go.earr.size(); ++i)
-				edgeMidpoints[i] = (go.varr[go.earr[i].a] + go.varr[go.earr[i].b]).Divide(2);
+				edgeMidpoints.push_back((go.varr[go.earr[i].a] + go.varr[go.earr[i].b]).Divide(2));
 
-
+			vector<Vertex> newPoints;
 
 			//foreach face
 			for(unsigned int fi = 0;fi < go.farr.size(); fi++)
@@ -90,8 +90,11 @@ namespace Game
 							//if(go.earr[go.farr[nextFace].earr[_ei]]. //if is forward
 					}
 
+					Vertex * newPoint = new Vertex(CalculateNewPoint(go, faceCentroids, edgeMidpoints, edgePoints, facePoints, VertexId));
 
+					std::cout<< "new point"<< newPoint->ToString() <<"\n";
 
+					newPoints.push_back(*newPoint);
 				}
 			}
 
@@ -128,7 +131,7 @@ namespace Game
 		return centroid;
 	}
 
-	Vertex CatmullClarkSubDivision::CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, Vertex &ControlPoint)
+	Vertex CatmullClarkSubDivision::CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, int ControlPoint)
 	{
 		//(Q/n) + (2R/n) + (S(n-3)/n)
 		//where q is the average of the surrounding facepoints
@@ -138,7 +141,7 @@ namespace Game
 		int n = EdgePoints.size();
 		Vertex q = FaceCentroids[FacePoints[0]];
 		Vertex r = EdgeMidPoints[EdgePoints[0]];
-		Vertex s = ControlPoint.Divide(n-3);
+		Vertex s = go.varr[ControlPoint].Divide(n-3);
 
 		for(unsigned int i = 1; i < FacePoints.size(); ++i )
 		{
