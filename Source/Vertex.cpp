@@ -111,6 +111,11 @@ namespace Game
     	return Vertex( x * inV, y * inV, z * inV);
 		}
 
+    Vertex Vertex::Multiply(int inV)
+		{
+    	return Vertex( x * inV, y * inV, z * inV);
+		}
+
     Vertex Vertex::operator / (Vertex &inV)
     	{
     	return Vertex( x / inV.GetX(), y / inV.GetY(), z / inV.GetZ());
