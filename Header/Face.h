@@ -26,24 +26,28 @@ namespace Game
 	{
     public:
 		Face();
+	/*
 		Face(Edge& A, Edge& B, Edge& C);
 		Face(Edge* A, Edge* B, Edge* C); //TODO: Remove Deprecated pass by reference is safer
 		Face(Edge* A, Edge* B, Edge* C, EdgeDirection faceDirection);//TODO: Remove Deprecated pass by reference is safer
-		Face(Edge& A, Edge& B, Edge& C, EdgeDirection faceDirection);
-		virtual ~Face();
-		void Draw();
-		Edge* earr[3];
-		EdgeDirection edgeDirection;
-		Edge LocateEdge(Vertex a, Vertex b);
-		Vertex LocateFinalVertex(Edge e);
-		Vertex CaluclateCenteroid();
-		int LocateEdgeIndex(Vertex a, Vertex b);
-		bool isForward (int EdgeIndex);
-		bool Contains(Edge e);
-		string ToString();
-		bool operator==(Face &inV);
-		bool operator!=(Face &inV);
+		Face(Edge& A, Edge& B, Edge& C, EdgeDirection faceDirection);*/
 
+		Face(int A, int B, int C);
+		Face(int A, int B, int C, EdgeDirection faceDirection);
+		virtual ~Face();
+		//void Draw();
+		int earr[3];
+		EdgeDirection edgeDirection;
+		/*Edge LocateEdge(Vertex a, Vertex b);
+		Vertex LocateFinalVertex(Edge e);
+		Vertex CaluclateCenteroid();*/
+		bool isForward (int EdgeIndex);
+		int LocateEdgeIndex(int a, int b);
+		bool Contains(int e);
+		string ToString();
+		/*bool operator==(Face &inV);
+		bool operator!=(Face &inV);
+*/
     private:
 	//implemented only for triangles at the moment. huh ?
 	//Edge a;

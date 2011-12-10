@@ -36,15 +36,17 @@ namespace Game
 		bool operator==(Vertex &inV);
 		bool operator!=(Vertex &inV);
 		Vertex operator +(Vertex &inV);
+		Vertex operator +(Vertex *inV);
 		Vertex operator -(Vertex &inV);
 		Vertex operator *(Vertex &inV);
 		Vertex operator *(int &inV);
 		Vertex operator *(float &inV);
 		Vertex operator /(Vertex &inV);
-		Vertex operator /(int &inV);
+		Vertex operator /(Vertex *inV);
+		Vertex operator /(int inV);
 		//Vertex Divide(Vertex &inV);
-		Vertex Divide(int &inV);
-		static Vertex Divide(Vertex a , int b);
+		Vertex Divide(int inV);
+		static Vertex Divide(Vertex a , int b);//TODO: remove!
 	private:
 		float x,y,z;
 		};

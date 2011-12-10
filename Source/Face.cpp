@@ -19,23 +19,15 @@ namespace Game
     }
 
 
-    Face::Face(Edge& A, Edge& B, Edge& C)
+    Face::Face(int A, int B, int C, EdgeDirection EdgeDirection)
     {
-	earr[0] = &A;
-	earr[1] = &B;
-	earr[2] = &C;
-	edgeDirection = FFF;
-    }
-
-    Face::Face(Edge& A, Edge& B, Edge& C, EdgeDirection EdgeDirection)
-    {
-    earr[0] = &A;
-    earr[1] = &B;
-    earr[2] = &C;
+    earr[0] = A;
+    earr[1] = B;
+    earr[2] = C;
     edgeDirection = EdgeDirection;
     }
 
-    Face::Face(Edge* A, Edge* B, Edge* C)
+    Face::Face(int A, int B, int C)
     {
     earr[0] = A;
     earr[1] = B;
@@ -43,14 +35,7 @@ namespace Game
     edgeDirection = FFF;
     }
 
-    Face::Face(Edge* A, Edge* B, Edge* C, EdgeDirection EdgeDirection)
-    {
-    earr[0] = A;
-    earr[1] = B;
-    earr[2] = C;
-    edgeDirection = EdgeDirection;
-    }
-
+/*
     void Face::Draw()
     {
 	switch(edgeDirection)
@@ -97,7 +82,8 @@ namespace Game
 	    glVertex3f(earr[1]->b->GetX(),earr[1]->b->GetY(),earr[1]->b->GetZ());
 	    }
     }
-
+*/
+    /*
     Vertex Face::LocateFinalVertex(Edge e)
     {
 #ifdef PrintToConsole
@@ -165,24 +151,22 @@ namespace Game
 		}
 	    throw -1;
 	}
-
-    int Face::LocateEdgeIndex(Vertex a, Vertex b)
+*/
+    int Face::LocateEdgeIndex(int a, int b)
 	{
 	    for(int i = 0; i < 3; ++i)
 		{
-		if(((*earr[i]->a == a) && (*earr[i]->b == b)) || ((*earr[i]->a == b) && (*earr[i]->b == a)))
+		if(((earr[i] == a) && (earr[i] == b)) || ((earr[i] == b) && (earr[i] == a)))
 		    return i;
 		}
 	    throw -1;
 	}
 
-
-
-    bool Face::Contains( Edge e)
+    bool Face::Contains(int e)
 	{
 	    for(int i = 0; i < 3; i++)
 		{
-		    if(*earr[i] == e)
+		    if(earr[i] == e)
 			return true;
 		}
 	    return false;
@@ -249,9 +233,10 @@ namespace Game
 
     string Face::ToString()
 	{
-	return " Face: "+ earr[0]->ToString() + earr[1]->ToString() + earr[2]->ToString() + "\n";
+    	//todo: fix
+	return " Face edges : a: broken fix";//"+ earr[0] + " b: " + earr[1] + " c: " +  earr[2] + "\n";
 	}
-
+/*
     bool Face::operator==(Face &inV)
     {
 	return earr[0] == inV.earr[0] && earr[1] == inV.earr[1] && earr[2] == inV.earr[2] ? true : false;
@@ -260,16 +245,16 @@ namespace Game
 		{
 		earr[i] == inV.earr[i];
 	}*/
-    }
+  /*  }
     bool Face::operator!=(Face &inV)
     {
 	return earr[0] == inV.earr[0] && earr[1] == inV.earr[1] && earr[2] == inV.earr[2] ? false : true;
-    }
+    }*/
     Face::~Face()
     {
     // TODO Auto-generated destructor stub
     }
-
+/*
     FaceCentroid::FaceCentroid(Face f)
     {
     	earr[0] = f.earr[0];
@@ -277,7 +262,7 @@ namespace Game
     	earr[2] = f.earr[2];
     	edgeDirection = f.edgeDirection;
     	centroid = f.CaluclateCenteroid();
-    }
+    }*/
 
     FaceCentroid::FaceCentroid()
     {

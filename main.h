@@ -21,7 +21,7 @@
 #include "Header/GameObject.h"
 #include "Header/ObjectManager.h"
 #include "Header/Cube.h"
-#include "Header/ButterflySubspaceDivision.h"
+//#include "Header/ButterflySubspaceDivision.h"
 #include "Header/CatmullClarkSubDivision.h"
 
 //using namespace std;

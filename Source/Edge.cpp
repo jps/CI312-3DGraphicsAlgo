@@ -16,23 +16,24 @@ namespace Game
 	}
 
 
-    Edge::Edge(Vertex &A, Vertex &B)
+/*    Edge::Edge(Vertex &A, Vertex &B)
     {
     	a = &A;
     	b = &B;
-    }
+    }*/
+/**/
 
-
-    Edge::Edge(Vertex* A, Vertex* B)
+    Edge::Edge(int A, int B)
 	{
 	    a = A;
 	    b = B;
 	}
-
+/*
     Vertex Edge::MidPoint()
 	{
 	    return Vertex(a->GetX()+b->GetX()/2,a->GetY()+b->GetY()/2,a->GetZ()+b->GetZ()/2);
 	}
+*/
 
 
 	bool Edge:: operator==( Edge &inV)
@@ -53,7 +54,9 @@ namespace Game
 
 	string Edge::ToString()
 	{
-	    return "Edge: a=" + a->ToString() + " b=" +b->ToString() +"\n"; //TODO: for each vertex
+		//TODO: fix
+		return "edge to string needs fixing";
+	   // return "Edge: a=" + a + " b=" + b +"\n"; //TODO: for each vertex
 	}
 
 

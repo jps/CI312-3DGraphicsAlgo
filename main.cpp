@@ -69,7 +69,7 @@ using namespace Game;
 		    if( key[SDLK_LEFT ] ){ RotationX+=0.5; }
 		    if( key[SDLK_UP] ){ RotationY-=0.5; }
 		    if( key[SDLK_DOWN ] ){ RotationY+=0.5; }
-		    if( key[SDLK_l] ) { glRotatef(45,4,0,0); }
+		    //if( key[SDLK_l] ) { glRotatef(45,4,0,0); } //>
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
 		    if( key[SDLK_i]) { Zoom += 0.5;}
 		    if( key[SDLK_o]) { Zoom -= 0.5;}
@@ -116,13 +116,14 @@ using namespace Game;
 			{
 		    	if(buttonPause == 0)
 		    	{
+		    		/*
 					objManager->GameObjects[CurrentObj].visible = false;
 					GameObject _ngobj = ButterflySubspaceDivision().Tessellate(objManager->GameObjects[CurrentObj]);
 					GameObject* ngobj = new GameObject(_ngobj);
 					ngobj->init();
 					objManager->GameObjects.push_back(*ngobj);
 					++CurrentObj;
-					buttonPause = 30;
+					buttonPause = 30;*/
 		    	}
 			}
 	    }

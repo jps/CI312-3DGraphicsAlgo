@@ -91,6 +91,11 @@ namespace Game
 			return Vertex( x + inV.GetX(), y + inV.GetY(), z + inV.GetZ());
 		}
 
+    Vertex Vertex::operator +(Vertex *inV)
+    	{
+    	return Vertex( x + inV->GetX(), y + inV->GetY(), z + inV->GetZ());
+    	}
+
     Vertex Vertex::operator -(Vertex &inV)
 		{
 		return Vertex( x - inV.GetX(), y - inV.GetY(), z - inV.GetZ());
@@ -110,13 +115,18 @@ namespace Game
     	{
     	return Vertex( x / inV.GetX(), y / inV.GetY(), z / inV.GetZ());
     	}
+
+    Vertex Vertex::operator / (Vertex *inV)
+    	{
+    	return Vertex( x / inV->GetX(), y / inV->GetY(), z / inV->GetZ());
+    	}
 /*
     Vertex Vertex::Divide(Vertex &inV)//added as operator overload was acting stange for some uknown reason
     	{
     	return Vertex( x / inV.GetX(), y / inV.GetY(), z / inV.GetZ());
     	}
 */
-    Vertex Vertex::Divide(int &inV)//added as operator overload was acting stange for some uknown reason
+    Vertex Vertex::Divide(int inV)//added as operator overload was acting stange for some uknown reason
     	{
     	return Vertex( x / inV, y / inV, z / inV);
     	}

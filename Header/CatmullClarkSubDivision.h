@@ -28,9 +28,10 @@ namespace Game
 		class CatmullClarkSubDivision
 		{
 		public:
-		GameObject Subdivide(GameObject go);
+		static GameObject Subdivide(GameObject go);
 		//CatmullClarkSubDivision();//not needed at this is going to be a static method
 		//virtual ~CatnullClarkSubDivision();
+		static Vertex FindCentroid(GameObject &go, int Face);
 		};
 
 	}
