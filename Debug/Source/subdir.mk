@@ -11,6 +11,8 @@ CPP_SRCS += \
 ../Source/EdgeFaces.cpp \
 ../Source/EdgesFaces.cpp \
 ../Source/Face.cpp \
+../Source/Face3.cpp \
+../Source/Face4.cpp \
 ../Source/GameObject.cpp \
 ../Source/ObjectManager.cpp \
 ../Source/Vertex.cpp 
@@ -23,6 +25,8 @@ OBJS += \
 ./Source/EdgeFaces.o \
 ./Source/EdgesFaces.o \
 ./Source/Face.o \
+./Source/Face3.o \
+./Source/Face4.o \
 ./Source/GameObject.o \
 ./Source/ObjectManager.o \
 ./Source/Vertex.o 
@@ -35,6 +39,8 @@ CPP_DEPS += \
 ./Source/EdgeFaces.d \
 ./Source/EdgesFaces.d \
 ./Source/Face.d \
+./Source/Face3.d \
+./Source/Face4.d \
 ./Source/GameObject.d \
 ./Source/ObjectManager.d \
 ./Source/Vertex.d 

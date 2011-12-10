@@ -65,18 +65,18 @@ namespace Game
 			earr.push_back(Edge(0, 7)); //Left Bottom
 			earr.push_back(Edge(3, 7)); //Bottom diagonal
 
-			farr.push_back(Face3(0,1,2));      //Front Face Left Tri
-			farr.push_back(Face3(2,3,4,BFF)); //Front Face Right Tri
-			farr.push_back(Face3(5,6,7));    //Top Face Left Tri
-			farr.push_back(Face3(7,8,1,BFB)); //Top Face Right
-			farr.push_back(Face3(3,8,9,BBF)); //Right Face Left
-			farr.push_back(Face3(9,10,11,BFF)); //Right Face Right
-			farr.push_back(Face3(10,6,12,BBF)); //Back Face Left
-			farr.push_back(Face3(12,13,14,BFF)); //Back Face Right
-			farr.push_back(Face3(13,5,15,BBF)); //Left Face Left
-			farr.push_back(Face3(15,0,16,BBF)); //Left Face Right
-			farr.push_back(Face3(16,4,17,BBF)); //Bottom Face Left
-			farr.push_back(Face3(17,11,14,BBB)); //Bottom Face Right
+			farr.push_back(Face3(0, 1, 2));                       //Front Face Left Tri
+			farr.push_back(Face3(2, 3, 4,  false, true, true));   //Front Face Right Tri
+			farr.push_back(Face3(5, 6, 7));    					  //Top Face Left Tri
+			farr.push_back(Face3(7, 8, 1,  false, true,  false)); //Top Face Right
+			farr.push_back(Face3(3, 8, 9,  false, false, true));  //Right Face Left
+			farr.push_back(Face3(9, 10,11, false, true,  true));  //Right Face Right
+			farr.push_back(Face3(10,6, 12, false, false, true));  //Back Face Left
+			farr.push_back(Face3(12,13,14, false, true,  true));  //Back Face Right
+			farr.push_back(Face3(13,5, 15, false, false, true));  //Left Face Left
+			farr.push_back(Face3(15,0, 16, false, false, true));  //Left Face Right
+			farr.push_back(Face3(16,4, 17, false, true,  true));  //Bottom Face Left
+			farr.push_back(Face3(17,11,14, false, false, false)); //Bottom Face Right
 
 		   for(unsigned int i = 0; i < varr.size(); ++i)
 			{

@@ -10,7 +10,7 @@
 
 #include "Vertex.h"
 #include "Edge.h"
-#include "Face.h"
+#include "Face3.h"
 
 namespace Game
 {

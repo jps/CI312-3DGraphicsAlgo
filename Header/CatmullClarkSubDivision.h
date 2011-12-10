@@ -8,7 +8,7 @@
 
 #include "GameObject.h"
 #include "Vertex.h"
-#include "Face.h"
+#include "Face3.h"
 #include "Vertex.h"
 #include "Edge.h"
 #include <stdlib.h>

@@ -58,58 +58,19 @@ namespace Game
 	{
 	    for(unsigned int i = 0; i < farr.size(); ++i)
 		{
-
-#ifdef hardDebugVertexVals
-	    for(unsigned int b = 0; b < 3; ++b)
-		{
-		cout << farr[i].earr[b].a.ToString() << "\n";
-		cout << farr[i].earr[b].b.ToString() << "\n";
-		}
-#endif
-
 	    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
-		switch(farr[i].edgeDirection)
-			{
-		case FFB:
-			glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
+	    if(farr[i].edgeDirection[0])
+	    	glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
+	    else
+	    	glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
+		if(farr[i].edgeDirection[1])
 			glVertex3f(varr[earr[farr[i].earr[1]].a].GetX(),varr[earr[farr[i].earr[1]].a].GetY(),varr[earr[farr[i].earr[1]].a].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[2]].b].GetX(),varr[earr[farr[i].earr[2]].b].GetY(),varr[earr[farr[i].earr[2]].b].GetZ());
-		break;
-		case BFF:
-			glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].a].GetX(),varr[earr[farr[i].earr[1]].a].GetY(),varr[earr[farr[i].earr[1]].a].GetZ());
+		else
+			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
+		if(farr[i].edgeDirection[2])
 			glVertex3f(varr[earr[farr[i].earr[2]].a].GetX(),varr[earr[farr[i].earr[2]].a].GetY(),varr[earr[farr[i].earr[2]].a].GetZ());
-		break;
-		case FBF:
-			glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[2]].a].GetX(),varr[earr[farr[i].earr[2]].a].GetY(),varr[earr[farr[i].earr[2]].a].GetZ());
-		break;
-		case FBB:
-			glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
+		else
 			glVertex3f(varr[earr[farr[i].earr[2]].b].GetX(),varr[earr[farr[i].earr[2]].b].GetY(),varr[earr[farr[i].earr[2]].b].GetZ());
-		break;
-		case BFB:
-			glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].a].GetX(),varr[earr[farr[i].earr[1]].a].GetY(),varr[earr[farr[i].earr[1]].a].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[2]].b].GetX(),varr[earr[farr[i].earr[2]].b].GetY(),varr[earr[farr[i].earr[2]].b].GetZ());
-		break;
-		case BBF:
-			glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[2]].a].GetX(),varr[earr[farr[i].earr[2]].a].GetY(),varr[earr[farr[i].earr[2]].a].GetZ());
-		break;
-		case BBB:
-			glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[2]].b].GetX(),varr[earr[farr[i].earr[2]].b].GetY(),varr[earr[farr[i].earr[2]].b].GetZ());
-		break;
-		default:
-			glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
-			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
-			}
 		}
 	}
 

@@ -10,7 +10,8 @@
 
 #include "Vertex.h"
 #include "Edge.h"
-#include "Face.h"
+#include "Face3.h"
+#include "Face4.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <vector>
@@ -67,6 +68,7 @@ namespace Game
 	vector<Vertex> varr;
 	vector<Edge> earr;
 	vector<Face3> farr;
+	vector<Face4> farr4;//this isn't very clean but will hold for now
 
 
 	void Transform(Vertex v);

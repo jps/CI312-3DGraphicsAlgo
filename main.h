@@ -17,7 +17,7 @@
 
 #include "Header/Vertex.h"
 #include "Header/Edge.h"
-#include "Header/Face.h"
+#include "Header/Face3.h"
 #include "Header/GameObject.h"
 #include "Header/ObjectManager.h"
 #include "Header/Cube.h"
