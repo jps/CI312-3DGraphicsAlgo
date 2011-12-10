@@ -13,13 +13,13 @@ namespace Game
     {
 
 
-    Face::Face()
+    Face3::Face3()
     {
 
     }
 
 
-    Face::Face(int A, int B, int C, EdgeDirection EdgeDirection)
+    Face3::Face3(int A, int B, int C, EdgeDirection EdgeDirection)
     {
     earr[0] = A;
     earr[1] = B;
@@ -27,7 +27,7 @@ namespace Game
     edgeDirection = EdgeDirection;
     }
 
-    Face::Face(int A, int B, int C)
+    Face3::Face3(int A, int B, int C)
     {
     earr[0] = A;
     earr[1] = B;
@@ -152,7 +152,7 @@ namespace Game
 	    throw -1;
 	}
 */
-    int Face::LocateEdgeIndex(int a, int b)
+    int Face3::LocateEdgeIndex(int a, int b)
 	{
 	    for(int i = 0; i < 3; ++i)
 		{
@@ -162,7 +162,7 @@ namespace Game
 	    throw -1;
 	}
 
-    bool Face::Contains(int e)
+    bool Face3::Contains(int e)
 	{
 	    for(int i = 0; i < 3; i++)
 		{
@@ -174,7 +174,7 @@ namespace Game
 
 //#define isForwardDebug
 
-    bool Face::isForward (int EdgeIndex)
+    bool Face3::isForward (int EdgeIndex)
 	{
 #ifdef isForwardDebug
 	std::cout << "give edge index is" << EdgeIndex << "\n";
@@ -231,7 +231,7 @@ namespace Game
 	throw "Couldn't detect if the edge was forward or backward facing";
 	}
 
-    string Face::ToString()
+    string Face3::ToString()
 	{
     	//todo: fix
 	return " Face edges : a: broken fix";//"+ earr[0] + " b: " + earr[1] + " c: " +  earr[2] + "\n";
@@ -250,7 +250,7 @@ namespace Game
     {
 	return earr[0] == inV.earr[0] && earr[1] == inV.earr[1] && earr[2] == inV.earr[2] ? false : true;
     }*/
-    Face::~Face()
+    Face3::~Face3()
     {
     // TODO Auto-generated destructor stub
     }

@@ -126,7 +126,7 @@ namespace Game
 			Edge * e = new Edge( 1, 2);
 			Edge * f = new Edge( 2, 0);
 
-			Face * g = new Face(0 , 1, 2);
+			Face3 * g = new Face3(0 , 1, 2);
 
 			ngo.varr.push_back(*a );
 			ngo.varr.push_back(*b );

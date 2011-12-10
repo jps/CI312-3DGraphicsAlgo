@@ -15,7 +15,7 @@
 namespace Game
     {
 
-    GameObject::GameObject(const Vertex * Varr, const Edge Earr[], const Face Farr[])
+    GameObject::GameObject(const Vertex * Varr, const Edge Earr[], const Face3 Farr[])
 	{
 
 	    //varr = new Vertex[sizeof( Varr ) / sizeof( Varr[0] )];

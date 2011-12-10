@@ -19,9 +19,9 @@ namespace Game
 	{
 	public:
 		EdgeFaces();
-		EdgeFaces(Edge E, Face Faces[2]);
+		EdgeFaces(Edge E, Face3 Faces[2]);
 		Edge e;
-		Face f[2];
+		Face3 f[2];
 		virtual ~EdgeFaces();
 	};
 

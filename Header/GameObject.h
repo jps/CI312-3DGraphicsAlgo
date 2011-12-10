@@ -42,7 +42,7 @@ namespace Game
 	    //TODO: Review could this be a collection of pointers to the new object to minimize memory consuption.
 		bool direction[3];
 		Edge nes[9];
-		Face nfs[4];
+		Face3 nfs[4];
 		Vertex nvs[3];
 		Vertex ovs[3];
 	    };
@@ -58,7 +58,7 @@ namespace Game
 
 
 	GameObject();
-	GameObject(const Vertex *Varr,const Edge *Earr, const Face *Farr);
+	GameObject(const Vertex *Varr,const Edge *Earr, const Face3 *Farr);
 	virtual ~GameObject();
 
 	bool visible;
@@ -66,7 +66,7 @@ namespace Game
 
 	vector<Vertex> varr;
 	vector<Edge> earr;
-	vector<Face> farr;
+	vector<Face3> farr;
 
 
 	void Transform(Vertex v);
