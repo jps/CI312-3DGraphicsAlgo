@@ -55,7 +55,7 @@ using namespace Game;
 		    glRotatef(RotationX,RotationY, 45,45);
 		    glPointSize(Size);
 
-		    glBegin(GL_TRIANGLES);
+
 		    objManager->Draw();
 		    glEnd();
 

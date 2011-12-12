@@ -51,26 +51,53 @@ namespace Game
 		}
 	}
 
-
-
-
     void GameObject::Draw()
 	{
+    	glBegin(GL_TRIANGLES);
 	    for(unsigned int i = 0; i < farr.size(); ++i)
 		{
-	    glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
-	    if(farr[i].edgeDirection[0])
-	    	glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
-	    else
-	    	glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
-		if(farr[i].edgeDirection[1])
-			glVertex3f(varr[earr[farr[i].earr[1]].a].GetX(),varr[earr[farr[i].earr[1]].a].GetY(),varr[earr[farr[i].earr[1]].a].GetZ());
-		else
-			glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
-		if(farr[i].edgeDirection[2])
-			glVertex3f(varr[earr[farr[i].earr[2]].a].GetX(),varr[earr[farr[i].earr[2]].a].GetY(),varr[earr[farr[i].earr[2]].a].GetZ());
-		else
-			glVertex3f(varr[earr[farr[i].earr[2]].b].GetX(),varr[earr[farr[i].earr[2]].b].GetY(),varr[earr[farr[i].earr[2]].b].GetZ());
+			glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
+			if(farr[i].edgeDirection[0])
+				glVertex3f(varr[earr[farr[i].earr[0]].a].GetX(),varr[earr[farr[i].earr[0]].a].GetY(),varr[earr[farr[i].earr[0]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr[i].earr[0]].b].GetX(),varr[earr[farr[i].earr[0]].b].GetY(),varr[earr[farr[i].earr[0]].b].GetZ());
+			if(farr[i].edgeDirection[1])
+				glVertex3f(varr[earr[farr[i].earr[1]].a].GetX(),varr[earr[farr[i].earr[1]].a].GetY(),varr[earr[farr[i].earr[1]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr[i].earr[1]].b].GetX(),varr[earr[farr[i].earr[1]].b].GetY(),varr[earr[farr[i].earr[1]].b].GetZ());
+			if(farr[i].edgeDirection[2])
+				glVertex3f(varr[earr[farr[i].earr[2]].a].GetX(),varr[earr[farr[i].earr[2]].a].GetY(),varr[earr[farr[i].earr[2]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr[i].earr[2]].b].GetX(),varr[earr[farr[i].earr[2]].b].GetY(),varr[earr[farr[i].earr[2]].b].GetZ());
+		}
+	    glEnd();
+	    glBegin(GL_QUADS);
+	    for(unsigned int i = 0; i < farr4.size(); ++i) //temp hack
+		{
+			glColor3ub(faceColors[i].r,faceColors[i].g,faceColors[i].b);
+			if(farr4[i].edgeDirection[0])
+				glVertex3f(varr[earr[farr4[i].earr[0]].a].GetX(),varr[earr[farr4[i].earr[0]].a].GetY(),varr[earr[farr4[i].earr[0]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr4[i].earr[0]].b].GetX(),varr[earr[farr4[i].earr[0]].b].GetY(),varr[earr[farr4[i].earr[0]].b].GetZ());
+			if(farr4[i].edgeDirection[1])
+				glVertex3f(varr[earr[farr4[i].earr[1]].a].GetX(),varr[earr[farr4[i].earr[1]].a].GetY(),varr[earr[farr4[i].earr[1]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr4[i].earr[1]].b].GetX(),varr[earr[farr4[i].earr[1]].b].GetY(),varr[earr[farr4[i].earr[1]].b].GetZ());
+			if(farr4[i].edgeDirection[2])
+				glVertex3f(varr[earr[farr4[i].earr[2]].a].GetX(),varr[earr[farr4[i].earr[2]].a].GetY(),varr[earr[farr4[i].earr[2]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr4[i].earr[2]].b].GetX(),varr[earr[farr4[i].earr[2]].b].GetY(),varr[earr[farr4[i].earr[2]].b].GetZ());
+			if(farr4[i].edgeDirection[3])
+				glVertex3f(varr[earr[farr4[i].earr[3]].a].GetX(),varr[earr[farr4[i].earr[3]].a].GetY(),varr[earr[farr4[i].earr[3]].a].GetZ());
+			else
+				glVertex3f(varr[earr[farr4[i].earr[3]].b].GetX(),varr[earr[farr4[i].earr[3]].b].GetY(),varr[earr[farr4[i].earr[3]].b].GetZ());
+		}
+	    glEnd();
+
+	    glBegin(GL_POINTS);
+		for(unsigned int i = 0; i < parr.size(); i++)
+		{
+			glVertex3f(parr[i].GetX(), parr[i].GetY(), parr[i].GetZ());
 		}
 	}
 

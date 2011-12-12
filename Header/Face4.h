@@ -16,6 +16,9 @@ namespace Game
 class Face4: public Game::Face
 {
 public:
+	Face4(int A, int B, int C, int D);
+	Face4(int A, int B, int C, int D, bool EdgeDirection[4]);
+	Face4(int A, int B, int C, int D, bool EDA, bool EDB, bool EDC, bool EDD);
 	Face4();
 	virtual ~Face4();
 };

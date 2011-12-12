@@ -69,7 +69,7 @@ namespace Game
 	vector<Edge> earr;
 	vector<Face3> farr;
 	vector<Face4> farr4;//this isn't very clean but will hold for now
-
+	vector<Vertex> parr;
 
 	void Transform(Vertex v);
 

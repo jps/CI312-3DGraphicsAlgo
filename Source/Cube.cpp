@@ -75,7 +75,7 @@ namespace Game
 			farr.push_back(Face3(12,13,14, false, true,  true));  //Back Face Right
 			farr.push_back(Face3(13,5, 15, false, false, true));  //Left Face Left
 			farr.push_back(Face3(15,0, 16, false, false, true));  //Left Face Right
-			farr.push_back(Face3(16,4, 17, false, true,  true));  //Bottom Face Left
+			farr.push_back(Face3(16,4, 17, false, false,  true));  //Bottom Face Left
 			farr.push_back(Face3(17,11,14, false, false, false)); //Bottom Face Right
 
 		   for(unsigned int i = 0; i < varr.size(); ++i)
