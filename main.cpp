@@ -41,12 +41,31 @@ using namespace Game;
 
 	    Cube CubeTest = Cube(1.0f,Vertex(0,0,0)); //create cube and push to object manager
 	    objManager->GameObjects.push_back(CubeTest);
+/*
+	    GLfloat ambient[] = { .5f, .5f, .5f, 1.f };
+	    GLfloat diffuse[] = { .5f, .5f, .5f, .6f };
+	    GLfloat litepos[] = { 0, 2, 3, 1 };
+	    GLfloat litepos2[] = { 0, -2, 5, 1 };
+
+	    glPushMatrix();
+	 		    	glLoadIdentity();
+	 		    	glEnable(GL_LIGHTING);
+	 		    	glLightfv(GL_LIGHT0, GL_AMBIENT,  ambient);
+	 		    	glLightfv(GL_LIGHT0, GL_DIFFUSE,  diffuse);
+	 		    	glLightfv(GL_LIGHT0, GL_POSITION, litepos);
+	 		    	glEnable(GL_LIGHT0);
+
+	 		    	glLightfv(GL_LIGHT1, GL_DIFFUSE,  diffuse);
+	 		    	glLightfv(GL_LIGHT1, GL_POSITION, litepos2);
+	 		    	glEnable(GL_LIGHT1);
+	 		    	glPopMatrix();
+*/
 
 	    signed int buttonPause, wireframe, CurrentObj;
 	    float RotationX, RotationY, RotationZ, Zoom, Size;
 	    RotationX = RotationY = RotationZ = buttonPause = wireframe = CurrentObj = 0;
-	    Zoom = -10;
-	    Size = 10;
+	    Zoom = -3;
+	    Size = 5;
 	    while( events() )
 	    {
 		    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -71,8 +90,8 @@ using namespace Game;
 		    if( key[SDLK_DOWN ] ){ RotationY+=0.5; }
 		    //if( key[SDLK_l] ) { glRotatef(45,4,0,0); } //>
 		    if( key[SDLK_k] ) { RotationZ +=0.5; }
-		    if( key[SDLK_i]) { Zoom += 0.5;}
-		    if( key[SDLK_o]) { Zoom -= 0.5;}
+		    if( key[SDLK_i]) { Zoom += 0.1;}
+		    if( key[SDLK_o]) { Zoom -= 0.1;}
 		    if( key[SDLK_0]){RotationX = RotationY = RotationZ == 0;} //reset to center
 		    if( key[SDLK_w])
 		    {
@@ -138,6 +157,7 @@ using namespace Game;
 	    glViewport( 0, 0, width, height );
 	    glMatrixMode( GL_PROJECTION );
 	    glEnable( GL_DEPTH_TEST );
+	    glEnable(GL_CULL_FACE);
 	    gluPerspective( 45, (float)width/height, 0.1, 100 );
 	    glMatrixMode( GL_MODELVIEW );
 	    glEnable(GL_POLYGON_SMOOTH);
