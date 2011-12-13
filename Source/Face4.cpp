@@ -51,6 +51,12 @@ Face4::Face4(int A, int B, int C, int D, bool EDA, bool EDB, bool EDC, bool EDD)
 	edgeDirection[3] = EDD;
 }
 
+bool Face4::isForward (int EdgeIndex)
+{
+	return edgeDirection[EdgeIndex];
+}
+
+
 Face4::~Face4()
 {
 	// TODO Auto-generated destructor stub

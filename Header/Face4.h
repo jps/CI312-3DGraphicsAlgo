@@ -20,6 +20,7 @@ public:
 	Face4(int A, int B, int C, int D, bool EdgeDirection[4]);
 	Face4(int A, int B, int C, int D, bool EDA, bool EDB, bool EDC, bool EDD);
 	Face4();
+	bool isForward (int EdgeIndex);
 	virtual ~Face4();
 };
 

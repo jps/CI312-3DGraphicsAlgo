@@ -157,7 +157,7 @@ using namespace Game;
 	    glViewport( 0, 0, width, height );
 	    glMatrixMode( GL_PROJECTION );
 	    glEnable( GL_DEPTH_TEST );
-	    glEnable(GL_CULL_FACE);
+	    //glEnable(GL_CULL_FACE);
 	    gluPerspective( 45, (float)width/height, 0.1, 100 );
 	    glMatrixMode( GL_MODELVIEW );
 	    glEnable(GL_POLYGON_SMOOTH);
