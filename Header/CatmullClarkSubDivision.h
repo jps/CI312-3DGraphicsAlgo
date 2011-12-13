@@ -29,13 +29,13 @@ namespace Game
 		{
 		public:
 		static GameObject Subdivide(GameObject go);
-		//CatmullClarkSubDivision();//not needed at this is going to be a static method
-		//virtual ~CatnullClarkSubDivision();
 		private:
-		static Vertex FindCentroid3(GameObject &go, int Face);
-		static Vertex FindCentroid4(GameObject &go, int Face);
-
-		static Vertex CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, int ControlPoint);
+		    static vector<Vertex> Findcentroids3(GameObject & go);
+		    static vector<Vertex> Findcentroids4(GameObject & go);
+		    static Vertex FindCentroid3(GameObject & go, int Face);
+		    static Vertex FindCentroid4(GameObject & go, int Face);
+		    static Vertex CalculateNewPoint(GameObject & go, vector<Vertex> & FaceCentroids, vector<Vertex> & EdgeMidPoints, vector<int> & EdgePoints, vector<int> & FacePoints, int ControlPoint);
+		    static vector<Vertex> FindEdgeMidpoints(GameObject & go);
 
 
 		};
