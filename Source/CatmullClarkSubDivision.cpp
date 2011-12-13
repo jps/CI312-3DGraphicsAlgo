@@ -19,7 +19,7 @@ namespace Game
 			//for each face in the object calculate the centroid
 			for(unsigned int i = 0; i < go.farr.size(); ++i)
 			{
-				Vertex * centroid = new Vertex(FindCentroid(go, i));
+				Vertex * centroid = new Vertex(FindCentroid3(go, i));
 				faceCentroids.push_back(*centroid);
 
 			}
@@ -79,7 +79,6 @@ namespace Game
 
 						if(!br)
 						break;
-
 
 						for(int _ei = 0; _ei < 3; _ei++)
 							if(EdgeID != _ei)
@@ -165,15 +164,39 @@ namespace Game
 			return ngo;
 	    }
 
-	Vertex CatmullClarkSubDivision::FindCentroid(GameObject &go, int Face)
+	Vertex CatmullClarkSubDivision::FindCentroid3(GameObject &go, int Face)
 		{
-			//Method is broken!
 			Vertex centroid;
 			centroid = go.varr[go.earr[go.farr[Face].earr[0]].a] + go.varr[go.earr[go.farr[Face].earr[0]].b];
 			//find last vertex in the second edge
 			centroid = go.earr[go.farr[Face].earr[0]].a != go.earr[go.farr[Face].earr[1]].a && go.earr[go.farr[Face].earr[0]].b != go.earr[go.farr[Face].earr[1]].a ? centroid + go.varr[go.earr[go.farr[Face].earr[0]].a] : centroid + go.varr[go.earr[go.farr[Face].earr[1]].b];
 			centroid = centroid.Divide(3);
 			return centroid;
+		}
+
+	Vertex CatmullClarkSubDivision::FindCentroid4(GameObject &go, int Face)
+		{
+			int points[4]; //can be optimized to work without this array but the solution isn't clean...
+			points[0] = go.earr[go.farr4[Face].earr[0]].a;
+			points[1] = go.earr[go.farr4[Face].earr[0]].b;
+			points[2] = go.earr[go.farr4[Face].earr[0]].a != go.earr[go.farr4[Face].earr[1]].a &&
+						go.earr[go.farr4[Face].earr[0]].b != go.earr[go.farr4[Face].earr[1]].a
+							? go.earr[go.farr4[Face].earr[1]].a : go.earr[go.farr4[Face].earr[1]].b;
+
+			points[3] = points[0] != go.earr[go.farr4[Face].earr[2]].a &&
+						 points[1] != go.earr[go.farr4[Face].earr[2]].a &&
+						 points[2] != go.earr[go.farr4[Face].earr[2]].a ?
+						 go.earr[go.farr4[Face].earr[1]].a :
+						 points[0] != go.earr[go.farr4[Face].earr[2]].b &&
+						 points[1] != go.earr[go.farr4[Face].earr[2]].b &&
+						 points[2] != go.earr[go.farr4[Face].earr[2]].b ?
+						 go.earr[go.farr4[Face].earr[1]].b :
+					   	 points[0] != go.earr[go.farr4[Face].earr[3]].a &&
+					 	 points[1] != go.earr[go.farr4[Face].earr[3]].a &&
+					     points[2] != go.earr[go.farr4[Face].earr[3]].a ?
+						 go.earr[go.farr4[Face].earr[3]].a :
+			 	 	 	 go.earr[go.farr4[Face].earr[3]].b ;
+			return (go.varr[points[0]] + go.varr[points[1]] + go.varr[points[2]] + go.varr[points[3]]).Divide(4);
 		}
 
 	Vertex CatmullClarkSubDivision::CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, int ControlPoint)
@@ -191,7 +214,6 @@ namespace Game
 			for(unsigned int i = 1; i < FacePoints.size(); ++i )
 			{
 				q = q + FaceCentroids[FacePoints[i]];
-				//r = r + EdgeMidPoints[go.farr[FacePoints[i]].earr[EdgePoints[i]]];
 			}
 			for(unsigned int i = 1; i < EdgePoints.size(); ++i )
 			{
@@ -201,9 +223,7 @@ namespace Game
 			r = r.Divide(n);
 			q = q.Divide(n);
 
-			Vertex x = (r + q + s).Divide(n);
-
-			return (x);
+			return (r + q + s).Divide(n);
 		}
 
 

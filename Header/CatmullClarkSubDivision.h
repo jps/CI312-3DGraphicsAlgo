@@ -32,7 +32,8 @@ namespace Game
 		//CatmullClarkSubDivision();//not needed at this is going to be a static method
 		//virtual ~CatnullClarkSubDivision();
 		private:
-		static Vertex FindCentroid(GameObject &go, int Face);
+		static Vertex FindCentroid3(GameObject &go, int Face);
+		static Vertex FindCentroid4(GameObject &go, int Face);
 
 		static Vertex CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, int ControlPoint);
 
