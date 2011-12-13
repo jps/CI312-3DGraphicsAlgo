@@ -39,7 +39,7 @@ namespace Game
 	string ToString();
 	bool operator==(Edge &inV);
 	bool operator!=(Edge &inV);
-
+	int Compare (Edge &inV);
 
     private:
 

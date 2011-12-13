@@ -45,6 +45,17 @@ namespace Game
 //	return inV.a.GetX() == a.GetX() && inV.a.GetY() == a.GetY() && inV.a.GetZ() == a.GetZ() && inV.b.GetX() == b.GetX() && inV.b.GetY() == b.GetY() && inV.b.GetZ() == b.GetZ()? true : false;
 	}
 
+
+	int Edge:: Compare (Edge &inV)
+	{
+		if(inV.a == a && inV.b == b)
+			return 2;//same
+		if(inV.a == b && inV.b == a)
+			return 1;//reverse
+		else
+			return 0;//no match
+	}
+
 	bool Edge :: operator!=(Edge &inV)
 	{
 	return (inV.a == a && inV.b == b) || (inV.a == b && inV.b == a)? false : true;

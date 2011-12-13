@@ -262,24 +262,61 @@ namespace Game
 
                 	ngo.varr.push_back(*nv[i]);
 */
-                Edge *ne[9];
-    			ne[0] = new Edge(nvi[0], nvi[4]); // a -> ab 0
-    			ne[1] = new Edge(nvi[4], nvi[1]); // ab -> b 1
-    			ne[2] = new Edge(nvi[1], nvi[5]); // b -> bc 2
-    			ne[3] = new Edge(nvi[5], nvi[2]); // bc -> c 3
-    			ne[4] = new Edge(nvi[2], nvi[3]); // c -> ac 4
-    			ne[5] = new Edge(nvi[3], nvi[0]);   // ac -> a 5
-    			ne[6] = new Edge(nvi[4], nvi[6]); // ab ->ce 6
-    			ne[7] = new Edge(nvi[6], nvi[5]); // ce ->bc 7
-    			ne[8] = new Edge(nvi[3], nvi[6]); // ac ->ce 8
+                Edge ne[9];
+                int nei[9]; //new edge index
+                bool ned[9];
 
-    			for(int i = 0; i < 9; ++i)
-    				ngo.earr.push_back(*ne[i]);
+    			ne[0] = Edge(nvi[0], nvi[4]); // a -> ab 0
+    			ne[1] = Edge(nvi[4], nvi[1]); // ab -> b 1
+    			ne[2] = Edge(nvi[1], nvi[5]); // b -> bc 2
+    			ne[3] = Edge(nvi[5], nvi[2]); // bc -> c 3
+    			ne[4] = Edge(nvi[2], nvi[3]); // c -> ac 4
+    			ne[5] = Edge(nvi[3], nvi[0]); // ac -> a 5
+    			ne[6] = Edge(nvi[4], nvi[6]); // ab ->ce 6
+    			ne[7] = Edge(nvi[6], nvi[5]); // ce ->bc 7
+    			ne[8] = Edge(nvi[3], nvi[6]); // ac ->ce 8
 
-    			Face4 * f1 = new Face4(estart, estart+6, estart+8, estart+5, true, true, false, true);
-    			Face4 * f2 = new Face4(estart+1, estart+2, estart+7, estart+6, true, true, false, false);
-    			Face4 * f3 = new Face4(estart+7, estart+3, estart+4, estart+8, true, true, true, true);
+    			for(int ei = 0; ei < 9; ++ei)
+    			{
+    				bool notFound = true;
+    				for(unsigned int i = 0; i < ngo.earr.size(); ++i)
+    				{
+    					int CompareResult = ngo.earr[i].Compare(ne[ei]);
+    					if(CompareResult == 2)
+    					{
+							nei[ei] = i;
+							ned[ei] = true;
+							notFound = false;
+							break;
+    					}else if(CompareResult == 1)
+    					{
+    						nei[ei] = i;
+    						ned[ei] = false;
+    						notFound = false;
+    						break;
+    					}
+    				}
+    				if(notFound)
+    				{
+    					nei[ei] = ngo.earr.size();
+    					ned[ei] = true;
+    					Edge * _ne = new Edge(ne[ei].a, ne[ei].b);
+    					ngo.earr.push_back(*_ne);
+    				}
+    			}
 
+
+    			/*for(int i = 0; i < 9; ++i)
+    				ngo.earr.push_back(ne[i]);
+*/
+    			Face4 * f1 = new Face4(nei[0], nei[6], nei[8], nei[5], ned[0], ned[6], !ned[8], ned[5]);
+				Face4 * f2 = new Face4(nei[1], nei[2], nei[7], nei[6], ned[1], ned[2], !ned[7], !nei[6]);
+				Face4 * f3 = new Face4(nei[7], nei[3], nei[4], nei[8], ned[7], ned[3], ned[4], ned[8]);
+    			/*
+    			Face4 * f1 = new Face4(nei[0], nei[6], nei[8], nei[5], true, true, false, true);
+    			Face4 * f2 = new Face4(nei[1], nei[2], nei[7], nei[6], true, true, false, false);
+    			Face4 * f3 = new Face4(nei[7], nei[3], nei[4], nei[8], true, true, true, true);
+*/
     			ngo.farr4.push_back(*f1);
     			ngo.farr4.push_back(*f2);
     			ngo.farr4.push_back(*f3);
