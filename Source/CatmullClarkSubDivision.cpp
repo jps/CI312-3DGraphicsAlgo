@@ -32,64 +32,63 @@ namespace Game
     		faceCentroids = Findcentroids4(go);
 
     		for(unsigned int fi = 0;fi < go.farr4.size();fi++)
-				{
+			{
 				NewControlPoints4 newPoints;
-				//foreach edge in face
-				for(int ei = 0;ei < 4;ei++)
+    			for(unsigned int ei = 0; ei < 4; ei++)
+    			{
+
+					int VertexID = go.farr4[fi].isForward(ei) ? go.earr[go.farr4[fi].earr[ei]].a : go.earr[go.farr4[fi].earr[ei]].b;
+					vector<unsigned int> fCentroids;
+					vector<unsigned int> eMidpoints;
+					fCentroids.push_back(fi);
+					eMidpoints.push_back(go.farr4[fi].earr[ei]);
+					unsigned int LastEdge, LastFace;
+					LastEdge = go.farr4[fi].earr[ei];
+					LastFace = fi;
+					bool finished, br;
+					finished = false;
+					while(!finished)
 					{
-					//take facepoint
-					int & currentEdge = go.farr4[fi].earr[ei];
-					bool isForward = go.farr4[fi].isForward(ei);
-					int VertexId = isForward ? go.earr[go.farr4[fi].earr[ei]].a : go.earr[go.farr4[fi].earr[ei]].b;
-					int nextEdge, EdgeID;
-					unsigned int currentFace = fi;
-					unsigned int nextFace = -1;
-					vector<int> edgePoints;
-					vector<int> facePoints;
-					edgePoints.push_back(go.farr4[fi].earr[ei]); //add current edged to midpoint list
-					facePoints.push_back(fi); //add current face point
-					while(nextFace != fi)
+						br = false;
+						for(unsigned int faceindex = 0; faceindex < go.farr4.size() ; ++faceindex) //foreach face
 						{
-						bool br = false;
-						for(unsigned int _fi = 0;_fi < go.farr4.size();_fi++)
+							if(faceindex != LastFace) // if its not the last face
+							for(unsigned int edgeindex = 0; edgeindex < 4; ++edgeindex) //foreach edges face
 							{
-							if(_fi != currentFace && fi != _fi)
+								if(go.farr4[faceindex].earr[edgeindex] == LastEdge || go.farr4[faceindex].earr[edgeindex] == LastEdge) //if edge is last edge
 								{
-								for(int _ei = 0;_ei < 4;_ei++)
+									if(faceindex != fi)//if it's the starting face break out
 									{
-									if(go.farr4[_fi].earr[_ei] == currentEdge)
+										for(int feindex = 0; feindex < 4; feindex++) //find the next edge in the face
 										{
-										EdgeID = _ei;
-										nextFace = _fi;
-										facePoints.push_back(_fi);
-										br = true;
-										break;
+											if(go.farr4[faceindex].earr[feindex] != LastEdge) // if it's not the last edge
+												if(go.earr[go.farr4[faceindex].earr[feindex]].a == VertexID || go.earr[go.farr4[faceindex].earr[feindex]].b == VertexID)//if the vertex is found
+												{
+													fCentroids.push_back(faceindex); //add the face index
+													LastFace = faceindex;
+													eMidpoints.push_back(go.farr4[faceindex].earr[feindex]);
+													LastEdge = go.farr4[faceindex].earr[feindex];
+													br = true;
+													break;
+												}
 										}
+										//LastFace = faceindex;
+										if(br)break;
+									}else{
+										br =finished = true;
 									}
-
 								}
-							if(br)
-								break;
+								if(br)break;
 							}
-
-						if(!br)
-							break;
-
-						nextEdge = FindNextEdge4f(EdgeID, go, nextFace, VertexId);
-						if(nextEdge == -1)
-						{
-						break;
-
+							if(br)break;
 						}
-						edgePoints.push_back(nextEdge);
-
-						currentEdge = nextEdge;
-						currentFace = nextFace;
-						}
-					newPoints.varr[ei] = Vertex(CalculateNewPoint(go, faceCentroids, edgeMidpoints, edgePoints, facePoints, VertexId));
 					}
-				newControlPoints4.push_back(newPoints);
+					//foreach edge in face
+					newPoints.varr[ei] = Vertex(CalculateNewPoint(go, faceCentroids, edgeMidpoints, eMidpoints, fCentroids, VertexID));
 				}
+
+				newControlPoints4.push_back(newPoints);
+			}
 
     	}else{
     		F4 = false;
@@ -108,8 +107,8 @@ namespace Game
 					int nextEdge, EdgeID;
 					unsigned int currentFace = fi;
 					unsigned int nextFace = -1;
-					vector<int> edgePoints;
-					vector<int> facePoints;
+					vector<unsigned int> edgePoints;
+					vector<unsigned int> facePoints;
 					edgePoints.push_back(go.farr[fi].earr[ei]); //add current edged to midpoint list
 					facePoints.push_back(fi); //add current face point
 					while(nextFace != fi)
@@ -145,6 +144,8 @@ namespace Game
 						currentEdge = nextEdge;
 						currentFace = nextFace;
 						}
+
+//
 					newPoints.varr[ei] = Vertex(CalculateNewPoint(go, faceCentroids, edgeMidpoints, edgePoints, facePoints, VertexId));
 					}
 				newControlPoints.push_back(newPoints);
@@ -171,7 +172,7 @@ namespace Game
                             	bool notFound = true;
             					for(unsigned int vi = 0; vi < ngo.varr.size(); vi++)
             					{
-            						if(ngo.varr[vi].EqualTo(newControlPoints[fi].varr[cpi]))
+            						if(ngo.varr[vi].EqualTo(newControlPoints4[fi].varr[cpi]))
             						{
             							notFound = false;
             							nvi[cpi] = vi;
@@ -181,7 +182,7 @@ namespace Game
             					if(notFound)
             					{
             						nvi[cpi] = ngo.varr.size();
-            						Vertex * ncp = new Vertex (newControlPoints[fi].varr[cpi]);
+            						Vertex * ncp = new Vertex (newControlPoints4[fi].varr[cpi]);
             						ngo.varr.push_back(*ncp);
             					}
             					notFound = true;
@@ -398,8 +399,8 @@ namespace Game
         //for each edge in the game object find the midpoint
     	vector<Vertex> edgeMidpoints;
         for(unsigned int i = 0;i < go.earr.size();++i){
-            Vertex *edgeMidpoint = new Vertex((go.varr[go.earr[i].a] + go.varr[go.earr[i].b]).Divide(2));
-            edgeMidpoints.push_back(*edgeMidpoint);
+            Vertex edgeMidpoint = Vertex((go.varr[go.earr[i].a] + go.varr[go.earr[i].b]).Divide(2));
+            edgeMidpoints.push_back(edgeMidpoint);
         }
         return edgeMidpoints;
     }
@@ -409,8 +410,11 @@ namespace Game
 			Vertex centroid;
 			centroid = go.varr[go.earr[go.farr[Face].earr[0]].a] + go.varr[go.earr[go.farr[Face].earr[0]].b];
 			//find last vertex in the second edge
-			centroid = go.earr[go.farr[Face].earr[0]].a != go.earr[go.farr[Face].earr[1]].a && go.earr[go.farr[Face].earr[0]].b != go.earr[go.farr[Face].earr[1]].a ? centroid + go.varr[go.earr[go.farr[Face].earr[0]].a] : centroid + go.varr[go.earr[go.farr[Face].earr[1]].b];
-			centroid = centroid.Divide(3);
+			centroid = go.earr[go.farr[Face].earr[0]].a != go.earr[go.farr[Face].earr[1]].a &&
+						go.earr[go.farr[Face].earr[0]].b != go.earr[go.farr[Face].earr[1]].a ?
+								centroid + go.varr[go.earr[go.farr[Face].earr[0]].a] :
+								centroid + go.varr[go.earr[go.farr[Face].earr[1]].b];
+				centroid = centroid.Divide(3);
 			return centroid;
 		}
 
@@ -439,7 +443,7 @@ namespace Game
 			return (go.varr[points[0]] + go.varr[points[1]] + go.varr[points[2]] + go.varr[points[3]]).Divide(4);
 		}
 
-	Vertex CatmullClarkSubDivision::CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<int> &EdgePoints, vector<int> &FacePoints, int ControlPoint)
+	Vertex CatmullClarkSubDivision::CalculateNewPoint(GameObject &go, vector<Vertex> &FaceCentroids, vector<Vertex> &EdgeMidPoints, vector<unsigned int> &EdgePoints, vector<unsigned int> &FacePoints, int ControlPoint)
 		{
 			//(Q/n) + (2R/n) + (S(n-3)/n)
 			//where q is the average of the surrounding facepoints
@@ -449,21 +453,17 @@ namespace Game
 			int n = FacePoints.size();
 			Vertex q = FaceCentroids[FacePoints[0]];
 			Vertex r = EdgeMidPoints[EdgePoints[0]];
-			Vertex s = go.varr[ControlPoint].Multiply(n-3);
-
-			for(unsigned int i = 1; i < FacePoints.size(); ++i )
+			Vertex s = go.varr[ControlPoint];
+			for(unsigned int i = 1; i < n; ++i )
 			{
 				q = q + FaceCentroids[FacePoints[i]];
-			}
-			for(unsigned int i = 1; i < EdgePoints.size(); ++i )
-			{
 				r = r + EdgeMidPoints[EdgePoints[i]];
 			}
-			r = r.Multiply(2);//.Divide(n);
-			r = r.Divide(n);
-			q = q.Divide(n);
+			q = q.Divide(n*n);
+			r = r.Divide(n).Multiply(2).Divide(n);
+			s = s.Multiply((n-3)).Divide(n);
 
-			return (r + q + s).Divide(n);
+			return r + q + s;
 		}
 
 		int CatmullClarkSubDivision::FindNextEdge3f(int EdgeID, GameObject & go, unsigned int & nextFace, int & VertexId)

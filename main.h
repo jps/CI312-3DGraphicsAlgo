@@ -34,6 +34,7 @@ namespace Game
 	class main
 	{
 public:
+
 	//void main_loop_function();
 	main();
 	virtual ~main();

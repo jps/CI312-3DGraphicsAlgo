@@ -39,6 +39,9 @@ using namespace Game;
     {
 	    ObjectManager * objManager = ObjectManager::Inst(); //create object manager
 
+
+
+
 	    Cube CubeTest = Cube(1.0f,Vertex(0,0,0)); //create cube and push to object manager
 	    objManager->GameObjects.push_back(CubeTest);
 /*
@@ -145,7 +148,14 @@ using namespace Game;
 					buttonPause = 30;*/
 		    	}
 			}
+
+
+
+
 	    }
+
+
+
 
 	    objManager->~ObjectManager();
     }

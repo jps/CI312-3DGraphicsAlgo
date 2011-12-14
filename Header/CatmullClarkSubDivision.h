@@ -39,7 +39,7 @@ namespace Game
 		    static vector<Vertex> Findcentroids4(GameObject & go);
 		    static Vertex FindCentroid3(GameObject & go, int Face);
 		    static Vertex FindCentroid4(GameObject & go, int Face);
-		    static Vertex CalculateNewPoint(GameObject & go, vector<Vertex> & FaceCentroids, vector<Vertex> & EdgeMidPoints, vector<int> & EdgePoints, vector<int> & FacePoints, int ControlPoint);
+		    static Vertex CalculateNewPoint(GameObject & go, vector<Vertex> & FaceCentroids, vector<Vertex> & EdgeMidPoints, vector<unsigned int> & EdgePoints, vector<unsigned int> & FacePoints, int ControlPoint);
 		    static vector<Vertex> FindEdgeMidpoints(GameObject & go);
 		    static int FindNextEdge3f(int EdgeID, GameObject & go, unsigned int & nextFace, int & VertexId);
 		    static int FindNextEdge4f(int EdgeID, GameObject & go, unsigned int & nextFace, int & VertexId);
